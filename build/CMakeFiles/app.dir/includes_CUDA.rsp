@@ -1,0 +1,1 @@
+-I"/home/franktudor/CPP-Fluid-Particles/include" -I/usr/local/cuda/include -I"/usr/local/cuda-samples/Common"
