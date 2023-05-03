@@ -7,7 +7,6 @@ const int block_size = 256;
 #define PI (3.14159265358979323846f)
 #include <cstdio>
 #define CUDA_CALL(x) do { if((x)!=cudaSuccess) { printf("CUDA Error at %s:%d\t Error code = %d\n",__FILE__,__LINE__,x);}} while(0) 
-//#define CUDA_CALL(x) do { x ;} while(0) 
 #define CHECK_KERNEL(); 	{cudaError_t err = cudaGetLastError();if(err)printf("CUDA Error at %s:%d:\t%s\n",__FILE__,__LINE__,cudaGetErrorString(err));}
 #define MAX_A (1000.0f)
 

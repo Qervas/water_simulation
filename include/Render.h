@@ -72,8 +72,8 @@ private:
 	bool running = false;
 	// particle system variables
 	std::shared_ptr<SPHSystem> pSystem;
-	const float3 spaceSize = make_float3(1.0f);
-	const float sphSpacing = 0.02f;
+	const float3 spaceSize = make_float3(1.0f, 1.0f, 1.0f);
+	const float sphSpacing = 0.02f;  
 	const float sphSmoothingRadius = 2.0f * sphSpacing;
 	const float sphCellLength = 1.01f * sphSmoothingRadius;
 	const float dt = 0.002f;

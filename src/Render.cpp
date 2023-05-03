@@ -228,6 +228,7 @@ void Render::keyboardEvent(){
 
 void Render::createContainerMesh() {
     // Container vertices and indices
+	const float cuboid_height = 0.75f;
     float containerVertices[] = {
           // Base (position, normal, color)
         -0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f,
@@ -237,26 +238,26 @@ void Render::createContainerMesh() {
 
         // Left wall (position, normal, color)
         -0.5f, 0.0f, -0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f,
-        -0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f,
-        -0.5f, 0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f,
+        -0.5f, cuboid_height, -0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f,
+        -0.5f, cuboid_height,  0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f,
         -0.5f, 0.0f,  0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f,
 
         // Right wall (position, normal, color)
         0.5f, 0.0f, -0.5f, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f,
-        0.5f, 0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f,
-        0.5f, 0.5f,  0.5f, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f,
+        0.5f, cuboid_height, -0.5f, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f,
+        0.5f, cuboid_height,  0.5f, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f,
         0.5f, 0.0f,  0.5f, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f,
 
         // Front wall (position, normal, color)
         -0.5f, 0.0f, -0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f,
-        -0.5f, 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f,
-        0.5f, 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f,
+        -0.5f, cuboid_height, -0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f,
+        0.5f, cuboid_height, -0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f,
         0.5f, 0.0f, -0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f,
 
         // Back wall (position, normal, color)
         -0.5f, 0.0f,  0.5f, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f,
-        -0.5f, 0.5f,  0.5f, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f,
-        0.5f, 0.5f,  0.5f, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f,
+        -0.5f, cuboid_height,  0.5f, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f,
+        0.5f, cuboid_height,  0.5f, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f,
         0.5f, 0.0f,  0.5f, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f,
     };
 
