@@ -14,8 +14,9 @@ set(CMAKE_CUDA_ARCHITECTURES 60)
 
 set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -gencode arch=compute_50,code=sm_50 \
 					--expt-extended-lambda -use_fast_math -Xcompiler -Wall,-Wextra, \
-					-Wno-unused-parameter,-Wno-unused-function,-Wno-unused-variable \
+					-fpermissive \
 					")
+					# -Wno-unused-parameter,-Wno-unused-function,-Wno-unused-variable \
 
 project(app CXX CUDA)
 
@@ -46,5 +47,5 @@ target_compile_options(app PUBLIC -Wall -Wextra )
 # add compiler definitions
 target_compile_definitions(app PUBLIC -DDEBUG)
 
-#copy  content under ./shaders to build, not the folder itself
-file(COPY shaders DESTINATION ${CMAKE_BINARY_DIR})
+#symlink  content under ./shaders to build, not the folder itself
+file(CREATE_LINK ${CMAKE_SOURCE_DIR}/shaders ${CMAKE_BINARY_DIR}/shaders SYMBOLIC)

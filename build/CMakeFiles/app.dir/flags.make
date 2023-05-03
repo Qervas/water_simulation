@@ -7,7 +7,7 @@ CUDA_DEFINES = -DDEBUG
 
 CUDA_INCLUDES = --options-file CMakeFiles/app.dir/includes_CUDA.rsp
 
-CUDA_FLAGS =  -gencode arch=compute_50,code=sm_50 					--expt-extended-lambda -use_fast_math -Xcompiler -Wall,-Wextra, 					-Wno-unused-parameter,-Wno-unused-function,-Wno-unused-variable 					 -std=c++17 --generate-code=arch=compute_60,code=[compute_60,sm_60] -Wall -Wextra
+CUDA_FLAGS =  -gencode arch=compute_50,code=sm_50 					--expt-extended-lambda -use_fast_math -Xcompiler -Wall,-Wextra, 					-fpermissive 					 -std=c++17 --generate-code=arch=compute_60,code=[compute_60,sm_60] -Wall -Wextra
 
 CXX_DEFINES = -DDEBUG
 

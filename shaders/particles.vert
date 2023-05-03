@@ -1,32 +1,32 @@
-
-
-#version 120
-
+#version 330 core
 
 uniform float pointRadius;  // point size in world space
-
-attribute float pointSize;
-varying float fs_pointSize;
-
-varying vec3 fs_PosEye;		// center of the viewpoint space
- 
+uniform mat4 viewMatrix;
+uniform mat4 projectionMatrix;
 uniform float pointScale;
-varying mat4 u_Persp;
+
+in vec4 vertex;
+in vec4 color;
+
+out vec4 fs_Color;
+out float fs_pointSize;
+
+out vec3 fs_PosEye;     // center of the viewpoint space
+out mat4 u_Persp;
 
 void main(void) {
 
-	vec3 posEye = (gl_ModelViewMatrix  * vec4(gl_Vertex.xyz, 1.0f)).xyz;
-	float dist = length(posEye);
+    vec3 posEye = (viewMatrix * vec4(vertex.xyz, 1.0f)).xyz;
+    float dist = length(posEye);
 
-	
-	gl_PointSize = pointRadius * pointScale/ dist;
+    gl_PointSize = pointRadius * pointScale / dist;
 
-	fs_PosEye = posEye;
+    fs_PosEye = posEye;
 
-	gl_FrontColor = gl_Color;
-	
-	u_Persp = gl_ProjectionMatrix;
-	
-	gl_Position = ftransform();
-	fs_pointSize = pointSize;
+    fs_Color = color;
+
+    u_Persp = projectionMatrix;
+
+    gl_Position = projectionMatrix * viewMatrix * vec4(vertex.xyz, 1.0f);
+    fs_pointSize = vertex.w;
 }

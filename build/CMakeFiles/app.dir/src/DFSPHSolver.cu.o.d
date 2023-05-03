@@ -836,4 +836,4 @@ CMakeFiles/app.dir/src/DFSPHSolver.cu.o : /home/franktudor/CPP-Fluid-Particles/s
     /home/franktudor/CPP-Fluid-Particles/include/SPHParticles.h \
     /home/franktudor/CPP-Fluid-Particles/include/BaseSolver.h \
     /home/franktudor/CPP-Fluid-Particles/include/BasicSPHSolver.h \
-    /home/franktudor/CPP-Fluid-Particles/src/DFSPHSolver.h
+    /home/franktudor/CPP-Fluid-Particles/include/DFSPHSolver.h

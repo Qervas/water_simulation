@@ -153,6 +153,30 @@ src/BasicSPHSolver.cu.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/BasicSPHSolver.cu.s
 .PHONY : src/BasicSPHSolver.cu.s
 
+src/Camera.o: src/Camera.cpp.o
+.PHONY : src/Camera.o
+
+# target to build an object file
+src/Camera.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/Camera.cpp.o
+.PHONY : src/Camera.cpp.o
+
+src/Camera.i: src/Camera.cpp.i
+.PHONY : src/Camera.i
+
+# target to preprocess a source file
+src/Camera.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/Camera.cpp.i
+.PHONY : src/Camera.cpp.i
+
+src/Camera.s: src/Camera.cpp.s
+.PHONY : src/Camera.s
+
+# target to generate assembly for a file
+src/Camera.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/Camera.cpp.s
+.PHONY : src/Camera.cpp.s
+
 src/DFSPHSolver.o: src/DFSPHSolver.cu.o
 .PHONY : src/DFSPHSolver.o
 
@@ -176,6 +200,30 @@ src/DFSPHSolver.s: src/DFSPHSolver.cu.s
 src/DFSPHSolver.cu.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/DFSPHSolver.cu.s
 .PHONY : src/DFSPHSolver.cu.s
+
+src/MarchingCubes.o: src/MarchingCubes.cpp.o
+.PHONY : src/MarchingCubes.o
+
+# target to build an object file
+src/MarchingCubes.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/MarchingCubes.cpp.o
+.PHONY : src/MarchingCubes.cpp.o
+
+src/MarchingCubes.i: src/MarchingCubes.cpp.i
+.PHONY : src/MarchingCubes.i
+
+# target to preprocess a source file
+src/MarchingCubes.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/MarchingCubes.cpp.i
+.PHONY : src/MarchingCubes.cpp.i
+
+src/MarchingCubes.s: src/MarchingCubes.cpp.s
+.PHONY : src/MarchingCubes.s
+
+# target to generate assembly for a file
+src/MarchingCubes.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/MarchingCubes.cpp.s
+.PHONY : src/MarchingCubes.cpp.s
 
 src/PBDSolver.o: src/PBDSolver.cu.o
 .PHONY : src/PBDSolver.o
@@ -225,6 +273,30 @@ src/Particles.cu.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/Particles.cu.s
 .PHONY : src/Particles.cu.s
 
+src/Render.o: src/Render.cpp.o
+.PHONY : src/Render.o
+
+# target to build an object file
+src/Render.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/Render.cpp.o
+.PHONY : src/Render.cpp.o
+
+src/Render.i: src/Render.cpp.i
+.PHONY : src/Render.i
+
+# target to preprocess a source file
+src/Render.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/Render.cpp.i
+.PHONY : src/Render.cpp.i
+
+src/Render.s: src/Render.cpp.s
+.PHONY : src/Render.s
+
+# target to generate assembly for a file
+src/Render.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/Render.cpp.s
+.PHONY : src/Render.cpp.s
+
 src/SPHSystem.o: src/SPHSystem.cu.o
 .PHONY : src/SPHSystem.o
 
@@ -249,29 +321,29 @@ src/SPHSystem.cu.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/SPHSystem.cu.s
 .PHONY : src/SPHSystem.cu.s
 
-src/ShaderUtility.o: src/ShaderUtility.cpp.o
-.PHONY : src/ShaderUtility.o
+src/ShaderUtils.o: src/ShaderUtils.cpp.o
+.PHONY : src/ShaderUtils.o
 
 # target to build an object file
-src/ShaderUtility.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/ShaderUtility.cpp.o
-.PHONY : src/ShaderUtility.cpp.o
+src/ShaderUtils.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/ShaderUtils.cpp.o
+.PHONY : src/ShaderUtils.cpp.o
 
-src/ShaderUtility.i: src/ShaderUtility.cpp.i
-.PHONY : src/ShaderUtility.i
+src/ShaderUtils.i: src/ShaderUtils.cpp.i
+.PHONY : src/ShaderUtils.i
 
 # target to preprocess a source file
-src/ShaderUtility.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/ShaderUtility.cpp.i
-.PHONY : src/ShaderUtility.cpp.i
+src/ShaderUtils.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/ShaderUtils.cpp.i
+.PHONY : src/ShaderUtils.cpp.i
 
-src/ShaderUtility.s: src/ShaderUtility.cpp.s
-.PHONY : src/ShaderUtility.s
+src/ShaderUtils.s: src/ShaderUtils.cpp.s
+.PHONY : src/ShaderUtils.s
 
 # target to generate assembly for a file
-src/ShaderUtility.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/ShaderUtility.cpp.s
-.PHONY : src/ShaderUtility.cpp.s
+src/ShaderUtils.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/ShaderUtils.cpp.s
+.PHONY : src/ShaderUtils.cpp.s
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
@@ -333,21 +405,30 @@ help:
 	@echo "... src/BasicSPHSolver.o"
 	@echo "... src/BasicSPHSolver.i"
 	@echo "... src/BasicSPHSolver.s"
+	@echo "... src/Camera.o"
+	@echo "... src/Camera.i"
+	@echo "... src/Camera.s"
 	@echo "... src/DFSPHSolver.o"
 	@echo "... src/DFSPHSolver.i"
 	@echo "... src/DFSPHSolver.s"
+	@echo "... src/MarchingCubes.o"
+	@echo "... src/MarchingCubes.i"
+	@echo "... src/MarchingCubes.s"
 	@echo "... src/PBDSolver.o"
 	@echo "... src/PBDSolver.i"
 	@echo "... src/PBDSolver.s"
 	@echo "... src/Particles.o"
 	@echo "... src/Particles.i"
 	@echo "... src/Particles.s"
+	@echo "... src/Render.o"
+	@echo "... src/Render.i"
+	@echo "... src/Render.s"
 	@echo "... src/SPHSystem.o"
 	@echo "... src/SPHSystem.i"
 	@echo "... src/SPHSystem.s"
-	@echo "... src/ShaderUtility.o"
-	@echo "... src/ShaderUtility.i"
-	@echo "... src/ShaderUtility.s"
+	@echo "... src/ShaderUtils.o"
+	@echo "... src/ShaderUtils.i"
+	@echo "... src/ShaderUtils.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
