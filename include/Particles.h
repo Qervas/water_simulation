@@ -3,11 +3,13 @@
 #pragma once
 #include <vector>
 #include <cuda_runtime.h>
+#include "DArray.h"
+#include "global.h"
 class Particles {
 public:
 	explicit Particles(const std::vector<float3>& p)
 		:pos(p.size()), vel(p.size()) {
-		CUDA_CALL(cudaMemcpy(pos.addr(), &p[0], sizeof(float3) * p.size(), cudaMemcpyHostToDevice));
+		checkCudaErrors(cudaMemcpy(pos.addr(), &p[0], sizeof(float3) * p.size(), cudaMemcpyHostToDevice));
 	}
 
 	Particles(const Particles&) = delete;
@@ -25,6 +27,7 @@ public:
 	const DArray<float3>& getPos() const {
 		return pos;
 	}
+	
 
 	void advect(float dt);
 

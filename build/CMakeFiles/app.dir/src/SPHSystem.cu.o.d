@@ -829,10 +829,10 @@ CMakeFiles/app.dir/src/SPHSystem.cu.o : /home/franktudor/CPP-Fluid-Particles/src
     /usr/local/cuda/include/cub/agent/agent_merge_sort.cuh \
     /usr/local/cuda/include/cub/agent/../block/block_merge_sort.cuh \
     /usr/local/cuda/include/cub/thread/thread_sort.cuh \
-    /home/franktudor/CPP-Fluid-Particles/src/CUDAFunctions.cuh \
-    /home/franktudor/CPP-Fluid-Particles/include/global.h \
     /home/franktudor/CPP-Fluid-Particles/include/DArray.h \
+    /home/franktudor/CPP-Fluid-Particles/include/global.h \
     /home/franktudor/CPP-Fluid-Particles/include/Particles.h \
     /home/franktudor/CPP-Fluid-Particles/include/SPHParticles.h \
     /home/franktudor/CPP-Fluid-Particles/include/BaseSolver.h \
-    /home/franktudor/CPP-Fluid-Particles/include/SPHSystem.h
+    /home/franktudor/CPP-Fluid-Particles/include/SPHSystem.h \
+    /home/franktudor/CPP-Fluid-Particles/include/CUDAFunctions.cuh

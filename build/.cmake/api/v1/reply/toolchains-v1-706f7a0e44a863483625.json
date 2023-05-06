@@ -1,0 +1,118 @@
+{
+	"kind" : "toolchains",
+	"toolchains" : 
+	[
+		{
+			"compiler" : 
+			{
+				"id" : "NVIDIA",
+				"implicit" : 
+				{
+					"includeDirectories" : 
+					[
+						"/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/include/c++/12.2.0",
+						"/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/include/c++/12.2.0/x86_64-pc-linux-gnu",
+						"/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/include/c++/12.2.0/backward",
+						"/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/lib/gcc/x86_64-pc-linux-gnu/12.2.0/include",
+						"/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/lib/gcc/x86_64-pc-linux-gnu/12.2.0/include-fixed",
+						"/usr/local/include",
+						"/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/include",
+						"/usr/include"
+					],
+					"linkDirectories" : 
+					[
+						"/usr/local/cuda/targets/x86_64-linux/lib/stubs",
+						"/usr/local/cuda/targets/x86_64-linux/lib",
+						"/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/lib/gcc/x86_64-pc-linux-gnu/12.2.0",
+						"/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/lib/gcc",
+						"/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/lib64",
+						"/lib64",
+						"/usr/lib64",
+						"/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/lib"
+					],
+					"linkFrameworkDirectories" : [],
+					"linkLibraries" : 
+					[
+						"stdc++",
+						"m",
+						"gcc_s",
+						"gcc",
+						"c",
+						"gcc_s",
+						"gcc"
+					]
+				},
+				"path" : "/usr/local/cuda/bin/nvcc",
+				"version" : "12.1.105"
+			},
+			"language" : "CUDA",
+			"sourceFileExtensions" : 
+			[
+				"cu"
+			]
+		},
+		{
+			"compiler" : 
+			{
+				"id" : "GNU",
+				"implicit" : 
+				{
+					"includeDirectories" : 
+					[
+						"/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/include/c++/12.2.0",
+						"/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/include/c++/12.2.0/x86_64-pc-linux-gnu",
+						"/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/include/c++/12.2.0/backward",
+						"/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/lib/gcc/x86_64-pc-linux-gnu/12.2.0/include",
+						"/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/lib/gcc/x86_64-pc-linux-gnu/12.2.0/include-fixed",
+						"/usr/local/include",
+						"/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/include",
+						"/usr/include"
+					],
+					"linkDirectories" : 
+					[
+						"/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/lib/gcc/x86_64-pc-linux-gnu/12.2.0",
+						"/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/lib/gcc",
+						"/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/lib64",
+						"/lib64",
+						"/usr/lib64",
+						"/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/lib"
+					],
+					"linkFrameworkDirectories" : [],
+					"linkLibraries" : 
+					[
+						"stdc++",
+						"m",
+						"gcc_s",
+						"gcc",
+						"c",
+						"gcc_s",
+						"gcc"
+					]
+				},
+				"path" : "/usr/lib64/ccache/g++",
+				"version" : "12.2.0"
+			},
+			"language" : "CXX",
+			"sourceFileExtensions" : 
+			[
+				"C",
+				"M",
+				"c++",
+				"cc",
+				"cpp",
+				"cxx",
+				"m",
+				"mm",
+				"mpp",
+				"CPP",
+				"ixx",
+				"cppm"
+			]
+		}
+	],
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 0
+	}
+}

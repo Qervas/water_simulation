@@ -11,7 +11,7 @@ public:
 		density(p.size()),
 		mass(p.size()),
 		particle2Cell(p.size()) {
-		CUDA_CALL(cudaMemcpy(pos.addr(), &p[0], sizeof(float3) * p.size(), cudaMemcpyHostToDevice));
+		checkCudaErrors(cudaMemcpy(pos.addr(), &p[0], sizeof(float3) * p.size(), cudaMemcpyHostToDevice));
 	}
 
 	SPHParticles(const SPHParticles&) = delete;

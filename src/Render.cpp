@@ -1,11 +1,11 @@
 #include "Render.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
-Render::Render(GLFWwindow* window):camera(window), window(window){
+
+Render::Render(GLFWwindow* window):camera(window), window(window), cellStart(cellSize.x* cellSize.y* cellSize.z + 1){
+
 
 	createContainerMesh();
-	// create VBOs
-
 	
 	GLuint vertexShader = ShaderUtils::loadShader("shaders/particles.vert", GL_VERTEX_SHADER);
     GLuint fragmentShader = ShaderUtils::loadShader("shaders/particles.frag", GL_FRAGMENT_SHADER);
@@ -14,19 +14,34 @@ Render::Render(GLFWwindow* window):camera(window), window(window){
     GLuint containerVertexShader = ShaderUtils::loadShader("shaders/container.vert", GL_VERTEX_SHADER);
     GLuint containerFragmentShader = ShaderUtils::loadShader("shaders/container.frag", GL_FRAGMENT_SHADER);
     containerShaderProgram = ShaderUtils::createShaderProgram(containerVertexShader, containerFragmentShader);
+	GLuint surfaceVertexShader = ShaderUtils::loadShader("shaders/surface.vert", GL_VERTEX_SHADER);
+    GLuint surfacaeFragmentShader = ShaderUtils::loadShader("shaders/surface.frag", GL_FRAGMENT_SHADER);
+    surfaceShaderProgram = ShaderUtils::createShaderProgram(surfaceVertexShader, surfacaeFragmentShader);
 
     // Clean up shader resources
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
     glDeleteShader(containerVertexShader);
     glDeleteShader(containerFragmentShader);
+	glDeleteShader(surfaceVertexShader);
+	glDeleteShader(surfacaeFragmentShader);
 }
 
 Render::~Render(){
-	deleteVBO(&particlesVBO);
-	deleteVBO(&particlesColorVBO);
+	deleteVBO(&particles_vbo);
+	deleteVBO(&particles_color_vbo);
 	pSystem = nullptr;
-	CUDA_CALL(cudaDeviceReset());
+	checkCudaErrors(cudaDeviceReset());
+	glDeleteProgram(surfaceShaderProgram);
+	glDeleteProgram(containerShaderProgram);
+	glDeleteVertexArrays(1, &container_vao);
+    glDeleteBuffers(1, &container_vbo);
+    glDeleteBuffers(1, &container_ebo);
+	glDeleteVertexArrays(1, &surface_vao);
+	glDeleteBuffers(2, surface_vbo);
+    glDeleteBuffers(1, &surface_ebo);
+	
+	
 }
 void Render::render(float deltaTime){
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -37,20 +52,28 @@ void Render::render(float deltaTime){
 	}
 	camera.update(deltaTime);
 	renderParticles();
-
 	renderContainer();
+	renderSurface();
 	keyboardEvent();
 }
 
 void Render::init(){
-	initSPHSystem(SPH);
-	createVBO(&particlesVBO, sizeof(float3) * pSystem->size());
-	createVBO(&particlesColorVBO, sizeof(float3) * pSystem->size());
+	initSPHSystem();
+	createVBO(&particles_vbo, sizeof(float3) * pSystem->size());
+	createVBO(&particles_color_vbo, sizeof(float3) * pSystem->size());
+	
+	// marchingCubes = MarchingCubes(pSystem->getFluids(), isolevel, pSystem->getFluids()->getDensityPtr(),
+	// 							pSystem->getFluids()->getParticle2Cell());
+
+	//init surface
+	glGenVertexArrays(1, &surface_vao);
+	glGenBuffers(2, surface_vbo);
+	glGenBuffers(1, &surface_ebo);
+
+
 }
 
-
-
-void Render::initSPHSystem(fluid_solver solver) {
+void Render::initSPHSystem() {
 	// initiate fluid particles
 	std::vector<float3> pos;
 	for (auto i = 0; i < 36; ++i) {
@@ -97,17 +120,7 @@ void Render::initSPHSystem(fluid_solver solver) {
 	auto boundaryParticles = std::make_shared<SPHParticles>(pos);
 	// initiate solver and particle system
 	std::shared_ptr<BaseSolver> pSolver;
-	switch (solver) {
-	case fluid_solver::PBD:
-		pSolver = std::make_shared<PBDSolver>(fluidParticles->size());
-		break;
-	case fluid_solver::DFSPH:
-		pSolver = std::make_shared<DFSPHSolver>(fluidParticles->size());
-		break;
-	default:
-		pSolver = std::make_shared<BasicSPHSolver>(fluidParticles->size());
-		break;
-	}	
+	pSolver = std::make_shared<BasicSPHSolver>(fluidParticles->size());
 	pSystem = std::make_shared<SPHSystem>(fluidParticles, boundaryParticles, pSolver,
 		spaceSize, sphCellLength, sphSmoothingRadius, dt, sphM0,
 		sphRho0, sphRhoBoundary, sphStiff, sphVisc, 
@@ -124,14 +137,21 @@ void Render::createVBO(GLuint* vbo, const unsigned int length) {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	// register buffer object with CUDA
-	CUDA_CALL(cudaGLRegisterBufferObject(*vbo));
+	checkCudaErrors(cudaGLRegisterBufferObject(*vbo));
+
+	// checkCudaErrors(cudaGraphicsGLRegisterBuffer(&resource_vbo, *vbo, cudaGraphicsMapFlagsNone));
+	// checkCudaErrors(cudaGraphicsMapResources(1, &resource_particles, 0));
+	// checkCudaErrors(cudaGraphicsMapResources(1, &resources_particle_color, 0));
 }
 
 void Render::deleteVBO(GLuint* vbo) {
+	// checkCudaErrors(cudaGraphicsUnregisterResource(resource_vbo));
+	// checkCudaErrors(cudaGraphicsUnregisterResource(resource_particles));
+	// checkCudaErrors(cudaGraphicsUnregisterResource(resources_particle_color));
+
 	glBindBuffer(1, *vbo);
 	glDeleteBuffers(1, vbo);
-	CUDA_CALL(cudaGLUnregisterBufferObject(*vbo));
-	*vbo = NULL;
+	// *vbo = NULL;
 }
 
 void Render::renderParticles() {
@@ -147,21 +167,29 @@ void Render::renderParticles() {
     // map OpenGL buffer object for writing from CUDA
     float3 *dptr;
     float3 *cptr;
-    CUDA_CALL(cudaGLMapBufferObject((void**)&dptr, particlesVBO));
-    CUDA_CALL(cudaGLMapBufferObject((void**)&cptr, particlesColorVBO));
+	// size_t num_bytes;
+	
+	// checkCudaErrors(cudaGraphicsResourceGetMappedPointer((void**)&dptr, &num_bytes, resource_particles));
+	// checkCudaErrors(cudaGraphicsResourceGetMappedPointer((void**)&cptr, &num_bytes, resources_particle_color));
+	checkCudaErrors(cudaGLMapBufferObject((void**)&dptr, particles_vbo));
+	checkCudaErrors(cudaGLMapBufferObject((void**)&cptr, particles_color_vbo));
+
 
     // calculate the dots' position and color
     generate_dots(dptr, cptr, pSystem->getFluids());
-
+	
     // unmap buffer object
-    CUDA_CALL(cudaGLUnmapBufferObject(particlesVBO));
-    CUDA_CALL(cudaGLUnmapBufferObject(particlesColorVBO));
+	// checkCudaErrors(cudaGraphicsUnmapResources(1, &resource_particles, 0));
+	// checkCudaErrors(cudaGraphicsUnmapResources(1, &resources_particle_color, 0));
+	checkCudaErrors(cudaGLUnmapBufferObject(particles_vbo));
+	checkCudaErrors(cudaGLUnmapBufferObject(particles_color_vbo));
 
-    glBindBuffer(GL_ARRAY_BUFFER, particlesVBO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, particles_vbo);
     glVertexPointer(3, GL_FLOAT, 0, nullptr);
     glEnableClientState(GL_VERTEX_ARRAY);
 
-    glBindBuffer(GL_ARRAY_BUFFER, particlesColorVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, particles_color_vbo);
     glColorPointer(3, GL_FLOAT, 0, nullptr);
     glEnableClientState(GL_COLOR_ARRAY);
 
@@ -179,42 +207,53 @@ void Render::renderParticles() {
     glUseProgram(0);
 }
 
+void Render::renderSurface(){
+	glUseProgram(surfaceShaderProgram);
+	
+
+
+	// marchingCubes.generateMesh_CUDA();
+	// vertices = marchingCubes.getVertices();
+	// normals = marchingCubes.getNormals();
+	// indices = marchingCubes.getIndices();
+	// glBindVertexArray(surface_vao);
+
+    // glBindBuffer(GL_ARRAY_BUFFER, surface_vbo[0]);
+    // glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float3), &vertices[0], GL_DYNAMIC_DRAW);
+    // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+    // glEnableVertexAttribArray(0);
+
+    // glBindBuffer(GL_ARRAY_BUFFER, surface_vbo[1]);
+    // glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(float3), &normals[0], GL_DYNAMIC_DRAW);
+    // glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+    // glEnableVertexAttribArray(1);
+
+    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, surface_ebo);
+    // glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(uint3), &indices[0], GL_DYNAMIC_DRAW);
+
+    // glDrawElements(GL_TRIANGLES, indices.size() * 3, GL_UNSIGNED_INT, 0);
+
+    glBindVertexArray(0);
+}
 
 void Render::oneStep() {
 	++frameId;
 	const auto milliseconds = pSystem->step();
 	totalTime += milliseconds;
-	printf("Frame %d - %2.2f ms, avg time - %2.2f ms/frame (%3.2f FPS)\r", 
-		frameId%10000, milliseconds, totalTime / float(frameId), float(frameId)*1000.0f/totalTime);
+	// printf("Frame %d - %2.2f ms, avg time - %2.2f ms/frame (%3.2f FPS)\r", 
+		// frameId%10000, milliseconds, totalTime / float(frameId), float(frameId)*1000.0f/totalTime);
 }
-static auto current = SPH;
+
 void Render::keyboardEvent(){
-	if(glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS){
-		initSPHSystem(SPH);
-		frameId = 0;
-		totalTime = 0.0f;
-		current = SPH;
-	}
-	else if(glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS){
-		initSPHSystem(DFSPH);
-		frameId = 0;
-		totalTime = 0.0f;
-		current = DFSPH;
-	}
-	else if(glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS){
-		initSPHSystem(PBD);
-		frameId = 0;
-		totalTime = 0.0f;
-		current = PBD;
-	}
-	else if(glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS){
+	if(glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS){
 		running = true;
 	}
 	else if(glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS){
 		running = !running;
 	}
 	else if(glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS){
-		initSPHSystem(current);
+		initSPHSystem();
+		running = false;
 		frameId = 0;
 		totalTime = 0.0f;		
 	}
@@ -322,11 +361,10 @@ void Render::renderContainer() {
     glUniformMatrix4fv(glGetUniformLocation(containerShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
 
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(0.5f, 0.02f, 0.5f)); // Move the container down slightly
-    model = glm::scale(model, glm::vec3(0.96f, 1.3f, 0.98f)); // Scale the container
+    model = glm::translate(model, glm::vec3(0.5f, 0.02f, 1.0f)); // Move the container down slightly
+    model = glm::scale(model, glm::vec3(1.0f, 1.3f, 2.0f)); // Scale the container
     glUniformMatrix4fv(glGetUniformLocation(containerShaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
-    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // Render as wireframe
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 
@@ -336,6 +374,7 @@ void Render::renderContainer() {
 
 
     glBindVertexArray(container_vao);
-    glDrawElements(GL_TRIANGLES, 24, GL_UNSIGNED_INT, 0);//set 30 as 24 to remove the front wall view
+    glDrawElements(GL_TRIANGLES, 30, GL_UNSIGNED_INT, 0);//set 30 as 24 to remove the front wall view
     glBindVertexArray(0);
 }
+

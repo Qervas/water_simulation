@@ -177,77 +177,29 @@ src/Camera.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/Camera.cpp.s
 .PHONY : src/Camera.cpp.s
 
-src/DFSPHSolver.o: src/DFSPHSolver.cu.o
-.PHONY : src/DFSPHSolver.o
-
-# target to build an object file
-src/DFSPHSolver.cu.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/DFSPHSolver.cu.o
-.PHONY : src/DFSPHSolver.cu.o
-
-src/DFSPHSolver.i: src/DFSPHSolver.cu.i
-.PHONY : src/DFSPHSolver.i
-
-# target to preprocess a source file
-src/DFSPHSolver.cu.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/DFSPHSolver.cu.i
-.PHONY : src/DFSPHSolver.cu.i
-
-src/DFSPHSolver.s: src/DFSPHSolver.cu.s
-.PHONY : src/DFSPHSolver.s
-
-# target to generate assembly for a file
-src/DFSPHSolver.cu.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/DFSPHSolver.cu.s
-.PHONY : src/DFSPHSolver.cu.s
-
-src/MarchingCubes.o: src/MarchingCubes.cpp.o
+src/MarchingCubes.o: src/MarchingCubes.cu.o
 .PHONY : src/MarchingCubes.o
 
 # target to build an object file
-src/MarchingCubes.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/MarchingCubes.cpp.o
-.PHONY : src/MarchingCubes.cpp.o
+src/MarchingCubes.cu.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/MarchingCubes.cu.o
+.PHONY : src/MarchingCubes.cu.o
 
-src/MarchingCubes.i: src/MarchingCubes.cpp.i
+src/MarchingCubes.i: src/MarchingCubes.cu.i
 .PHONY : src/MarchingCubes.i
 
 # target to preprocess a source file
-src/MarchingCubes.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/MarchingCubes.cpp.i
-.PHONY : src/MarchingCubes.cpp.i
+src/MarchingCubes.cu.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/MarchingCubes.cu.i
+.PHONY : src/MarchingCubes.cu.i
 
-src/MarchingCubes.s: src/MarchingCubes.cpp.s
+src/MarchingCubes.s: src/MarchingCubes.cu.s
 .PHONY : src/MarchingCubes.s
 
 # target to generate assembly for a file
-src/MarchingCubes.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/MarchingCubes.cpp.s
-.PHONY : src/MarchingCubes.cpp.s
-
-src/PBDSolver.o: src/PBDSolver.cu.o
-.PHONY : src/PBDSolver.o
-
-# target to build an object file
-src/PBDSolver.cu.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/PBDSolver.cu.o
-.PHONY : src/PBDSolver.cu.o
-
-src/PBDSolver.i: src/PBDSolver.cu.i
-.PHONY : src/PBDSolver.i
-
-# target to preprocess a source file
-src/PBDSolver.cu.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/PBDSolver.cu.i
-.PHONY : src/PBDSolver.cu.i
-
-src/PBDSolver.s: src/PBDSolver.cu.s
-.PHONY : src/PBDSolver.s
-
-# target to generate assembly for a file
-src/PBDSolver.cu.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/PBDSolver.cu.s
-.PHONY : src/PBDSolver.cu.s
+src/MarchingCubes.cu.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/MarchingCubes.cu.s
+.PHONY : src/MarchingCubes.cu.s
 
 src/Particles.o: src/Particles.cu.o
 .PHONY : src/Particles.o
@@ -408,15 +360,9 @@ help:
 	@echo "... src/Camera.o"
 	@echo "... src/Camera.i"
 	@echo "... src/Camera.s"
-	@echo "... src/DFSPHSolver.o"
-	@echo "... src/DFSPHSolver.i"
-	@echo "... src/DFSPHSolver.s"
 	@echo "... src/MarchingCubes.o"
 	@echo "... src/MarchingCubes.i"
 	@echo "... src/MarchingCubes.s"
-	@echo "... src/PBDSolver.o"
-	@echo "... src/PBDSolver.i"
-	@echo "... src/PBDSolver.s"
 	@echo "... src/Particles.o"
 	@echo "... src/Particles.i"
 	@echo "... src/Particles.s"

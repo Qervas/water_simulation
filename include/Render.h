@@ -11,21 +11,21 @@
 #include "SPHParticles.h"
 #include "BaseSolver.h"
 #include "BasicSPHSolver.h"
-#include "DFSPHSolver.h"
-#include "PBDSolver.h"
 #include "SPHSystem.h"
 #include "global.h"
 #include "ShaderUtils.h"
 
+#include "MarchingCubes.cuh"
 #define WIDTH 1920
 #define HEIGHT 1080
 
-enum  fluid_solver { SPH, DFSPH, PBD};
 
 namespace particle_attributes {
 	enum { POSITION, COLOR, SIZE, };
 }
 extern "C" void generate_dots(float3* dot, float3* color, const std::shared_ptr<SPHParticles> particles);
+extern "C" void generateMarchingCubes(float3* vertices, int* indices, const std::shared_ptr<SPHParticles>& particles, 
+								int3 gridSize, float3 mcCellSize, float threshold, float sphCellLength, int* cellStart);
 
 class Render{
 public:
@@ -34,7 +34,7 @@ public:
 
 	void render(float deltaTime);
 	void init();
-	void initSPHSystem(fluid_solver solver);
+	void initSPHSystem();
 	void createVBO(GLuint* vbo, const unsigned int length);
 	void deleteVBO(GLuint* vbo);
 	void renderParticles();
@@ -42,7 +42,10 @@ public:
 	void keyboardEvent();
 	void createContainerMesh();
 	void renderContainer();
-	
+	void renderSurface();
+
+	int numTriangles;
+
 
 
 private:
@@ -55,24 +58,24 @@ private:
 	GLuint container_ebo;
 	GLuint containerShaderProgram;
 
-	GLuint particlesVBO;
-	GLuint particlesColorVBO;
+	GLuint particles_vbo;
+	GLuint particles_color_vbo;
 	GLuint m_particles_program;
-	// const int m_window_h = 700;
+	
+	GLuint surface_vao;
+	GLuint surface_vbo[2];
+	GLuint surface_ebo;
+	GLuint surfaceShaderProgram;
+
 	const int m_fov = 30;
-	const float particle_radius = 0.001f;
-	// view variables
-	float rot[2] = { 0.0f, 0.0f };
-	int mousePos[2] = { -1,-1 };
-	bool mouse_left_down = false;
-	float zoom = 0.3f;
+	const float particle_radius = 0.004f;
 	// state variables
 	int frameId = 0;
 	float totalTime = 0.0f;
 	bool running = false;
 	// particle system variables
 	std::shared_ptr<SPHSystem> pSystem;
-	const float3 spaceSize = make_float3(1.0f, 1.0f, 1.0f);
+	const float3 spaceSize = make_float3(1.0f, 1.0f, 2.0f);
 	const float sphSpacing = 0.02f;  
 	const float sphSmoothingRadius = 2.0f * sphSpacing;
 	const float sphCellLength = 1.01f * sphSmoothingRadius;
@@ -80,11 +83,24 @@ private:
 	const float sphRho0 = 1.0f;
 	const float sphRhoBoundary = 1.4f * sphRho0;
 	const float sphM0 = 76.596750762082e-6f;
-	const float sphStiff = 10.0f;
+	const float sphStiff = 10.0f; //10.0f
 	const float3 sphG = make_float3(0.0f, -9.8f, 0.0f);
-	const float sphVisc = 5e-4f;
+	const float sphVisc = 1e-3f;  //5e-4f
 	const float sphSurfaceTensionIntensity = 0.0001f;
 	const float sphAirPressure = 0.0001f;
 	const int3 cellSize = make_int3(ceil(spaceSize.x / sphCellLength), ceil(spaceSize.y / sphCellLength), ceil(spaceSize.z / sphCellLength));
+	float3 mcCellSize = make_float3(0.004f, 0.004f, 0.004f); 
+	int3 gridSize = make_int3(ceil(spaceSize.x / mcCellSize.x), ceil(spaceSize.y / mcCellSize.y), ceil(spaceSize.z / mcCellSize.z));
 
+
+	DArray<int> cellStart;
+
+	float isolevel = 0.5;
+
+	// MarchingCubes marchingCubes;
+	std::vector<float3> vertices;
+	std::vector<float3> normals;
+	std::vector<uint3> indices;
+
+	// cudaGraphicsResource_t resource_vbo, resource_particles, resources_particle_color;
 };

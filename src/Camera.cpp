@@ -96,7 +96,7 @@ void Camera::processMouseMovement() {
 void Camera::processMouseScroll() {
     double xoffset, yoffset;
     glfwSetScrollCallback(window, scrollCallback);
-
+    
     zoom -= yoffset;
     if (zoom < 1.0f) {
         zoom = 1.0f;

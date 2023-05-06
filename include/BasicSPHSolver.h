@@ -1,7 +1,7 @@
 
 
 #pragma once
-
+#include "BaseSolver.h"
 class BasicSPHSolver: public BaseSolver {
 public:
 	virtual void step(std::shared_ptr<SPHParticles>& fluids, const std::shared_ptr<SPHParticles>& boundaries,

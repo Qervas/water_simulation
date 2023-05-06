@@ -10,7 +10,7 @@
 
 __global__ void generate_dots_CUDA(float3* dot, float3* posColor, float3* pos, float* density, const int num)
 {
-	const unsigned int i = __mul24(blockIdx.x, blockDim.x) + threadIdx.x;
+	const unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
 	if (i >= num) return;
 
 	dot[i] = pos[i];

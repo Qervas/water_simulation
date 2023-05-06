@@ -13,8 +13,8 @@ public:
 		_length(length),
  		d_array([length]() {
 		T* ptr; 
-		CUDA_CALL(cudaMalloc((void**)& ptr, sizeof(T) * length));
-		std::shared_ptr<T> t(new(ptr)T[length], [](T* ptr) {CUDA_CALL(cudaFree(ptr)); });
+		checkCudaErrors(cudaMalloc((void**)& ptr, sizeof(T) * length));
+		std::shared_ptr<T> t(new(ptr)T[length], [](T* ptr) {checkCudaErrors(cudaFree(ptr)); });
  		return t;
 	}()) {
 		this->clear();
@@ -29,7 +29,7 @@ public:
 
 	unsigned int length() const { return _length; }
 	void clear()
-	{ CUDA_CALL(cudaMemset(this->addr(), 0, sizeof(T) * this->length())); }
+	{ checkCudaErrors(cudaMemset(this->addr(), 0, sizeof(T) * this->length())); }
 	
 	~DArray() noexcept { }
 

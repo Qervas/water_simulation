@@ -1,5 +1,3 @@
-
-
 #include <vector>
 #include <memory>
 #include <cuda_runtime.h>
@@ -8,13 +6,15 @@
 #include <thrust/scan.h>
 #include <thrust/fill.h>
 #include <thrust/execution_policy.h>
-#include "CUDAFunctions.cuh"
 #include "DArray.h"
 #include "Particles.h"
 #include "SPHParticles.h"
 #include "BaseSolver.h"
 #include "SPHSystem.h"
+#include "CUDAFunctions.cuh"
 
+// __global__ void countingInCell_CUDA(int* cellStart, int* particle2cell, const unsigned int& num);
+// __global__ void mapParticles2Cells_CUDA(int* particles2cells, float3* pos, const float& cellLength, const int3& cellSize, const unsigned int& num);
 SPHSystem::SPHSystem(
 	std::shared_ptr<SPHParticles>& fluidParticles,
 	std::shared_ptr<SPHParticles>& boundaryParticles,
@@ -76,7 +76,7 @@ __device__ void contributeBoundaryKernel(float* sum_kernel, const int i, const i
 
 __global__ void computeBoundaryMass_CUDA(float* mass, float3* pos, const int num, int* cellStart, const int3 cellSize, const float cellLength, const float rhoB, const float radius)
 {
-	const unsigned int i = __mul24(blockIdx.x, blockDim.x) + threadIdx.x;
+	const unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
 	if (i >= num) return;
 	const auto cellPos = make_int3(pos[i] / cellLength);
 #pragma unroll
@@ -100,9 +100,9 @@ void SPHSystem::neighborSearch(const std::shared_ptr<SPHParticles> &particles, D
 {
 	int num = particles->size();
 	mapParticles2Cells_CUDA <<<(num - 1) / block_size + 1, block_size >>> (particles->getParticle2Cell(), particles->getPosPtr(), _sphCellLength, _cellSize, num);
-	CUDA_CALL(cudaMemcpy(bufferInt.addr(), particles->getParticle2Cell(), sizeof(int) * num, cudaMemcpyDeviceToDevice));
+	checkCudaErrors(cudaMemcpy(bufferInt.addr(), particles->getParticle2Cell(), sizeof(int) * num, cudaMemcpyDeviceToDevice));
 	thrust::sort_by_key(thrust::device, bufferInt.addr(), bufferInt.addr() + num, particles->getPosPtr());
-	CUDA_CALL(cudaMemcpy(bufferInt.addr(), particles->getParticle2Cell(), sizeof(int) * num, cudaMemcpyDeviceToDevice));
+	checkCudaErrors(cudaMemcpy(bufferInt.addr(), particles->getParticle2Cell(), sizeof(int) * num, cudaMemcpyDeviceToDevice));
 	thrust::sort_by_key(thrust::device, bufferInt.addr(), bufferInt.addr() + num, particles->getVelPtr());
 
 	thrust::fill(thrust::device, cellStart.addr(), cellStart.addr() + _cellSize.x * _cellSize.y * _cellSize.z + 1, 0);
@@ -114,9 +114,9 @@ void SPHSystem::neighborSearch(const std::shared_ptr<SPHParticles> &particles, D
 float SPHSystem::step()
 {
 	cudaEvent_t start, stop;
-	CUDA_CALL(cudaEventCreate(&start));
-	CUDA_CALL(cudaEventCreate(&stop));
-	CUDA_CALL(cudaEventRecord(start, 0));
+	checkCudaErrors(cudaEventCreate(&start));
+	checkCudaErrors(cudaEventCreate(&stop));
+	checkCudaErrors(cudaEventRecord(start, 0));
 
 	neighborSearch(_fluids, cellStartFluid);
 	try {
@@ -134,10 +134,10 @@ float SPHSystem::step()
 	}
 
 	float milliseconds;
-	CUDA_CALL(cudaEventRecord(stop, 0));
-	CUDA_CALL(cudaEventSynchronize(stop));
-	CUDA_CALL(cudaEventElapsedTime(&milliseconds, start, stop));
-	CUDA_CALL(cudaEventDestroy(start));
-	CUDA_CALL(cudaEventDestroy(stop));
+	checkCudaErrors(cudaEventRecord(stop, 0));
+	checkCudaErrors(cudaEventSynchronize(stop));
+	checkCudaErrors(cudaEventElapsedTime(&milliseconds, start, stop));
+	checkCudaErrors(cudaEventDestroy(start));
+	checkCudaErrors(cudaEventDestroy(stop));
 	return milliseconds;
 }

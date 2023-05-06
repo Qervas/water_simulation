@@ -41,7 +41,7 @@ __global__ void computeDensity_CUDA(float* density, const int num,
 	float3* posBoundary, float* massBoundary, int* cellStartBoundary,
 	const int3 cellSize, const float cellLength, const float radius)
 {
-	const unsigned int i = __mul24(blockIdx.x, blockDim.x) + threadIdx.x;
+	const unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
 	if (i >= num) return;
 	__syncthreads();
 #pragma unroll
@@ -69,7 +69,7 @@ void BasicSPHSolver::computeDensity(std::shared_ptr<SPHParticles>& fluids, const
 
 __global__ void enforceBoundary_CUDA(float3* pos, float3* vel, const int num, const float3 spaceSize)
 {
-	const unsigned int i = __mul24(blockIdx.x, blockDim.x) + threadIdx.x;
+	const unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
 	if (i >= num) return;
 	if (pos[i].x <= spaceSize.x * .00f) { pos[i].x = spaceSize.x * .00f;	vel[i].x = fmaxf(vel[i].x, 0.0f); }
 	if (pos[i].x >= spaceSize.x * .99f) { pos[i].x = spaceSize.x * .99f;	vel[i].x = fminf(vel[i].x, 0.0f); }
@@ -87,7 +87,7 @@ void BasicSPHSolver::advect(std::shared_ptr<SPHParticles>& fluids, float dt, flo
 
 __global__ void computePressure_CUDA(float* pressure, float* density, const int num, const float rho0, const float stiff)
 {
-	const unsigned int i = __mul24(blockIdx.x, blockDim.x) + threadIdx.x;
+	const unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
 	if (i >= num) return;
 	pressure[i] = stiff * (powf((density[i] / rho0), 7) - 1.0f);
 	//clamp
@@ -127,7 +127,7 @@ __global__ void pressureForce_CUDA(float3* velFluid, float3* posFluid, float* ma
 	float3* posBoundary, float* massBoundary, int* cellStartBoundary,
 	const int3 cellSize, const float cellLength, const float radius, const float dt)
 {
-	const unsigned int i = __mul24(blockIdx.x, blockDim.x) + threadIdx.x;
+	const unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
 	if (i >= num) return;
 	auto a = make_float3(0.0f);
 	__syncthreads();
@@ -177,7 +177,7 @@ __device__ void contributeViscosity(float3* a, const int i, float3* pos, float3*
 __global__ void viscosity_CUDA(float3* deltaV, float3* vel, float3* pos,
                                float* mass, const int num, int* cellStart, const int3 cellSize,
                                const float cellLength, const float rho0, const float radius, const float visc, const float dt) {
-	const unsigned int i = __mul24(blockIdx.x, blockDim.x) + threadIdx.x;
+	const unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
 	if (i >= num) return;
 	auto a = make_float3(0.0f);
 	__syncthreads();
@@ -284,7 +284,7 @@ __device__ void contributeColorGrad_boundary(float3& numerator, float& denominat
 __global__ void computeColorGrad_CUDA(float3* colorGrad, float3* posFluid, float* massFluid, const int num, int* cellStartFluid, const int3 cellSize,
                                       float3* posBoundary, float* massBoudnary, int* cellStartBoundary, const float cellLength, const float radius, const float rho0, const float rhoB)
 {
-	const unsigned int i = __mul24(blockIdx.x, blockDim.x) + threadIdx.x;
+	const unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
 	if (i >= num) return;
 	auto c_g = make_float3(0.0f);
 	auto denominator = 0.0f;
@@ -338,7 +338,7 @@ __global__ void surfaceTensionAndAirPressure_CUDA(float3* vel, float3* pos_fluid
                                                   float3* color_grad, const int num, int* cellStart, const int3 cellSize, const float cellLength, const float radius, const float dt,
                                                   const float rho0, const float color_energy_coefficient, const float airPressure)
 {
-	const unsigned int i = __mul24(blockIdx.x, blockDim.x) + threadIdx.x;
+	const unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
 	if (i >= num) return;
 	auto a = make_float3(0.0f);
 #pragma unroll

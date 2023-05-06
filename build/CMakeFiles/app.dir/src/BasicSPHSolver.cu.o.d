@@ -788,7 +788,7 @@ CMakeFiles/app.dir/src/BasicSPHSolver.cu.o : /home/franktudor/CPP-Fluid-Particle
     /usr/local/cuda/include/thrust/system/detail/sequential/unique_by_key.h \
     /usr/local/cuda/include/thrust/system/cuda/execution_policy.h \
     /usr/local/cuda-samples/Common/helper_math.h \
-    /home/franktudor/CPP-Fluid-Particles/src/CUDAFunctions.cuh \
+    /home/franktudor/CPP-Fluid-Particles/include/CUDAFunctions.cuh \
     /home/franktudor/CPP-Fluid-Particles/include/global.h \
     /home/franktudor/CPP-Fluid-Particles/include/DArray.h \
     /home/franktudor/CPP-Fluid-Particles/include/Particles.h \
