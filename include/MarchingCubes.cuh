@@ -5,7 +5,7 @@
 #include "SPHParticles.h"
 
 
-__global__ void generateVerticesKernel(std::shared_ptr<SPHParticles> particles, float3* vertices, uint3* indices, 
+__global__ void generateVerticesIndicesKernel(std::shared_ptr<SPHParticles> particles, float3* vertices, uint3* indices, 
                                     float3* posPtr,const float* density, const int* particle2Cell, int num);
 __global__ void generateNormalsKernel(float3* normals, const float3* vertices, const uint3* indices, int num);
 __global__ void countVerticesKernel(const uint3* indices, int* numVertices, int numTriangles) ;
@@ -38,5 +38,10 @@ private:
     std::vector<float3> h_normals;
 
     int numVertices;
+
+    //CUDA variables
+    float3* d_vertices;
+    uint3* d_indices;
+
 };
 

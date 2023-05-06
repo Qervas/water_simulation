@@ -6,7 +6,7 @@
 #include <device_atomic_functions.h>
 #include <helper_math.h>
 
-__device__ int d_numParticles;
+__device__ int d_numParticles = 0;
 
 __device__ float d_isolevel = 0.0f; //some tuned value between density max and min
 __device__ float d_sphSpacing = 0.02f;  
@@ -22,72 +22,72 @@ inline __device__ float cubic_spline_kernel(const float r, const float radius){
 
 MarchingCubes::MarchingCubes(std::shared_ptr<SPHParticles> particles, float isolevel, float* density,
                             int* particle2Cell)
-    : h_particles(particles), h_isolevel(isolevel),  h_density(density),h_particle2Cell(particle2Cell) {}
+    : h_particles(particles), h_isolevel(isolevel),  h_density(density),h_particle2Cell(particle2Cell) {
 
-MarchingCubes::~MarchingCubes() {}
+        h_numParticles = h_particles->size();
+        cudaMemcpy(&d_numParticles, &h_numParticles, sizeof(int), cudaMemcpyHostToDevice);
+        cudaMemcpy(&d_isolevel, &h_isolevel, sizeof(float), cudaMemcpyHostToDevice);
+        cudaMalloc(&d_vertices, h_numParticles * 12 * sizeof(float3));
+        cudaMalloc(&d_indices, h_numParticles * 5 * sizeof(uint3));
+
+    }
+
+MarchingCubes::~MarchingCubes() {
+    cudaFree(d_indices);
+    cudaFree(d_vertices);
+
+}
 
 void MarchingCubes::generateMesh_CUDA() {
-    h_numParticles = h_particles->size();
-    cudaMemcpy(&d_numParticles, &h_numParticles, sizeof(int), cudaMemcpyHostToDevice);
-    cudaMemcpy(&d_isolevel, &h_isolevel, sizeof(float), cudaMemcpyHostToDevice);
-    // Allocate device memory for vertices
-    float3* d_vertices;
-    cudaMalloc(&d_vertices, h_numParticles * 12 * sizeof(float3));
 
-    // Allocate device memory for indices
-    uint3* d_indices;
-    cudaMalloc(&d_indices, h_numParticles * 5 * sizeof(uint3));
-
-    // Call the generateVerticesKernel
+    // Call the generateVerticesIndicesKernel
     int blockSize = 256;
     int gridSize = (h_numParticles + blockSize - 1) / blockSize;
     
-    generateVerticesKernel<<<gridSize, blockSize>>>(h_particles, d_vertices, d_indices, h_particles->getPosPtr(),
+    generateVerticesIndicesKernel<<<gridSize, blockSize>>>(h_particles, d_vertices, d_indices, h_particles->getPosPtr(),
                                                     h_density, h_particle2Cell, h_numParticles);
-    cudaDeviceSynchronize();
+    // cudaDeviceSynchronize();
 
-    // Allocate device memory for numVerticesGenerated
-    int* d_numVerticesGenerated;
-    cudaMalloc(&d_numVerticesGenerated, sizeof(int));
-    cudaMemset(d_numVerticesGenerated, 0, sizeof(int));
+    // // Allocate device memory for numVerticesGenerated
+    // int* d_numVerticesGenerated;
+    // cudaMalloc(&d_numVerticesGenerated, sizeof(int));
+    // cudaMemset(d_numVerticesGenerated, 0, sizeof(int));
 
-    // Call the countVerticesKernel
-    int numTriangles = h_numParticles * 5;
-    gridSize = (numTriangles + blockSize - 1) / blockSize;
-    countVerticesKernel<<<gridSize, blockSize>>>(d_indices, d_numVerticesGenerated, numTriangles);
-    cudaDeviceSynchronize();
+    // // Call the countVerticesKernel
+    // int numTriangles = h_numParticles * 5;
+    // gridSize = (numTriangles + blockSize - 1) / blockSize;
+    // countVerticesKernel<<<gridSize, blockSize>>>(d_indices, d_numVerticesGenerated, numTriangles);
+    // cudaDeviceSynchronize();
 
-    // Copy the number of vertices generated from device memory to host memory
-    cudaMemcpy(&numVertices, d_numVerticesGenerated, sizeof(int), cudaMemcpyDeviceToHost);
+    // // Copy the number of vertices generated from device memory to host memory
+    // cudaMemcpy(&numVertices, d_numVerticesGenerated, sizeof(int), cudaMemcpyDeviceToHost);
 
-    // Resize the host-side vectors
-    h_vertices.resize(numVertices);
+    // // Resize the host-side vectors
+    // h_vertices.resize(numVertices);
 
-    // Copy the vertices to the host-side vectors
-    cudaMemcpy(h_vertices.data(), d_vertices, numVertices * sizeof(float3), cudaMemcpyDeviceToHost);
+    // // Copy the vertices to the host-side vectors
+    // cudaMemcpy(h_vertices.data(), d_vertices, numVertices * sizeof(float3), cudaMemcpyDeviceToHost);
 
-    // =============normals===================
-    // Allocate device memory for normals
-    float3* d_normals;
-    cudaMalloc(&d_normals, numVertices * sizeof(float3));
+    // // =============normals===================
+    // // Allocate device memory for normals
+    // float3* d_normals;
+    // cudaMalloc(&d_normals, numVertices * sizeof(float3));
 
-    // Call the generateNormalsKernel
-    // int blockSize = 256;
-    gridSize = (numVertices + blockSize - 1) / blockSize;
-    generateNormalsKernel<<<gridSize, blockSize>>>(d_normals, d_vertices, d_indices, numVertices);
-    cudaDeviceSynchronize();
+    // // Call the generateNormalsKernel
+    // // int blockSize = 256;
+    // gridSize = (numVertices + blockSize - 1) / blockSize;
+    // generateNormalsKernel<<<gridSize, blockSize>>>(d_normals, d_vertices, d_indices, numVertices);
+    // cudaDeviceSynchronize();
 
-    // Resize the host-side vectors
-    h_normals.resize(numVertices);
+    // // Resize the host-side vectors
+    // h_normals.resize(numVertices);
 
-    // Copy the generated normals from device memory to host memory
-    cudaMemcpy(h_normals.data(), d_normals, numVertices * sizeof(float3), cudaMemcpyDeviceToHost);
+    // // Copy the generated normals from device memory to host memory
+    // cudaMemcpy(h_normals.data(), d_normals, numVertices * sizeof(float3), cudaMemcpyDeviceToHost);
 
     // Free device memory
-    cudaFree(d_vertices);
-    cudaFree(d_indices);
-    cudaFree(d_normals);
-    cudaFree(d_numVerticesGenerated);
+    // cudaFree(d_normals);
+    // cudaFree(d_numVerticesGenerated);
 }
 
 
@@ -121,9 +121,10 @@ __device__ int findSharedVertexIndex(const float3* vertices, float3 targetVertex
 }
 
 
-__global__ void generateVerticesKernel(std::shared_ptr<SPHParticles> particles, float3* vertices, uint3* indices,
+__global__ void generateVerticesIndicesKernel(std::shared_ptr<SPHParticles> particles, float3* vertices, uint3* indices,
                                     float3* posPtr,const float* density, const int* particle2Cell, int num) {
     const unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
+    printf("%d\n ", i);
     if (i >= num) return;
 
     // Calculate the cell position

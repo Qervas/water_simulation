@@ -12,7 +12,7 @@
 		"environment": [],
 		"externalConsole": false,
 		"MIMode": "gdb",
-		"miDebuggerPath": "/home/franktudor/Application/Library/CUDA/bin/cuda-gdb",
+		"miDebuggerPath": "/usr/local/cuda/bin/cuda-gdb",
 		"setupCommands": [
 		  {
 			"description": "Enable pretty-printing for gdb",

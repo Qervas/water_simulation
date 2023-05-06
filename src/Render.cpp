@@ -51,7 +51,7 @@ void Render::render(float deltaTime){
 		oneStep();
 	}
 	camera.update(deltaTime);
-	renderParticles();
+	// renderParticles();
 	renderContainer();
 	renderSurface();
 	keyboardEvent();
@@ -62,8 +62,8 @@ void Render::init(){
 	createVBO(&particles_vbo, sizeof(float3) * pSystem->size());
 	createVBO(&particles_color_vbo, sizeof(float3) * pSystem->size());
 	
-	// marchingCubes = MarchingCubes(pSystem->getFluids(), isolevel, pSystem->getFluids()->getDensityPtr(),
-	// 							pSystem->getFluids()->getParticle2Cell());
+	marchingCubes = MarchingCubes(pSystem->getFluids(), isolevel, pSystem->getFluids()->getDensityPtr(),
+								pSystem->getFluids()->getParticle2Cell());
 
 	//init surface
 	glGenVertexArrays(1, &surface_vao);
@@ -212,7 +212,7 @@ void Render::renderSurface(){
 	
 
 
-	// marchingCubes.generateMesh_CUDA();
+	marchingCubes.generateMesh_CUDA();
 	// vertices = marchingCubes.getVertices();
 	// normals = marchingCubes.getNormals();
 	// indices = marchingCubes.getIndices();

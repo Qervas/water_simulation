@@ -6,10 +6,6 @@
 static inline __device__ float cubic_spline_kernel(const float r, const float radius)
 {
 	const auto q = 2.0f * fabs(r) / radius;
-	//return (q < EPSILON) ? 0.0f :
-	//	((q) <= 1.0f ? (powf(2.0f - q, 3) - 4.0f * powf(1.0f - q, 3)) :
-	//	(q) <= 2.0f ? (powf(2.0f - q, 3)) :
-	//		0.0f) / (4.0f * PI * powf(radius, 3));
 	if (q > 2.0f || q < EPSILON) return 0.0f;
 	else {
 		const auto a = 0.25f / (PI * radius * radius * radius);
@@ -20,13 +16,8 @@ static inline __device__ float cubic_spline_kernel(const float r, const float ra
 static inline __device__ float3 cubic_spline_kernel_gradient(const float3 r, const float radius)
 {
 	const auto q = 2.0f * length(r) / radius;
-	//return
-	//	((q) <= 1.0f ? -(3.0f * (2.0f - q) * (2.0f - q) - 12.0f * (1.0f - q) * (1.0f - q)) :
-	//	(q) <= 2.0f ? -(3.0f * (2.0f - q) * (2.0f - q)) :
-	//		0.0f) / (2.0f * PI * powf(radius, 4)) * r / fmaxf(EPSILON, length(r));
 	if (q > 2.0f) return make_float3(0.0f);
 	else {
-		//const auto a = r / ((length(r) + EPSILON) * 2.0f * PI * radius * radius * radius * radius);
 		const auto a = r / (PI * (q + EPSILON) * radius * radius * radius * radius * radius);
 		return a * ((q > 1.0f) ? ((12.0f - 3.0f * q) * q - 12.0f) : ((9.0f * q - 12.0f) * q));
 	}
@@ -46,7 +37,6 @@ static __global__ void countingInCell_CUDA(int* cellStart, int* particle2cell, c
 
 static inline __device__ int particlePos2cellIdx(const int3 pos, const int3 cellSize)
 {
-	// return (cellSize.x*cellSize.y*cellSize.z) if the particle is out of the grid
 	return (pos.x >= 0 && pos.x < cellSize.x && pos.y >= 0 && pos.y < cellSize.y && pos.z >= 0 && pos.z < cellSize.z) ?
 		(((pos.x * cellSize.y) + pos.y) * cellSize.z + pos.z)
 		: (cellSize.x * cellSize.y * cellSize.z);
@@ -60,16 +50,9 @@ static __global__ void mapParticles2Cells_CUDA(int* particles2cells, float3* pos
 	return;
 }
 
-// smoothing kernel in [2013][SIGGRAPH ASIA][Versatile Surface Tension and Adhesion for SPH Fluids].
-// it's already been 3D spherical normalized.
 inline __device__ float3 surface_tension_kernel_gradient(float3 r, const float radius)
 {
 	const auto x = length(r);
-	//return
-	//	(x < EPSILON) ? make_float3(0.0f) : (
-	//		2.0f * x <= radius ? 2.0f * powf((radius - x), 3) * powf(x, 3) - 0.0156f * powf(radius, 6) :
-	//		x <= radius ? powf((radius - x), 3) * powf(x, 3) :
-	//		0.0f) * 136.0241f / (PI * powf(radius, 9)) * -r / fmaxf(EPSILON, x);
 	if (x > radius || x < EPSILON) return make_float3(0.0f);
 	else {
 		auto cube = [](float x) {return x * x * x; };

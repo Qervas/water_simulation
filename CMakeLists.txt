@@ -12,7 +12,7 @@ set(CMAKE_CUDA_COMPILER "${CUDA_HOME}/bin/nvcc")
 set(CUDAToolkit_ROOT ${CUDA_HOME})
 set(CMAKE_CUDA_ARCHITECTURES 60)
 
-set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -gencode arch=compute_50,code=sm_50 \
+set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -G -gencode arch=compute_50,code=sm_50 \
 					--expt-extended-lambda -use_fast_math -Xcompiler -Wall,-Wextra, \
 					-fpermissive \
 					")
@@ -27,7 +27,9 @@ include_directories(include)
 include_directories(${CUDA_HOME}/include /usr/local/cuda-samples/Common)
 link_directories(${CUDA_HOME}/lib64 /usr/local/cuda-samples/Common/lib/x64/)
 
+set(CMAKE_BUILD_TYPE Debug)
 
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
 
 # add all source files in "src" folder
 file(GLOB SOURCES "src/*.cpp" "src/*.cu")
