@@ -1,4 +1,4 @@
-# Install script for directory: /home/franktudor/CPP-Fluid-Particles
+# Install script for directory: /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/franktudor/CPP-Fluid-Particles/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

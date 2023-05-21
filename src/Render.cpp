@@ -51,9 +51,9 @@ void Render::render(float deltaTime){
 		oneStep();
 	}
 	camera.update(deltaTime);
-	// renderParticles();
+	renderParticles();
 	renderContainer();
-	renderSurface();
+	// renderSurface();
 	keyboardEvent();
 }
 
@@ -62,8 +62,8 @@ void Render::init(){
 	createVBO(&particles_vbo, sizeof(float3) * pSystem->size());
 	createVBO(&particles_color_vbo, sizeof(float3) * pSystem->size());
 	
-	marchingCubes = MarchingCubes(pSystem->getFluids(), isolevel, pSystem->getFluids()->getDensityPtr(),
-								pSystem->getFluids()->getParticle2Cell());
+	// marchingCubes = MarchingCubes(pSystem->getFluids(), isolevel, pSystem->getFluids()->getDensityPtr(),
+	// 							pSystem->getFluids()->getParticle2Cell());
 
 	//init surface
 	glGenVertexArrays(1, &surface_vao);
@@ -139,15 +139,9 @@ void Render::createVBO(GLuint* vbo, const unsigned int length) {
 	// register buffer object with CUDA
 	checkCudaErrors(cudaGLRegisterBufferObject(*vbo));
 
-	// checkCudaErrors(cudaGraphicsGLRegisterBuffer(&resource_vbo, *vbo, cudaGraphicsMapFlagsNone));
-	// checkCudaErrors(cudaGraphicsMapResources(1, &resource_particles, 0));
-	// checkCudaErrors(cudaGraphicsMapResources(1, &resources_particle_color, 0));
 }
 
 void Render::deleteVBO(GLuint* vbo) {
-	// checkCudaErrors(cudaGraphicsUnregisterResource(resource_vbo));
-	// checkCudaErrors(cudaGraphicsUnregisterResource(resource_particles));
-	// checkCudaErrors(cudaGraphicsUnregisterResource(resources_particle_color));
 
 	glBindBuffer(1, *vbo);
 	glDeleteBuffers(1, vbo);
@@ -208,11 +202,11 @@ void Render::renderParticles() {
 }
 
 void Render::renderSurface(){
-	glUseProgram(surfaceShaderProgram);
+	// glUseProgram(surfaceShaderProgram);
 	
 
 
-	marchingCubes.generateMesh_CUDA();
+	// marchingCubes.generateMesh_CUDA();
 	// vertices = marchingCubes.getVertices();
 	// normals = marchingCubes.getNormals();
 	// indices = marchingCubes.getIndices();
@@ -233,7 +227,7 @@ void Render::renderSurface(){
 
     // glDrawElements(GL_TRIANGLES, indices.size() * 3, GL_UNSIGNED_INT, 0);
 
-    glBindVertexArray(0);
+    // glBindVertexArray(0);
 }
 
 void Render::oneStep() {

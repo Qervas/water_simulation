@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/franktudor/CPP-Fluid-Particles
+CMAKE_SOURCE_DIR = /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/franktudor/CPP-Fluid-Particles/build
+CMAKE_BINARY_DIR = /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/app.dir/depend.make
@@ -71,10 +71,10 @@ include CMakeFiles/app.dir/flags.make
 
 CMakeFiles/app.dir/src/BasicSPHSolver.cu.o: CMakeFiles/app.dir/flags.make
 CMakeFiles/app.dir/src/BasicSPHSolver.cu.o: CMakeFiles/app.dir/includes_CUDA.rsp
-CMakeFiles/app.dir/src/BasicSPHSolver.cu.o: /home/franktudor/CPP-Fluid-Particles/src/BasicSPHSolver.cu
+CMakeFiles/app.dir/src/BasicSPHSolver.cu.o: /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/BasicSPHSolver.cu
 CMakeFiles/app.dir/src/BasicSPHSolver.cu.o: CMakeFiles/app.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/franktudor/CPP-Fluid-Particles/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CUDA object CMakeFiles/app.dir/src/BasicSPHSolver.cu.o"
-	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/app.dir/src/BasicSPHSolver.cu.o -MF CMakeFiles/app.dir/src/BasicSPHSolver.cu.o.d -x cu -c /home/franktudor/CPP-Fluid-Particles/src/BasicSPHSolver.cu -o CMakeFiles/app.dir/src/BasicSPHSolver.cu.o
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CUDA object CMakeFiles/app.dir/src/BasicSPHSolver.cu.o"
+	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler -ccbin=/home/frankyin/Applications/gcc-12.2.0/build//bin/gcc $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/app.dir/src/BasicSPHSolver.cu.o -MF CMakeFiles/app.dir/src/BasicSPHSolver.cu.o.d -x cu -c /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/BasicSPHSolver.cu -o CMakeFiles/app.dir/src/BasicSPHSolver.cu.o
 
 CMakeFiles/app.dir/src/BasicSPHSolver.cu.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CUDA source to CMakeFiles/app.dir/src/BasicSPHSolver.cu.i"
@@ -85,25 +85,25 @@ CMakeFiles/app.dir/src/BasicSPHSolver.cu.s: cmake_force
 	$(CMAKE_COMMAND) -E cmake_unimplemented_variable CMAKE_CUDA_CREATE_ASSEMBLY_SOURCE
 
 CMakeFiles/app.dir/src/Camera.cpp.o: CMakeFiles/app.dir/flags.make
-CMakeFiles/app.dir/src/Camera.cpp.o: /home/franktudor/CPP-Fluid-Particles/src/Camera.cpp
+CMakeFiles/app.dir/src/Camera.cpp.o: /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/Camera.cpp
 CMakeFiles/app.dir/src/Camera.cpp.o: CMakeFiles/app.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/franktudor/CPP-Fluid-Particles/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/app.dir/src/Camera.cpp.o"
-	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/app.dir/src/Camera.cpp.o -MF CMakeFiles/app.dir/src/Camera.cpp.o.d -o CMakeFiles/app.dir/src/Camera.cpp.o -c /home/franktudor/CPP-Fluid-Particles/src/Camera.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/app.dir/src/Camera.cpp.o"
+	/home/frankyin/Applications/gcc-12.2.0/build//bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/app.dir/src/Camera.cpp.o -MF CMakeFiles/app.dir/src/Camera.cpp.o.d -o CMakeFiles/app.dir/src/Camera.cpp.o -c /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/Camera.cpp
 
 CMakeFiles/app.dir/src/Camera.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/app.dir/src/Camera.cpp.i"
-	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/franktudor/CPP-Fluid-Particles/src/Camera.cpp > CMakeFiles/app.dir/src/Camera.cpp.i
+	/home/frankyin/Applications/gcc-12.2.0/build//bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/Camera.cpp > CMakeFiles/app.dir/src/Camera.cpp.i
 
 CMakeFiles/app.dir/src/Camera.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/app.dir/src/Camera.cpp.s"
-	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/franktudor/CPP-Fluid-Particles/src/Camera.cpp -o CMakeFiles/app.dir/src/Camera.cpp.s
+	/home/frankyin/Applications/gcc-12.2.0/build//bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/Camera.cpp -o CMakeFiles/app.dir/src/Camera.cpp.s
 
 CMakeFiles/app.dir/src/MarchingCubes.cu.o: CMakeFiles/app.dir/flags.make
 CMakeFiles/app.dir/src/MarchingCubes.cu.o: CMakeFiles/app.dir/includes_CUDA.rsp
-CMakeFiles/app.dir/src/MarchingCubes.cu.o: /home/franktudor/CPP-Fluid-Particles/src/MarchingCubes.cu
+CMakeFiles/app.dir/src/MarchingCubes.cu.o: /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/MarchingCubes.cu
 CMakeFiles/app.dir/src/MarchingCubes.cu.o: CMakeFiles/app.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/franktudor/CPP-Fluid-Particles/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CUDA object CMakeFiles/app.dir/src/MarchingCubes.cu.o"
-	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/app.dir/src/MarchingCubes.cu.o -MF CMakeFiles/app.dir/src/MarchingCubes.cu.o.d -x cu -c /home/franktudor/CPP-Fluid-Particles/src/MarchingCubes.cu -o CMakeFiles/app.dir/src/MarchingCubes.cu.o
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CUDA object CMakeFiles/app.dir/src/MarchingCubes.cu.o"
+	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler -ccbin=/home/frankyin/Applications/gcc-12.2.0/build//bin/gcc $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/app.dir/src/MarchingCubes.cu.o -MF CMakeFiles/app.dir/src/MarchingCubes.cu.o.d -x cu -c /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/MarchingCubes.cu -o CMakeFiles/app.dir/src/MarchingCubes.cu.o
 
 CMakeFiles/app.dir/src/MarchingCubes.cu.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CUDA source to CMakeFiles/app.dir/src/MarchingCubes.cu.i"
@@ -115,10 +115,10 @@ CMakeFiles/app.dir/src/MarchingCubes.cu.s: cmake_force
 
 CMakeFiles/app.dir/src/Particles.cu.o: CMakeFiles/app.dir/flags.make
 CMakeFiles/app.dir/src/Particles.cu.o: CMakeFiles/app.dir/includes_CUDA.rsp
-CMakeFiles/app.dir/src/Particles.cu.o: /home/franktudor/CPP-Fluid-Particles/src/Particles.cu
+CMakeFiles/app.dir/src/Particles.cu.o: /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/Particles.cu
 CMakeFiles/app.dir/src/Particles.cu.o: CMakeFiles/app.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/franktudor/CPP-Fluid-Particles/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CUDA object CMakeFiles/app.dir/src/Particles.cu.o"
-	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/app.dir/src/Particles.cu.o -MF CMakeFiles/app.dir/src/Particles.cu.o.d -x cu -c /home/franktudor/CPP-Fluid-Particles/src/Particles.cu -o CMakeFiles/app.dir/src/Particles.cu.o
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CUDA object CMakeFiles/app.dir/src/Particles.cu.o"
+	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler -ccbin=/home/frankyin/Applications/gcc-12.2.0/build//bin/gcc $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/app.dir/src/Particles.cu.o -MF CMakeFiles/app.dir/src/Particles.cu.o.d -x cu -c /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/Particles.cu -o CMakeFiles/app.dir/src/Particles.cu.o
 
 CMakeFiles/app.dir/src/Particles.cu.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CUDA source to CMakeFiles/app.dir/src/Particles.cu.i"
@@ -129,25 +129,25 @@ CMakeFiles/app.dir/src/Particles.cu.s: cmake_force
 	$(CMAKE_COMMAND) -E cmake_unimplemented_variable CMAKE_CUDA_CREATE_ASSEMBLY_SOURCE
 
 CMakeFiles/app.dir/src/Render.cpp.o: CMakeFiles/app.dir/flags.make
-CMakeFiles/app.dir/src/Render.cpp.o: /home/franktudor/CPP-Fluid-Particles/src/Render.cpp
+CMakeFiles/app.dir/src/Render.cpp.o: /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/Render.cpp
 CMakeFiles/app.dir/src/Render.cpp.o: CMakeFiles/app.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/franktudor/CPP-Fluid-Particles/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/app.dir/src/Render.cpp.o"
-	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/app.dir/src/Render.cpp.o -MF CMakeFiles/app.dir/src/Render.cpp.o.d -o CMakeFiles/app.dir/src/Render.cpp.o -c /home/franktudor/CPP-Fluid-Particles/src/Render.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/app.dir/src/Render.cpp.o"
+	/home/frankyin/Applications/gcc-12.2.0/build//bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/app.dir/src/Render.cpp.o -MF CMakeFiles/app.dir/src/Render.cpp.o.d -o CMakeFiles/app.dir/src/Render.cpp.o -c /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/Render.cpp
 
 CMakeFiles/app.dir/src/Render.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/app.dir/src/Render.cpp.i"
-	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/franktudor/CPP-Fluid-Particles/src/Render.cpp > CMakeFiles/app.dir/src/Render.cpp.i
+	/home/frankyin/Applications/gcc-12.2.0/build//bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/Render.cpp > CMakeFiles/app.dir/src/Render.cpp.i
 
 CMakeFiles/app.dir/src/Render.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/app.dir/src/Render.cpp.s"
-	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/franktudor/CPP-Fluid-Particles/src/Render.cpp -o CMakeFiles/app.dir/src/Render.cpp.s
+	/home/frankyin/Applications/gcc-12.2.0/build//bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/Render.cpp -o CMakeFiles/app.dir/src/Render.cpp.s
 
 CMakeFiles/app.dir/src/SPHSystem.cu.o: CMakeFiles/app.dir/flags.make
 CMakeFiles/app.dir/src/SPHSystem.cu.o: CMakeFiles/app.dir/includes_CUDA.rsp
-CMakeFiles/app.dir/src/SPHSystem.cu.o: /home/franktudor/CPP-Fluid-Particles/src/SPHSystem.cu
+CMakeFiles/app.dir/src/SPHSystem.cu.o: /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/SPHSystem.cu
 CMakeFiles/app.dir/src/SPHSystem.cu.o: CMakeFiles/app.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/franktudor/CPP-Fluid-Particles/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CUDA object CMakeFiles/app.dir/src/SPHSystem.cu.o"
-	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/app.dir/src/SPHSystem.cu.o -MF CMakeFiles/app.dir/src/SPHSystem.cu.o.d -x cu -c /home/franktudor/CPP-Fluid-Particles/src/SPHSystem.cu -o CMakeFiles/app.dir/src/SPHSystem.cu.o
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CUDA object CMakeFiles/app.dir/src/SPHSystem.cu.o"
+	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler -ccbin=/home/frankyin/Applications/gcc-12.2.0/build//bin/gcc $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/app.dir/src/SPHSystem.cu.o -MF CMakeFiles/app.dir/src/SPHSystem.cu.o.d -x cu -c /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/SPHSystem.cu -o CMakeFiles/app.dir/src/SPHSystem.cu.o
 
 CMakeFiles/app.dir/src/SPHSystem.cu.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CUDA source to CMakeFiles/app.dir/src/SPHSystem.cu.i"
@@ -158,39 +158,39 @@ CMakeFiles/app.dir/src/SPHSystem.cu.s: cmake_force
 	$(CMAKE_COMMAND) -E cmake_unimplemented_variable CMAKE_CUDA_CREATE_ASSEMBLY_SOURCE
 
 CMakeFiles/app.dir/src/ShaderUtils.cpp.o: CMakeFiles/app.dir/flags.make
-CMakeFiles/app.dir/src/ShaderUtils.cpp.o: /home/franktudor/CPP-Fluid-Particles/src/ShaderUtils.cpp
+CMakeFiles/app.dir/src/ShaderUtils.cpp.o: /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/ShaderUtils.cpp
 CMakeFiles/app.dir/src/ShaderUtils.cpp.o: CMakeFiles/app.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/franktudor/CPP-Fluid-Particles/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/app.dir/src/ShaderUtils.cpp.o"
-	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/app.dir/src/ShaderUtils.cpp.o -MF CMakeFiles/app.dir/src/ShaderUtils.cpp.o.d -o CMakeFiles/app.dir/src/ShaderUtils.cpp.o -c /home/franktudor/CPP-Fluid-Particles/src/ShaderUtils.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/app.dir/src/ShaderUtils.cpp.o"
+	/home/frankyin/Applications/gcc-12.2.0/build//bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/app.dir/src/ShaderUtils.cpp.o -MF CMakeFiles/app.dir/src/ShaderUtils.cpp.o.d -o CMakeFiles/app.dir/src/ShaderUtils.cpp.o -c /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/ShaderUtils.cpp
 
 CMakeFiles/app.dir/src/ShaderUtils.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/app.dir/src/ShaderUtils.cpp.i"
-	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/franktudor/CPP-Fluid-Particles/src/ShaderUtils.cpp > CMakeFiles/app.dir/src/ShaderUtils.cpp.i
+	/home/frankyin/Applications/gcc-12.2.0/build//bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/ShaderUtils.cpp > CMakeFiles/app.dir/src/ShaderUtils.cpp.i
 
 CMakeFiles/app.dir/src/ShaderUtils.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/app.dir/src/ShaderUtils.cpp.s"
-	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/franktudor/CPP-Fluid-Particles/src/ShaderUtils.cpp -o CMakeFiles/app.dir/src/ShaderUtils.cpp.s
+	/home/frankyin/Applications/gcc-12.2.0/build//bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/ShaderUtils.cpp -o CMakeFiles/app.dir/src/ShaderUtils.cpp.s
 
 CMakeFiles/app.dir/src/main.cpp.o: CMakeFiles/app.dir/flags.make
-CMakeFiles/app.dir/src/main.cpp.o: /home/franktudor/CPP-Fluid-Particles/src/main.cpp
+CMakeFiles/app.dir/src/main.cpp.o: /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/main.cpp
 CMakeFiles/app.dir/src/main.cpp.o: CMakeFiles/app.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/franktudor/CPP-Fluid-Particles/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/app.dir/src/main.cpp.o"
-	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/app.dir/src/main.cpp.o -MF CMakeFiles/app.dir/src/main.cpp.o.d -o CMakeFiles/app.dir/src/main.cpp.o -c /home/franktudor/CPP-Fluid-Particles/src/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/app.dir/src/main.cpp.o"
+	/home/frankyin/Applications/gcc-12.2.0/build//bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/app.dir/src/main.cpp.o -MF CMakeFiles/app.dir/src/main.cpp.o.d -o CMakeFiles/app.dir/src/main.cpp.o -c /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/main.cpp
 
 CMakeFiles/app.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/app.dir/src/main.cpp.i"
-	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/franktudor/CPP-Fluid-Particles/src/main.cpp > CMakeFiles/app.dir/src/main.cpp.i
+	/home/frankyin/Applications/gcc-12.2.0/build//bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/main.cpp > CMakeFiles/app.dir/src/main.cpp.i
 
 CMakeFiles/app.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/app.dir/src/main.cpp.s"
-	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/franktudor/CPP-Fluid-Particles/src/main.cpp -o CMakeFiles/app.dir/src/main.cpp.s
+	/home/frankyin/Applications/gcc-12.2.0/build//bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/main.cpp -o CMakeFiles/app.dir/src/main.cpp.s
 
 CMakeFiles/app.dir/src/vbo.cu.o: CMakeFiles/app.dir/flags.make
 CMakeFiles/app.dir/src/vbo.cu.o: CMakeFiles/app.dir/includes_CUDA.rsp
-CMakeFiles/app.dir/src/vbo.cu.o: /home/franktudor/CPP-Fluid-Particles/src/vbo.cu
+CMakeFiles/app.dir/src/vbo.cu.o: /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/vbo.cu
 CMakeFiles/app.dir/src/vbo.cu.o: CMakeFiles/app.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/franktudor/CPP-Fluid-Particles/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CUDA object CMakeFiles/app.dir/src/vbo.cu.o"
-	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/app.dir/src/vbo.cu.o -MF CMakeFiles/app.dir/src/vbo.cu.o.d -x cu -c /home/franktudor/CPP-Fluid-Particles/src/vbo.cu -o CMakeFiles/app.dir/src/vbo.cu.o
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CUDA object CMakeFiles/app.dir/src/vbo.cu.o"
+	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler -ccbin=/home/frankyin/Applications/gcc-12.2.0/build//bin/gcc $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/app.dir/src/vbo.cu.o -MF CMakeFiles/app.dir/src/vbo.cu.o.d -x cu -c /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/vbo.cu -o CMakeFiles/app.dir/src/vbo.cu.o
 
 CMakeFiles/app.dir/src/vbo.cu.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CUDA source to CMakeFiles/app.dir/src/vbo.cu.i"
@@ -226,7 +226,7 @@ app: CMakeFiles/app.dir/src/main.cpp.o
 app: CMakeFiles/app.dir/src/vbo.cu.o
 app: CMakeFiles/app.dir/build.make
 app: CMakeFiles/app.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/franktudor/CPP-Fluid-Particles/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable app"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable app"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/app.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -238,6 +238,6 @@ CMakeFiles/app.dir/clean:
 .PHONY : CMakeFiles/app.dir/clean
 
 CMakeFiles/app.dir/depend:
-	cd /home/franktudor/CPP-Fluid-Particles/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/franktudor/CPP-Fluid-Particles /home/franktudor/CPP-Fluid-Particles /home/franktudor/CPP-Fluid-Particles/build /home/franktudor/CPP-Fluid-Particles/build /home/franktudor/CPP-Fluid-Particles/build/CMakeFiles/app.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/app.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/app.dir/depend
 

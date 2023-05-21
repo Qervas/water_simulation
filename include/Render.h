@@ -97,7 +97,7 @@ private:
 
 	float isolevel = 0.5;
 
-	MarchingCubes marchingCubes;
+	// MarchingCubes marchingCubes;
 	std::vector<float3> vertices;
 	std::vector<float3> normals;
 	std::vector<uint3> indices;

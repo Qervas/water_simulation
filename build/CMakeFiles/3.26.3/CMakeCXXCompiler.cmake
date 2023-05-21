@@ -1,7 +1,7 @@
-set(CMAKE_CXX_COMPILER "/usr/lib64/ccache/c++")
+set(CMAKE_CXX_COMPILER "/home/frankyin/Applications/gcc-12.2.0/build//bin/g++")
 set(CMAKE_CXX_COMPILER_ARG1 "")
 set(CMAKE_CXX_COMPILER_ID "GNU")
-set(CMAKE_CXX_COMPILER_VERSION "13.1.1")
+set(CMAKE_CXX_COMPILER_VERSION "12.2.0")
 set(CMAKE_CXX_COMPILER_VERSION_INTERNAL "")
 set(CMAKE_CXX_COMPILER_WRAPPER "")
 set(CMAKE_CXX_STANDARD_COMPUTED_DEFAULT "17")
@@ -23,9 +23,9 @@ set(CMAKE_CXX_SIMULATE_VERSION "")
 
 
 set(CMAKE_AR "/usr/bin/ar")
-set(CMAKE_CXX_COMPILER_AR "/usr/bin/gcc-ar")
+set(CMAKE_CXX_COMPILER_AR "/home/frankyin/Applications/gcc-12.2.0/build/bin/gcc-ar")
 set(CMAKE_RANLIB "/usr/bin/ranlib")
-set(CMAKE_CXX_COMPILER_RANLIB "/usr/bin/gcc-ranlib")
+set(CMAKE_CXX_COMPILER_RANLIB "/home/frankyin/Applications/gcc-12.2.0/build/bin/gcc-ranlib")
 set(CMAKE_LINKER "/usr/bin/ld")
 set(CMAKE_MT "")
 set(CMAKE_COMPILER_IS_GNUCXX 1)
@@ -77,7 +77,7 @@ endif()
 
 
 
-set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "/usr/include/c++/13;/usr/include/c++/13/x86_64-redhat-linux;/usr/include/c++/13/backward;/usr/lib/gcc/x86_64-redhat-linux/13/include;/usr/local/include;/usr/include")
+set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "/home/frankyin/Applications/gcc-12.2.0/build/include/c++/12.2.0;/home/frankyin/Applications/gcc-12.2.0/build/include/c++/12.2.0/x86_64-pc-linux-gnu;/home/frankyin/Applications/gcc-12.2.0/build/include/c++/12.2.0/backward;/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/include;/usr/local/include;/home/frankyin/Applications/gcc-12.2.0/build/include;/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/include-fixed;/usr/include")
 set(CMAKE_CXX_IMPLICIT_LINK_LIBRARIES "stdc++;m;gcc_s;gcc;c;gcc_s;gcc")
-set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "/usr/lib/gcc/x86_64-redhat-linux/13;/usr/lib64;/lib64;/usr/lib")
+set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0;/home/frankyin/Applications/gcc-12.2.0/build/lib64;/lib64;/usr/lib64;/home/frankyin/Applications/gcc-12.2.0/build/lib")
 set(CMAKE_CXX_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")

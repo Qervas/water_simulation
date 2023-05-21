@@ -22,87 +22,16 @@ inline __device__ float cubic_spline_kernel(const float r, const float radius){
 
 MarchingCubes::MarchingCubes(std::shared_ptr<SPHParticles> particles, float isolevel, float* density,
                             int* particle2Cell)
-    : h_particles(particles), h_isolevel(isolevel),  h_density(density),h_particle2Cell(particle2Cell) {
-
-        h_numParticles = h_particles->size();
-        cudaMemcpy(&d_numParticles, &h_numParticles, sizeof(int), cudaMemcpyHostToDevice);
-        cudaMemcpy(&d_isolevel, &h_isolevel, sizeof(float), cudaMemcpyHostToDevice);
-        cudaMalloc(&d_vertices, h_numParticles * 12 * sizeof(float3));
-        cudaMalloc(&d_indices, h_numParticles * 5 * sizeof(uint3));
-
+    : h_particles(particles), h_isolevel(isolevel),  h_density(density),h_particle2Cell(particle2Cell),
+    h_vertices(particles->size() * 12), h_indices(particles->size() * 5) {//todo number error
+    h_numParticles = h_particles->size();
+        
     }
 
 MarchingCubes::~MarchingCubes() {
     cudaFree(d_indices);
     cudaFree(d_vertices);
 
-}
-
-void MarchingCubes::generateMesh_CUDA() {
-
-    // Call the generateVerticesIndicesKernel
-    int blockSize = 256;
-    int gridSize = (h_numParticles + blockSize - 1) / blockSize;
-    
-    generateVerticesIndicesKernel<<<gridSize, blockSize>>>(h_particles, d_vertices, d_indices, h_particles->getPosPtr(),
-                                                    h_density, h_particle2Cell, h_numParticles);
-    // cudaDeviceSynchronize();
-
-    // // Allocate device memory for numVerticesGenerated
-    // int* d_numVerticesGenerated;
-    // cudaMalloc(&d_numVerticesGenerated, sizeof(int));
-    // cudaMemset(d_numVerticesGenerated, 0, sizeof(int));
-
-    // // Call the countVerticesKernel
-    // int numTriangles = h_numParticles * 5;
-    // gridSize = (numTriangles + blockSize - 1) / blockSize;
-    // countVerticesKernel<<<gridSize, blockSize>>>(d_indices, d_numVerticesGenerated, numTriangles);
-    // cudaDeviceSynchronize();
-
-    // // Copy the number of vertices generated from device memory to host memory
-    // cudaMemcpy(&numVertices, d_numVerticesGenerated, sizeof(int), cudaMemcpyDeviceToHost);
-
-    // // Resize the host-side vectors
-    // h_vertices.resize(numVertices);
-
-    // // Copy the vertices to the host-side vectors
-    // cudaMemcpy(h_vertices.data(), d_vertices, numVertices * sizeof(float3), cudaMemcpyDeviceToHost);
-
-    // // =============normals===================
-    // // Allocate device memory for normals
-    // float3* d_normals;
-    // cudaMalloc(&d_normals, numVertices * sizeof(float3));
-
-    // // Call the generateNormalsKernel
-    // // int blockSize = 256;
-    // gridSize = (numVertices + blockSize - 1) / blockSize;
-    // generateNormalsKernel<<<gridSize, blockSize>>>(d_normals, d_vertices, d_indices, numVertices);
-    // cudaDeviceSynchronize();
-
-    // // Resize the host-side vectors
-    // h_normals.resize(numVertices);
-
-    // // Copy the generated normals from device memory to host memory
-    // cudaMemcpy(h_normals.data(), d_normals, numVertices * sizeof(float3), cudaMemcpyDeviceToHost);
-
-    // Free device memory
-    // cudaFree(d_normals);
-    // cudaFree(d_numVerticesGenerated);
-}
-
-
-
-
-std::vector<float3> MarchingCubes::getVertices() {
-    return h_vertices;
-}
-
-std::vector<uint3> MarchingCubes::getIndices() {
-    return h_indices;
-}
-
-std::vector<float3> MarchingCubes::getNormals() {
-    return h_normals;
 }
 
 __device__ int findSharedVertexIndex(const float3* vertices, float3 targetVertex, int numVertices) {
@@ -121,10 +50,63 @@ __device__ int findSharedVertexIndex(const float3* vertices, float3 targetVertex
 }
 
 
-__global__ void generateVerticesIndicesKernel(std::shared_ptr<SPHParticles> particles, float3* vertices, uint3* indices,
-                                    float3* posPtr,const float* density, const int* particle2Cell, int num) {
-    const unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
-    printf("%d\n ", i);
+void MarchingCubes::generateMesh_CUDA() {
+        h_numParticles = h_particles->size();
+        cudaMemcpy(&d_numParticles, &h_numParticles, sizeof(int), cudaMemcpyHostToDevice);
+        cudaMemcpy(&d_isolevel, &h_isolevel, sizeof(float), cudaMemcpyHostToDevice);
+    // Call the generateVerticesIndicesKernel
+    int blockSize = 256;
+    int gridSize = (h_numParticles + blockSize - 1) / blockSize;
+
+    // Call the countVerticesKernel
+    int numTriangles = h_numParticles * 5;
+    gridSize = (numTriangles + blockSize - 1) / blockSize;
+    int* d_numVertices, *d_numIndices;
+    cudaMalloc(&d_numVertices, sizeof(int));
+    cudaMalloc(&d_numIndices, sizeof(int));
+    cudaMemset(d_numVertices, 0, sizeof(int));
+    cudaMemset(d_numIndices, 0, sizeof(int));
+    //get vertices, indices data
+    generateVerticesIndicesKernel<<<gridSize, blockSize>>>(d_vertices, d_indices, d_numVertices, d_numIndices,
+                                h_particles->getPosPtr(), h_density, h_particle2Cell, h_numParticles);
+    cudaDeviceSynchronize();
+    // Copy the number of vertices generated from device memory to host memory
+    cudaMemcpy(&numVertices, d_numVertices, sizeof(int), cudaMemcpyDeviceToHost);
+
+    // Resize the host-side vectors
+    h_vertices.resize(numVertices);
+
+    // Copy the vertices to the host-side vectors
+    cudaMemcpy(h_vertices.data(), d_vertices, numVertices * sizeof(float3), cudaMemcpyDeviceToHost);
+    // cudaMemcpy(h_indices.data(), d_indices, )
+
+    // =============normals===================
+    // Allocate device memory for normals
+    float3* d_normals;
+    cudaMalloc(&d_normals, numVertices * sizeof(float3));
+
+    // Call the generateNormalsKernel
+    gridSize = (numVertices + blockSize - 1) / blockSize;
+    // generateNormalsKernel<<<gridSize, blockSize>>>(d_normals, d_vertices, d_indices, numVertices);
+    cudaDeviceSynchronize();
+
+    // Resize the host-side vectors
+    h_normals.resize(numVertices);
+
+    // Copy the generated normals from device memory to host memory
+    cudaMemcpy(h_normals.data(), d_normals, numVertices * sizeof(float3), cudaMemcpyDeviceToHost);
+
+    // Free device memory
+    cudaFree(d_normals);
+    cudaFree(d_numVertices);
+
+}
+
+
+__global__ void generateVerticesIndicesKernel(float3* vertices, uint3* indices, int* d_numVertices, int* d_numIndice,
+                            float3* posPtr,const float* density, const int* particle2Cell, int num) {
+    unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
+    // printf("%d\n ", i);
     if (i >= num) return;
 
     // Calculate the cell position
@@ -225,19 +207,22 @@ __global__ void generateVerticesIndicesKernel(std::shared_ptr<SPHParticles> part
         cellVertexIndices[11] = findSharedVertexIndex(vertices, cellVertices[11], d_numParticles);
     }
 
+    // Get the index of the first vertex for this cell
+    int baseIdx = atomicAdd(d_numVertices, (int)__popc(edgeTable[cubeIndex]));
 
     // Store the vertex positions in the output vertices array
     for (int j = 0; triTable[cubeIndex][j] != -1; j += 3) {
-        vertices[i * 15 + j]     = cellVertices[triTable[cubeIndex][j]];
-        vertices[i * 15 + j + 1] = cellVertices[triTable[cubeIndex][j + 1]];
-        vertices[i * 15 + j + 2] = cellVertices[triTable[cubeIndex][j + 2]];
+        vertices[baseIdx + j]     = cellVertices[triTable[cubeIndex][j]];
+        vertices[baseIdx + j + 1] = cellVertices[triTable[cubeIndex][j + 1]];
+        vertices[baseIdx + j + 2] = cellVertices[triTable[cubeIndex][j + 2]];
     }
     // Store the vertex indices in the output indices array
     for (int j = 0; triTable[cubeIndex][j] != -1; j += 3) {
-        indices[i * 5 + j / 3] = make_uint3(cellVertexIndices[triTable[cubeIndex][j]],
-                                            cellVertexIndices[triTable[cubeIndex][j + 1]],
-                                            cellVertexIndices[triTable[cubeIndex][j + 2]]);
+        indices[baseIdx / 3 + j / 3] = make_uint3(cellVertexIndices[triTable[cubeIndex][j]],
+                                                cellVertexIndices[triTable[cubeIndex][j + 1]],
+                                                cellVertexIndices[triTable[cubeIndex][j + 2]]);
     }
+
 }
        
 
@@ -280,3 +265,64 @@ __device__ float3 vertexInterpolation(float isolevel, float3 pos1, float3 pos2, 
                        pos1.z + t * (pos2.z - pos1.z));
 }
 
+
+////////////////////////////////////////////////////////////////
+
+
+
+std::vector<glm::vec3> MarchingCubes::getVertices_CPU() {
+    return h_vertices_CPU;
+}
+
+std::vector<glm::uvec3> MarchingCubes::getIndices_CPU() {
+    return h_indices_CPU;
+}
+
+std::vector<glm::vec3> MarchingCubes::getNormals_CPU() {
+    return h_normals_CPU;
+}
+
+
+std::vector<float3> MarchingCubes::getVertices() {
+    return h_vertices;
+}
+
+std::vector<uint3> MarchingCubes::getIndices() {
+    return h_indices;
+}
+
+std::vector<float3> MarchingCubes::getNormals() {
+    return h_normals;
+}
+
+// void MarchingCubes::generateMesh_CPU(){
+    // generateVerticesIndicesCPU(h_vertices, h_indices, h_particles->getPosPtr(), h_density, h_particle2Cell, h_numParticles);
+
+    // int numVertices = countVerticesCPU(h_indices, h_numParticles * 5);
+    // h_vertices.resize(numVertices);
+    // std::copy(h_vertices.begin(), h_vertices.begin() + numVertices, h_vertices.begin());
+
+    // h_normals.resize(numVertices);
+    // generateNormalsCPU(h_normals, h_vertices, h_indices, numVertices);    
+// }
+
+// void generateVerticesIndicesCPU(std::vector<glm::vec3> &vertices, std::vector<glm::uvec3> &indices, glm::vec3 *posPtr,
+//                                 const float *density, const int *particle2Cell, int num) {
+//     // ... Implement the CPU version of generateVerticesIndicesKernel
+// }
+
+// int countVerticesCPU(const std::vector<glm::uvec3> &indices, int numTriangles) {
+//     // ... Implement the CPU version of countVerticesKernel
+// }
+
+// void generateNormalsCPU(std::vector<glm::vec3> &normals, const std::vector<glm::vec3> &vertices, const std::vector<glm::uvec3> &indices, int num) {
+//     // ... Implement the CPU version of generateNormalsKernel
+// }
+
+// float interpolateDensity(float isolevel, float density1, float density2) {
+//     // ... Implement the CPU version of interpolateDensity
+// }
+
+// glm::vec3 vertexInterpolation(float isolevel, glm::vec3 pos1, glm::vec3 pos2, float density1, float density2) {
+//     // ... Implement the CPU version of vertexInterpolation
+// }

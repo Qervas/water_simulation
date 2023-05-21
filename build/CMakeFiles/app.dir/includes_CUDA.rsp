@@ -1,1 +1,1 @@
--I"/home/franktudor/CPP-Fluid-Particles/include" -I/usr/local/cuda/include -I"/usr/local/cuda-samples/Common"
+-I"/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/include" -I/usr/local/cuda/include -I"/usr/local/cuda-samples/Common"

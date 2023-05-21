@@ -1,6 +1,6 @@
 set(CMAKE_CUDA_COMPILER "/usr/local/cuda/bin/nvcc")
-set(CMAKE_CUDA_HOST_COMPILER "")
-set(CMAKE_CUDA_HOST_LINK_LAUNCHER "/usr/lib64/ccache/g++")
+set(CMAKE_CUDA_HOST_COMPILER "/home/frankyin/Applications/gcc-12.2.0/build//bin/gcc")
+set(CMAKE_CUDA_HOST_LINK_LAUNCHER "/home/frankyin/Applications/gcc-12.2.0/build//bin/g++")
 set(CMAKE_CUDA_COMPILER_ID "NVIDIA")
 set(CMAKE_CUDA_COMPILER_VERSION "12.1.105")
 set(CMAKE_CUDA_DEVICE_LINKER "/usr/local/cuda/bin/nvlink")
@@ -55,7 +55,7 @@ set(CMAKE_CUDA_COMPILER_LIBRARY_ROOT "/usr/local/cuda")
 
 set(CMAKE_CUDA_ARCHITECTURES_ALL "50-real;52-real;53-real;60-real;61-real;62-real;70-real;72-real;75-real;80-real;86-real;87-real;89-real;90")
 set(CMAKE_CUDA_ARCHITECTURES_ALL_MAJOR "50-real;60-real;70-real;80-real;90")
-set(CMAKE_CUDA_ARCHITECTURES_NATIVE "61-real")
+set(CMAKE_CUDA_ARCHITECTURES_NATIVE "89-real")
 
 set(CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES "/usr/local/cuda/targets/x86_64-linux/include")
 
@@ -63,9 +63,9 @@ set(CMAKE_CUDA_HOST_IMPLICIT_LINK_LIBRARIES "")
 set(CMAKE_CUDA_HOST_IMPLICIT_LINK_DIRECTORIES "/usr/local/cuda/targets/x86_64-linux/lib/stubs;/usr/local/cuda/targets/x86_64-linux/lib")
 set(CMAKE_CUDA_HOST_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")
 
-set(CMAKE_CUDA_IMPLICIT_INCLUDE_DIRECTORIES "/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/include/c++/12.2.0;/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/include/c++/12.2.0/x86_64-pc-linux-gnu;/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/include/c++/12.2.0/backward;/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/lib/gcc/x86_64-pc-linux-gnu/12.2.0/include;/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/lib/gcc/x86_64-pc-linux-gnu/12.2.0/include-fixed;/usr/local/include;/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/include;/usr/include")
+set(CMAKE_CUDA_IMPLICIT_INCLUDE_DIRECTORIES "/home/frankyin/Applications/gcc-12.2.0/build/include/c++/12.2.0;/home/frankyin/Applications/gcc-12.2.0/build/include/c++/12.2.0/x86_64-pc-linux-gnu;/home/frankyin/Applications/gcc-12.2.0/build/include/c++/12.2.0/backward;/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/include;/usr/local/include;/home/frankyin/Applications/gcc-12.2.0/build/include;/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/include-fixed;/usr/include")
 set(CMAKE_CUDA_IMPLICIT_LINK_LIBRARIES "stdc++;m;gcc_s;gcc;c;gcc_s;gcc")
-set(CMAKE_CUDA_IMPLICIT_LINK_DIRECTORIES "/usr/local/cuda/targets/x86_64-linux/lib/stubs;/usr/local/cuda/targets/x86_64-linux/lib;/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/lib/gcc/x86_64-pc-linux-gnu/12.2.0;/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/lib/gcc;/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/lib64;/lib64;/usr/lib64;/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/lib")
+set(CMAKE_CUDA_IMPLICIT_LINK_DIRECTORIES "/usr/local/cuda/targets/x86_64-linux/lib/stubs;/usr/local/cuda/targets/x86_64-linux/lib;/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0;/home/frankyin/Applications/gcc-12.2.0/build/lib64;/lib64;/usr/lib64;/home/frankyin/Applications/gcc-12.2.0/build/lib")
 set(CMAKE_CUDA_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")
 
 set(CMAKE_CUDA_RUNTIME_LIBRARY_DEFAULT "STATIC")

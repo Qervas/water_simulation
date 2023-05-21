@@ -3,10 +3,11 @@
 #include <memory>
 #include <vector>
 #include "SPHParticles.h"
+#include <glm/glm.hpp>
 
 
-__global__ void generateVerticesIndicesKernel(std::shared_ptr<SPHParticles> particles, float3* vertices, uint3* indices, 
-                                    float3* posPtr,const float* density, const int* particle2Cell, int num);
+__global__ void generateVerticesIndicesKernel(float3* vertices, uint3* indices, int* d_numVertices, 
+            int* d_numIndice, float3* posPtr,const float* density, const int* particle2Cell, int num);
 __global__ void generateNormalsKernel(float3* normals, const float3* vertices, const uint3* indices, int num);
 __global__ void countVerticesKernel(const uint3* indices, int* numVertices, int numTriangles) ;
 __device__ float interpolateDensity(float d_isolevel, float density1, float density2);
@@ -21,7 +22,11 @@ public:
     ~MarchingCubes();
 
     void generateMesh_CUDA();
+    // void generateMesh_CPU();
 
+    std::vector<glm::vec3> getVertices_CPU();
+    std::vector<glm::uvec3> getIndices_CPU();
+    std::vector<glm::vec3> getNormals_CPU();
     std::vector<float3> getVertices();
     std::vector<uint3> getIndices();
     std::vector<float3> getNormals();
@@ -33,6 +38,9 @@ private:
     int* h_particle2Cell;
     int h_numParticles;
 
+    std::vector<glm::vec3> h_vertices_CPU;
+    std::vector<glm::uvec3> h_indices_CPU;
+    std::vector<glm::vec3> h_normals_CPU;
     std::vector<float3> h_vertices;
     std::vector<uint3> h_indices;
     std::vector<float3> h_normals;
