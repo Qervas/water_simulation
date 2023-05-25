@@ -833,6 +833,6 @@ CMakeFiles/app.dir/src/SPHSystem.cu.o : /home/frankyin/Desktop/Workspace/water_s
     /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/include/global.h \
     /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/include/Particles.h \
     /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/include/SPHParticles.h \
-    /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/include/BaseSolver.h \
+    /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/include/BasicSPHSolver.h \
     /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/include/SPHSystem.h \
     /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/include/CUDAFunctions.cuh

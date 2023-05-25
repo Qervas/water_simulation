@@ -17,7 +17,7 @@ events:
       - "CMakeLists.txt:21 (project)"
     message: |
       Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
-      Compiler: /home/frankyin/Applications/gcc-12.2.0/build//bin/g++ 
+      Compiler: /usr/bin/g++ 
       Build flags: 
       Id flags:  
       
@@ -28,7 +28,7 @@ events:
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
       
       The CXX compiler identification is GNU, found in:
-        /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/3.26.3/CompilerIdCXX/a.out
+        /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/3.26.4/CompilerIdCXX/a.out
       
   -
     kind: "message-v1"
@@ -54,7 +54,7 @@ events:
       Compiling the CUDA compiler identification source file "CMakeCUDACompilerId.cu" failed.
       Compiler: /usr/local/cuda/bin/nvcc 
       Build flags: ;-G;-gencode;arch=compute_50,code=sm_50;					--expt-extended-lambda;-use_fast_math;-Xcompiler;-Wall,-Wextra,;					-fpermissive;					
-      Id flags: --keep;--keep-dir;tmp;-ccbin=/home/frankyin/Applications/gcc-12.2.0/build//bin/gcc -v
+      Id flags: --keep;--keep-dir;tmp -v
       
       The output was:
       1
@@ -88,7 +88,7 @@ events:
       Compiling the CUDA compiler identification source file "CMakeCUDACompilerId.cu" succeeded.
       Compiler: /usr/local/cuda/bin/nvcc 
       Build flags: 
-      Id flags: --keep;--keep-dir;tmp;-ccbin=/home/frankyin/Applications/gcc-12.2.0/build//bin/gcc -v
+      Id flags: --keep;--keep-dir;tmp -v
       
       The output was:
       0
@@ -109,23 +109,23 @@ events:
       #$ CUDAFE_FLAGS=
       #$ PTXAS_FLAGS=
       #$ rm tmp/a_dlink.reg.c
-      #$ "/home/frankyin/Applications/gcc-12.2.0/build//bin"/gcc -D__CUDA_ARCH_LIST__=520 -E -x c++ -D__CUDACC__ -D__NVCC__  "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"    -D__CUDACC_VER_MAJOR__=12 -D__CUDACC_VER_MINOR__=1 -D__CUDACC_VER_BUILD__=105 -D__CUDA_API_VER_MAJOR__=12 -D__CUDA_API_VER_MINOR__=1 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -include "cuda_runtime.h" -m64 "CMakeCUDACompilerId.cu" -o "tmp/CMakeCUDACompilerId.cpp4.ii" 
-      #$ cudafe++ --c++17 --gnu_version=120200 --display_error_number --orig_src_file_name "CMakeCUDACompilerId.cu" --orig_src_path_name "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/3.26.3/CompilerIdCUDA/CMakeCUDACompilerId.cu" --allow_managed  --m64 --parse_templates --gen_c_file_name "tmp/CMakeCUDACompilerId.cudafe1.cpp" --stub_file_name "CMakeCUDACompilerId.cudafe1.stub.c" --gen_module_id_file --module_id_file_name "tmp/CMakeCUDACompilerId.module_id" "tmp/CMakeCUDACompilerId.cpp4.ii" 
-      #$ "/home/frankyin/Applications/gcc-12.2.0/build//bin"/gcc -D__CUDA_ARCH__=520 -D__CUDA_ARCH_LIST__=520 -E -x c++  -DCUDA_DOUBLE_MATH_FUNCTIONS -D__CUDACC__ -D__NVCC__  "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"    -D__CUDACC_VER_MAJOR__=12 -D__CUDACC_VER_MINOR__=1 -D__CUDACC_VER_BUILD__=105 -D__CUDA_API_VER_MAJOR__=12 -D__CUDA_API_VER_MINOR__=1 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -include "cuda_runtime.h" -m64 "CMakeCUDACompilerId.cu" -o "tmp/CMakeCUDACompilerId.cpp1.ii" 
-      #$ cicc --c++17 --gnu_version=120200 --display_error_number --orig_src_file_name "CMakeCUDACompilerId.cu" --orig_src_path_name "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/3.26.3/CompilerIdCUDA/CMakeCUDACompilerId.cu" --allow_managed   -arch compute_52 -m64 --no-version-ident -ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 --include_file_name "CMakeCUDACompilerId.fatbin.c" -tused --module_id_file_name "tmp/CMakeCUDACompilerId.module_id" --gen_c_file_name "tmp/CMakeCUDACompilerId.cudafe1.c" --stub_file_name "tmp/CMakeCUDACompilerId.cudafe1.stub.c" --gen_device_file_name "tmp/CMakeCUDACompilerId.cudafe1.gpu"  "tmp/CMakeCUDACompilerId.cpp1.ii" -o "tmp/CMakeCUDACompilerId.ptx"
+      #$ gcc -D__CUDA_ARCH_LIST__=520 -E -x c++ -D__CUDACC__ -D__NVCC__  "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"    -D__CUDACC_VER_MAJOR__=12 -D__CUDACC_VER_MINOR__=1 -D__CUDACC_VER_BUILD__=105 -D__CUDA_API_VER_MAJOR__=12 -D__CUDA_API_VER_MINOR__=1 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -include "cuda_runtime.h" -m64 "CMakeCUDACompilerId.cu" -o "tmp/CMakeCUDACompilerId.cpp4.ii" 
+      #$ cudafe++ --c++17 --gnu_version=120200 --display_error_number --orig_src_file_name "CMakeCUDACompilerId.cu" --orig_src_path_name "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/3.26.4/CompilerIdCUDA/CMakeCUDACompilerId.cu" --allow_managed  --m64 --parse_templates --gen_c_file_name "tmp/CMakeCUDACompilerId.cudafe1.cpp" --stub_file_name "CMakeCUDACompilerId.cudafe1.stub.c" --gen_module_id_file --module_id_file_name "tmp/CMakeCUDACompilerId.module_id" "tmp/CMakeCUDACompilerId.cpp4.ii" 
+      #$ gcc -D__CUDA_ARCH__=520 -D__CUDA_ARCH_LIST__=520 -E -x c++  -DCUDA_DOUBLE_MATH_FUNCTIONS -D__CUDACC__ -D__NVCC__  "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"    -D__CUDACC_VER_MAJOR__=12 -D__CUDACC_VER_MINOR__=1 -D__CUDACC_VER_BUILD__=105 -D__CUDA_API_VER_MAJOR__=12 -D__CUDA_API_VER_MINOR__=1 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -include "cuda_runtime.h" -m64 "CMakeCUDACompilerId.cu" -o "tmp/CMakeCUDACompilerId.cpp1.ii" 
+      #$ cicc --c++17 --gnu_version=120200 --display_error_number --orig_src_file_name "CMakeCUDACompilerId.cu" --orig_src_path_name "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/3.26.4/CompilerIdCUDA/CMakeCUDACompilerId.cu" --allow_managed   -arch compute_52 -m64 --no-version-ident -ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 --include_file_name "CMakeCUDACompilerId.fatbin.c" -tused --module_id_file_name "tmp/CMakeCUDACompilerId.module_id" --gen_c_file_name "tmp/CMakeCUDACompilerId.cudafe1.c" --stub_file_name "tmp/CMakeCUDACompilerId.cudafe1.stub.c" --gen_device_file_name "tmp/CMakeCUDACompilerId.cudafe1.gpu"  "tmp/CMakeCUDACompilerId.cpp1.ii" -o "tmp/CMakeCUDACompilerId.ptx"
       #$ ptxas -arch=sm_52 -m64  "tmp/CMakeCUDACompilerId.ptx"  -o "tmp/CMakeCUDACompilerId.sm_52.cubin" 
       #$ fatbinary --create="tmp/CMakeCUDACompilerId.fatbin" -64 --cicc-cmdline="-ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 " "--image3=kind=elf,sm=52,file=tmp/CMakeCUDACompilerId.sm_52.cubin" "--image3=kind=ptx,sm=52,file=tmp/CMakeCUDACompilerId.ptx" --embedded-fatbin="tmp/CMakeCUDACompilerId.fatbin.c" 
-      #$ "/home/frankyin/Applications/gcc-12.2.0/build//bin"/gcc -D__CUDA_ARCH__=520 -D__CUDA_ARCH_LIST__=520 -c -x c++  -DCUDA_DOUBLE_MATH_FUNCTIONS "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"   -m64 "tmp/CMakeCUDACompilerId.cudafe1.cpp" -o "tmp/CMakeCUDACompilerId.o" 
-      #$ nvlink -m64 --arch=sm_52 --register-link-binaries="tmp/a_dlink.reg.c"    "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib" -cpu-arch=X86_64 "tmp/CMakeCUDACompilerId.o"  -lcudadevrt  -o "tmp/a_dlink.sm_52.cubin" --host-ccbin "/home/frankyin/Applications/gcc-12.2.0/build//bin/gcc"
+      #$ gcc -D__CUDA_ARCH__=520 -D__CUDA_ARCH_LIST__=520 -c -x c++  -DCUDA_DOUBLE_MATH_FUNCTIONS "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"   -m64 "tmp/CMakeCUDACompilerId.cudafe1.cpp" -o "tmp/CMakeCUDACompilerId.o" 
+      #$ nvlink -m64 --arch=sm_52 --register-link-binaries="tmp/a_dlink.reg.c"    "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib" -cpu-arch=X86_64 "tmp/CMakeCUDACompilerId.o"  -lcudadevrt  -o "tmp/a_dlink.sm_52.cubin" --host-ccbin "gcc"
       #$ fatbinary --create="tmp/a_dlink.fatbin" -64 --cicc-cmdline="-ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 " -link "--image3=kind=elf,sm=52,file=tmp/a_dlink.sm_52.cubin" --embedded-fatbin="tmp/a_dlink.fatbin.c" 
-      #$ "/home/frankyin/Applications/gcc-12.2.0/build//bin"/gcc -D__CUDA_ARCH_LIST__=520 -c -x c++ -DFATBINFILE="\\"tmp/a_dlink.fatbin.c\\"" -DREGISTERLINKBINARYFILE="\\"tmp/a_dlink.reg.c\\"" -I. -D__NV_EXTRA_INITIALIZATION= -D__NV_EXTRA_FINALIZATION= -D__CUDA_INCLUDE_COMPILER_INTERNAL_HEADERS__  "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"    -D__CUDACC_VER_MAJOR__=12 -D__CUDACC_VER_MINOR__=1 -D__CUDACC_VER_BUILD__=105 -D__CUDA_API_VER_MAJOR__=12 -D__CUDA_API_VER_MINOR__=1 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -m64 "/usr/local/cuda/bin/crt/link.stub" -o "tmp/a_dlink.o" 
-      #$ "/home/frankyin/Applications/gcc-12.2.0/build//bin"/g++ -D__CUDA_ARCH_LIST__=520 -m64 -Wl,--start-group "tmp/a_dlink.o" "tmp/CMakeCUDACompilerId.o"   "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib"  -lcudadevrt  -lcudart_static  -lrt -lpthread  -ldl  -Wl,--end-group -o "a.out" 
+      #$ gcc -D__CUDA_ARCH_LIST__=520 -c -x c++ -DFATBINFILE="\\"tmp/a_dlink.fatbin.c\\"" -DREGISTERLINKBINARYFILE="\\"tmp/a_dlink.reg.c\\"" -I. -D__NV_EXTRA_INITIALIZATION= -D__NV_EXTRA_FINALIZATION= -D__CUDA_INCLUDE_COMPILER_INTERNAL_HEADERS__  "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"    -D__CUDACC_VER_MAJOR__=12 -D__CUDACC_VER_MINOR__=1 -D__CUDACC_VER_BUILD__=105 -D__CUDA_API_VER_MAJOR__=12 -D__CUDA_API_VER_MINOR__=1 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -m64 "/usr/local/cuda/bin/crt/link.stub" -o "tmp/a_dlink.o" 
+      #$ g++ -D__CUDA_ARCH_LIST__=520 -m64 -Wl,--start-group "tmp/a_dlink.o" "tmp/CMakeCUDACompilerId.o"   "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib"  -lcudadevrt  -lcudart_static  -lrt -lpthread  -ldl  -Wl,--end-group -o "a.out" 
       
       
       Compilation of the CUDA compiler identification source "CMakeCUDACompilerId.cu" produced "a.out"
       
       The CUDA compiler identification is NVIDIA, found in:
-        /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/3.26.3/CompilerIdCUDA/a.out
+        /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/3.26.4/CompilerIdCUDA/a.out
       
   -
     kind: "message-v1"
@@ -137,26 +137,27 @@ events:
         found 'PATH=' string: [/usr/local/cuda/bin/../nvvm/bin:/usr/local/cuda/bin:/usr/local/cuda/bin:/usr/local/cuda/bin:/home/frankyin/.local/bin:/home/frankyin/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/var/lib/snapd/snap/bin]
         found 'LIBRARIES=' string: ["-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib"]
         considering line: [#$ rm tmp/a_dlink.reg.c]
-        considering line: ["/home/frankyin/Applications/gcc-12.2.0/build//bin"/gcc -D__CUDA_ARCH_LIST__=520 -E -x c++ -D__CUDACC__ -D__NVCC__  "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"    -D__CUDACC_VER_MAJOR__=12 -D__CUDACC_VER_MINOR__=1 -D__CUDACC_VER_BUILD__=105 -D__CUDA_API_VER_MAJOR__=12 -D__CUDA_API_VER_MINOR__=1 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -include "cuda_runtime.h" -m64 "CMakeCUDACompilerId.cu" -o "tmp/CMakeCUDACompilerId.cpp4.ii" ]
-        considering line: [cudafe++ --c++17 --gnu_version=120200 --display_error_number --orig_src_file_name "CMakeCUDACompilerId.cu" --orig_src_path_name "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/3.26.3/CompilerIdCUDA/CMakeCUDACompilerId.cu" --allow_managed  --m64 --parse_templates --gen_c_file_name "tmp/CMakeCUDACompilerId.cudafe1.cpp" --stub_file_name "CMakeCUDACompilerId.cudafe1.stub.c" --gen_module_id_file --module_id_file_name "tmp/CMakeCUDACompilerId.module_id" "tmp/CMakeCUDACompilerId.cpp4.ii" ]
-        considering line: ["/home/frankyin/Applications/gcc-12.2.0/build//bin"/gcc -D__CUDA_ARCH__=520 -D__CUDA_ARCH_LIST__=520 -E -x c++  -DCUDA_DOUBLE_MATH_FUNCTIONS -D__CUDACC__ -D__NVCC__  "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"    -D__CUDACC_VER_MAJOR__=12 -D__CUDACC_VER_MINOR__=1 -D__CUDACC_VER_BUILD__=105 -D__CUDA_API_VER_MAJOR__=12 -D__CUDA_API_VER_MINOR__=1 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -include "cuda_runtime.h" -m64 "CMakeCUDACompilerId.cu" -o "tmp/CMakeCUDACompilerId.cpp1.ii" ]
-        considering line: [cicc --c++17 --gnu_version=120200 --display_error_number --orig_src_file_name "CMakeCUDACompilerId.cu" --orig_src_path_name "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/3.26.3/CompilerIdCUDA/CMakeCUDACompilerId.cu" --allow_managed   -arch compute_52 -m64 --no-version-ident -ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 --include_file_name "CMakeCUDACompilerId.fatbin.c" -tused --module_id_file_name "tmp/CMakeCUDACompilerId.module_id" --gen_c_file_name "tmp/CMakeCUDACompilerId.cudafe1.c" --stub_file_name "tmp/CMakeCUDACompilerId.cudafe1.stub.c" --gen_device_file_name "tmp/CMakeCUDACompilerId.cudafe1.gpu"  "tmp/CMakeCUDACompilerId.cpp1.ii" -o "tmp/CMakeCUDACompilerId.ptx"]
+        considering line: [gcc -D__CUDA_ARCH_LIST__=520 -E -x c++ -D__CUDACC__ -D__NVCC__  "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"    -D__CUDACC_VER_MAJOR__=12 -D__CUDACC_VER_MINOR__=1 -D__CUDACC_VER_BUILD__=105 -D__CUDA_API_VER_MAJOR__=12 -D__CUDA_API_VER_MINOR__=1 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -include "cuda_runtime.h" -m64 "CMakeCUDACompilerId.cu" -o "tmp/CMakeCUDACompilerId.cpp4.ii" ]
+        considering line: [cudafe++ --c++17 --gnu_version=120200 --display_error_number --orig_src_file_name "CMakeCUDACompilerId.cu" --orig_src_path_name "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/3.26.4/CompilerIdCUDA/CMakeCUDACompilerId.cu" --allow_managed  --m64 --parse_templates --gen_c_file_name "tmp/CMakeCUDACompilerId.cudafe1.cpp" --stub_file_name "CMakeCUDACompilerId.cudafe1.stub.c" --gen_module_id_file --module_id_file_name "tmp/CMakeCUDACompilerId.module_id" "tmp/CMakeCUDACompilerId.cpp4.ii" ]
+        considering line: [gcc -D__CUDA_ARCH__=520 -D__CUDA_ARCH_LIST__=520 -E -x c++  -DCUDA_DOUBLE_MATH_FUNCTIONS -D__CUDACC__ -D__NVCC__  "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"    -D__CUDACC_VER_MAJOR__=12 -D__CUDACC_VER_MINOR__=1 -D__CUDACC_VER_BUILD__=105 -D__CUDA_API_VER_MAJOR__=12 -D__CUDA_API_VER_MINOR__=1 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -include "cuda_runtime.h" -m64 "CMakeCUDACompilerId.cu" -o "tmp/CMakeCUDACompilerId.cpp1.ii" ]
+        considering line: [cicc --c++17 --gnu_version=120200 --display_error_number --orig_src_file_name "CMakeCUDACompilerId.cu" --orig_src_path_name "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/3.26.4/CompilerIdCUDA/CMakeCUDACompilerId.cu" --allow_managed   -arch compute_52 -m64 --no-version-ident -ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 --include_file_name "CMakeCUDACompilerId.fatbin.c" -tused --module_id_file_name "tmp/CMakeCUDACompilerId.module_id" --gen_c_file_name "tmp/CMakeCUDACompilerId.cudafe1.c" --stub_file_name "tmp/CMakeCUDACompilerId.cudafe1.stub.c" --gen_device_file_name "tmp/CMakeCUDACompilerId.cudafe1.gpu"  "tmp/CMakeCUDACompilerId.cpp1.ii" -o "tmp/CMakeCUDACompilerId.ptx"]
         considering line: [ptxas -arch=sm_52 -m64  "tmp/CMakeCUDACompilerId.ptx"  -o "tmp/CMakeCUDACompilerId.sm_52.cubin" ]
         considering line: [fatbinary --create="tmp/CMakeCUDACompilerId.fatbin" -64 --cicc-cmdline="-ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 " "--image3=kind=elf,sm=52,file=tmp/CMakeCUDACompilerId.sm_52.cubin" "--image3=kind=ptx,sm=52,file=tmp/CMakeCUDACompilerId.ptx" --embedded-fatbin="tmp/CMakeCUDACompilerId.fatbin.c" ]
-        considering line: ["/home/frankyin/Applications/gcc-12.2.0/build//bin"/gcc -D__CUDA_ARCH__=520 -D__CUDA_ARCH_LIST__=520 -c -x c++  -DCUDA_DOUBLE_MATH_FUNCTIONS "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"   -m64 "tmp/CMakeCUDACompilerId.cudafe1.cpp" -o "tmp/CMakeCUDACompilerId.o" ]
-        considering line: [nvlink -m64 --arch=sm_52 --register-link-binaries="tmp/a_dlink.reg.c"    "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib" -cpu-arch=X86_64 "tmp/CMakeCUDACompilerId.o"  -lcudadevrt  -o "tmp/a_dlink.sm_52.cubin" --host-ccbin "/home/frankyin/Applications/gcc-12.2.0/build//bin/gcc"]
+        considering line: [gcc -D__CUDA_ARCH__=520 -D__CUDA_ARCH_LIST__=520 -c -x c++  -DCUDA_DOUBLE_MATH_FUNCTIONS "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"   -m64 "tmp/CMakeCUDACompilerId.cudafe1.cpp" -o "tmp/CMakeCUDACompilerId.o" ]
+        considering line: [nvlink -m64 --arch=sm_52 --register-link-binaries="tmp/a_dlink.reg.c"    "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib" -cpu-arch=X86_64 "tmp/CMakeCUDACompilerId.o"  -lcudadevrt  -o "tmp/a_dlink.sm_52.cubin" --host-ccbin "gcc"]
           ignoring nvlink line
         considering line: [fatbinary --create="tmp/a_dlink.fatbin" -64 --cicc-cmdline="-ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 " -link "--image3=kind=elf,sm=52,file=tmp/a_dlink.sm_52.cubin" --embedded-fatbin="tmp/a_dlink.fatbin.c" ]
-        considering line: ["/home/frankyin/Applications/gcc-12.2.0/build//bin"/gcc -D__CUDA_ARCH_LIST__=520 -c -x c++ -DFATBINFILE="\\"tmp/a_dlink.fatbin.c\\"" -DREGISTERLINKBINARYFILE="\\"tmp/a_dlink.reg.c\\"" -I. -D__NV_EXTRA_INITIALIZATION= -D__NV_EXTRA_FINALIZATION= -D__CUDA_INCLUDE_COMPILER_INTERNAL_HEADERS__  "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"    -D__CUDACC_VER_MAJOR__=12 -D__CUDACC_VER_MINOR__=1 -D__CUDACC_VER_BUILD__=105 -D__CUDA_API_VER_MAJOR__=12 -D__CUDA_API_VER_MINOR__=1 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -m64 "/usr/local/cuda/bin/crt/link.stub" -o "tmp/a_dlink.o" ]
-        considering line: ["/home/frankyin/Applications/gcc-12.2.0/build//bin"/g++ -D__CUDA_ARCH_LIST__=520 -m64 -Wl,--start-group "tmp/a_dlink.o" "tmp/CMakeCUDACompilerId.o"   "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib"  -lcudadevrt  -lcudart_static  -lrt -lpthread  -ldl  -Wl,--end-group -o "a.out" ]
-          extracted link line: ["/home/frankyin/Applications/gcc-12.2.0/build//bin"/g++ -D__CUDA_ARCH_LIST__=520 -m64 -Wl,--start-group "tmp/a_dlink.o" "tmp/CMakeCUDACompilerId.o"   "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib"  -lcudadevrt  -lcudart_static  -lrt -lpthread  -ldl  -Wl,--end-group -o "a.out" ]
+        considering line: [gcc -D__CUDA_ARCH_LIST__=520 -c -x c++ -DFATBINFILE="\\"tmp/a_dlink.fatbin.c\\"" -DREGISTERLINKBINARYFILE="\\"tmp/a_dlink.reg.c\\"" -I. -D__NV_EXTRA_INITIALIZATION= -D__NV_EXTRA_FINALIZATION= -D__CUDA_INCLUDE_COMPILER_INTERNAL_HEADERS__  "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"    -D__CUDACC_VER_MAJOR__=12 -D__CUDACC_VER_MINOR__=1 -D__CUDACC_VER_BUILD__=105 -D__CUDA_API_VER_MAJOR__=12 -D__CUDA_API_VER_MINOR__=1 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -m64 "/usr/local/cuda/bin/crt/link.stub" -o "tmp/a_dlink.o" ]
+        considering line: [g++ -D__CUDA_ARCH_LIST__=520 -m64 -Wl,--start-group "tmp/a_dlink.o" "tmp/CMakeCUDACompilerId.o"   "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib"  -lcudadevrt  -lcudart_static  -lrt -lpthread  -ldl  -Wl,--end-group -o "a.out" ]
+          extracted link line: [g++ -D__CUDA_ARCH_LIST__=520 -m64 -Wl,--start-group "tmp/a_dlink.o" "tmp/CMakeCUDACompilerId.o"   "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib"  -lcudadevrt  -lcudart_static  -lrt -lpthread  -ldl  -Wl,--end-group -o "a.out" ]
         considering line: []
-        extracted link launcher absolute path: [/home/frankyin/Applications/gcc-12.2.0/build//bin/g++]
+        extracted link launcher name: [g++]
+        found link launcher absolute path: [/usr/bin/g++]
       
         link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        link line: [cuda-fake-ld "/home/frankyin/Applications/gcc-12.2.0/build//bin"/g++ -D__CUDA_ARCH_LIST__=520 -m64 -Wl,--start-group "tmp/a_dlink.o" "tmp/CMakeCUDACompilerId.o"   "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib"  -lcudadevrt  -lcudart_static  -lrt -lpthread  -ldl  -Wl,--end-group -o "a.out" ]
+        link line: [cuda-fake-ld g++ -D__CUDA_ARCH_LIST__=520 -m64 -Wl,--start-group "tmp/a_dlink.o" "tmp/CMakeCUDACompilerId.o"   "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib"  -lcudadevrt  -lcudart_static  -lrt -lpthread  -ldl  -Wl,--end-group -o "a.out" ]
           arg [cuda-fake-ld] ==> ignore
-          arg [/home/frankyin/Applications/gcc-12.2.0/build//bin/g++] ==> ignore
+          arg [g++] ==> ignore
           arg [-D__CUDA_ARCH_LIST__=520] ==> ignore
           arg [-m64] ==> ignore
           arg [-Wl,--start-group] ==> ignore
@@ -190,27 +191,28 @@ events:
         found 'PATH=' string: [/usr/local/cuda/bin/../nvvm/bin:/usr/local/cuda/bin:/usr/local/cuda/bin:/usr/local/cuda/bin:/home/frankyin/.local/bin:/home/frankyin/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/var/lib/snapd/snap/bin]
         found 'LIBRARIES=' string: ["-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib"]
         considering line: [#$ rm tmp/a_dlink.reg.c]
-        considering line: ["/home/frankyin/Applications/gcc-12.2.0/build//bin"/gcc -D__CUDA_ARCH_LIST__=520 -E -x c++ -D__CUDACC__ -D__NVCC__  "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"    -D__CUDACC_VER_MAJOR__=12 -D__CUDACC_VER_MINOR__=1 -D__CUDACC_VER_BUILD__=105 -D__CUDA_API_VER_MAJOR__=12 -D__CUDA_API_VER_MINOR__=1 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -include "cuda_runtime.h" -m64 "CMakeCUDACompilerId.cu" -o "tmp/CMakeCUDACompilerId.cpp4.ii" ]
-        considering line: [cudafe++ --c++17 --gnu_version=120200 --display_error_number --orig_src_file_name "CMakeCUDACompilerId.cu" --orig_src_path_name "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/3.26.3/CompilerIdCUDA/CMakeCUDACompilerId.cu" --allow_managed  --m64 --parse_templates --gen_c_file_name "tmp/CMakeCUDACompilerId.cudafe1.cpp" --stub_file_name "CMakeCUDACompilerId.cudafe1.stub.c" --gen_module_id_file --module_id_file_name "tmp/CMakeCUDACompilerId.module_id" "tmp/CMakeCUDACompilerId.cpp4.ii" ]
-        considering line: ["/home/frankyin/Applications/gcc-12.2.0/build//bin"/gcc -D__CUDA_ARCH__=520 -D__CUDA_ARCH_LIST__=520 -E -x c++  -DCUDA_DOUBLE_MATH_FUNCTIONS -D__CUDACC__ -D__NVCC__  "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"    -D__CUDACC_VER_MAJOR__=12 -D__CUDACC_VER_MINOR__=1 -D__CUDACC_VER_BUILD__=105 -D__CUDA_API_VER_MAJOR__=12 -D__CUDA_API_VER_MINOR__=1 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -include "cuda_runtime.h" -m64 "CMakeCUDACompilerId.cu" -o "tmp/CMakeCUDACompilerId.cpp1.ii" ]
-        considering line: [cicc --c++17 --gnu_version=120200 --display_error_number --orig_src_file_name "CMakeCUDACompilerId.cu" --orig_src_path_name "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/3.26.3/CompilerIdCUDA/CMakeCUDACompilerId.cu" --allow_managed   -arch compute_52 -m64 --no-version-ident -ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 --include_file_name "CMakeCUDACompilerId.fatbin.c" -tused --module_id_file_name "tmp/CMakeCUDACompilerId.module_id" --gen_c_file_name "tmp/CMakeCUDACompilerId.cudafe1.c" --stub_file_name "tmp/CMakeCUDACompilerId.cudafe1.stub.c" --gen_device_file_name "tmp/CMakeCUDACompilerId.cudafe1.gpu"  "tmp/CMakeCUDACompilerId.cpp1.ii" -o "tmp/CMakeCUDACompilerId.ptx"]
+        considering line: [gcc -D__CUDA_ARCH_LIST__=520 -E -x c++ -D__CUDACC__ -D__NVCC__  "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"    -D__CUDACC_VER_MAJOR__=12 -D__CUDACC_VER_MINOR__=1 -D__CUDACC_VER_BUILD__=105 -D__CUDA_API_VER_MAJOR__=12 -D__CUDA_API_VER_MINOR__=1 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -include "cuda_runtime.h" -m64 "CMakeCUDACompilerId.cu" -o "tmp/CMakeCUDACompilerId.cpp4.ii" ]
+        considering line: [cudafe++ --c++17 --gnu_version=120200 --display_error_number --orig_src_file_name "CMakeCUDACompilerId.cu" --orig_src_path_name "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/3.26.4/CompilerIdCUDA/CMakeCUDACompilerId.cu" --allow_managed  --m64 --parse_templates --gen_c_file_name "tmp/CMakeCUDACompilerId.cudafe1.cpp" --stub_file_name "CMakeCUDACompilerId.cudafe1.stub.c" --gen_module_id_file --module_id_file_name "tmp/CMakeCUDACompilerId.module_id" "tmp/CMakeCUDACompilerId.cpp4.ii" ]
+        considering line: [gcc -D__CUDA_ARCH__=520 -D__CUDA_ARCH_LIST__=520 -E -x c++  -DCUDA_DOUBLE_MATH_FUNCTIONS -D__CUDACC__ -D__NVCC__  "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"    -D__CUDACC_VER_MAJOR__=12 -D__CUDACC_VER_MINOR__=1 -D__CUDACC_VER_BUILD__=105 -D__CUDA_API_VER_MAJOR__=12 -D__CUDA_API_VER_MINOR__=1 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -include "cuda_runtime.h" -m64 "CMakeCUDACompilerId.cu" -o "tmp/CMakeCUDACompilerId.cpp1.ii" ]
+        considering line: [cicc --c++17 --gnu_version=120200 --display_error_number --orig_src_file_name "CMakeCUDACompilerId.cu" --orig_src_path_name "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/3.26.4/CompilerIdCUDA/CMakeCUDACompilerId.cu" --allow_managed   -arch compute_52 -m64 --no-version-ident -ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 --include_file_name "CMakeCUDACompilerId.fatbin.c" -tused --module_id_file_name "tmp/CMakeCUDACompilerId.module_id" --gen_c_file_name "tmp/CMakeCUDACompilerId.cudafe1.c" --stub_file_name "tmp/CMakeCUDACompilerId.cudafe1.stub.c" --gen_device_file_name "tmp/CMakeCUDACompilerId.cudafe1.gpu"  "tmp/CMakeCUDACompilerId.cpp1.ii" -o "tmp/CMakeCUDACompilerId.ptx"]
         considering line: [ptxas -arch=sm_52 -m64  "tmp/CMakeCUDACompilerId.ptx"  -o "tmp/CMakeCUDACompilerId.sm_52.cubin" ]
         considering line: [fatbinary --create="tmp/CMakeCUDACompilerId.fatbin" -64 --cicc-cmdline="-ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 " "--image3=kind=elf,sm=52,file=tmp/CMakeCUDACompilerId.sm_52.cubin" "--image3=kind=ptx,sm=52,file=tmp/CMakeCUDACompilerId.ptx" --embedded-fatbin="tmp/CMakeCUDACompilerId.fatbin.c" ]
-        considering line: ["/home/frankyin/Applications/gcc-12.2.0/build//bin"/gcc -D__CUDA_ARCH__=520 -D__CUDA_ARCH_LIST__=520 -c -x c++  -DCUDA_DOUBLE_MATH_FUNCTIONS "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"   -m64 "tmp/CMakeCUDACompilerId.cudafe1.cpp" -o "tmp/CMakeCUDACompilerId.o" ]
-        considering line: [nvlink -m64 --arch=sm_52 --register-link-binaries="tmp/a_dlink.reg.c"    "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib" -cpu-arch=X86_64 "tmp/CMakeCUDACompilerId.o"  -lcudadevrt  -o "tmp/a_dlink.sm_52.cubin" --host-ccbin "/home/frankyin/Applications/gcc-12.2.0/build//bin/gcc"]
+        considering line: [gcc -D__CUDA_ARCH__=520 -D__CUDA_ARCH_LIST__=520 -c -x c++  -DCUDA_DOUBLE_MATH_FUNCTIONS "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"   -m64 "tmp/CMakeCUDACompilerId.cudafe1.cpp" -o "tmp/CMakeCUDACompilerId.o" ]
+        considering line: [nvlink -m64 --arch=sm_52 --register-link-binaries="tmp/a_dlink.reg.c"    "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib" -cpu-arch=X86_64 "tmp/CMakeCUDACompilerId.o"  -lcudadevrt  -o "tmp/a_dlink.sm_52.cubin" --host-ccbin "gcc"]
           ignoring nvlink line
         considering line: [fatbinary --create="tmp/a_dlink.fatbin" -64 --cicc-cmdline="-ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 " -link "--image3=kind=elf,sm=52,file=tmp/a_dlink.sm_52.cubin" --embedded-fatbin="tmp/a_dlink.fatbin.c" ]
-        considering line: ["/home/frankyin/Applications/gcc-12.2.0/build//bin"/gcc -D__CUDA_ARCH_LIST__=520 -c -x c++ -DFATBINFILE="\\"tmp/a_dlink.fatbin.c\\"" -DREGISTERLINKBINARYFILE="\\"tmp/a_dlink.reg.c\\"" -I. -D__NV_EXTRA_INITIALIZATION= -D__NV_EXTRA_FINALIZATION= -D__CUDA_INCLUDE_COMPILER_INTERNAL_HEADERS__  "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"    -D__CUDACC_VER_MAJOR__=12 -D__CUDACC_VER_MINOR__=1 -D__CUDACC_VER_BUILD__=105 -D__CUDA_API_VER_MAJOR__=12 -D__CUDA_API_VER_MINOR__=1 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -m64 "/usr/local/cuda/bin/crt/link.stub" -o "tmp/a_dlink.o" ]
-        considering line: ["/home/frankyin/Applications/gcc-12.2.0/build//bin"/g++ -D__CUDA_ARCH_LIST__=520 -m64 -Wl,--start-group "tmp/a_dlink.o" "tmp/CMakeCUDACompilerId.o"   "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib"  -lcudadevrt  -lcudart_static  -lrt -lpthread  -ldl  -Wl,--end-group -o "a.out" ]
-          extracted link line: ["/home/frankyin/Applications/gcc-12.2.0/build//bin"/g++ -D__CUDA_ARCH_LIST__=520 -m64 -Wl,--start-group "tmp/a_dlink.o" "tmp/CMakeCUDACompilerId.o"   "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib"  -lcudadevrt  -lcudart_static  -lrt -lpthread  -ldl  -Wl,--end-group -o "a.out" ]
+        considering line: [gcc -D__CUDA_ARCH_LIST__=520 -c -x c++ -DFATBINFILE="\\"tmp/a_dlink.fatbin.c\\"" -DREGISTERLINKBINARYFILE="\\"tmp/a_dlink.reg.c\\"" -I. -D__NV_EXTRA_INITIALIZATION= -D__NV_EXTRA_FINALIZATION= -D__CUDA_INCLUDE_COMPILER_INTERNAL_HEADERS__  "-I/usr/local/cuda/bin/../targets/x86_64-linux/include"    -D__CUDACC_VER_MAJOR__=12 -D__CUDACC_VER_MINOR__=1 -D__CUDACC_VER_BUILD__=105 -D__CUDA_API_VER_MAJOR__=12 -D__CUDA_API_VER_MINOR__=1 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -m64 "/usr/local/cuda/bin/crt/link.stub" -o "tmp/a_dlink.o" ]
+        considering line: [g++ -D__CUDA_ARCH_LIST__=520 -m64 -Wl,--start-group "tmp/a_dlink.o" "tmp/CMakeCUDACompilerId.o"   "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib"  -lcudadevrt  -lcudart_static  -lrt -lpthread  -ldl  -Wl,--end-group -o "a.out" ]
+          extracted link line: [g++ -D__CUDA_ARCH_LIST__=520 -m64 -Wl,--start-group "tmp/a_dlink.o" "tmp/CMakeCUDACompilerId.o"   "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib"  -lcudadevrt  -lcudart_static  -lrt -lpthread  -ldl  -Wl,--end-group -o "a.out" ]
         considering line: []
-        extracted link launcher absolute path: [/home/frankyin/Applications/gcc-12.2.0/build//bin/g++]
+        extracted link launcher name: [g++]
+        found link launcher absolute path: [/usr/bin/g++]
         found 'INCLUDES=' string: ["-I/usr/local/cuda/bin/../targets/x86_64-linux/include"  ]
       
         link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        link line: [cuda-fake-ld "/home/frankyin/Applications/gcc-12.2.0/build//bin"/g++ -D__CUDA_ARCH_LIST__=520 -m64 -Wl,--start-group "tmp/a_dlink.o" "tmp/CMakeCUDACompilerId.o"   "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib"  -lcudadevrt  -lcudart_static  -lrt -lpthread  -ldl  -Wl,--end-group -o "a.out" ]
+        link line: [cuda-fake-ld g++ -D__CUDA_ARCH_LIST__=520 -m64 -Wl,--start-group "tmp/a_dlink.o" "tmp/CMakeCUDACompilerId.o"   "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/x86_64-linux/lib"  -lcudadevrt  -lcudart_static  -lrt -lpthread  -ldl  -Wl,--end-group -o "a.out" ]
           arg [cuda-fake-ld] ==> ignore
-          arg [/home/frankyin/Applications/gcc-12.2.0/build//bin/g++] ==> ignore
+          arg [g++] ==> ignore
           arg [-D__CUDA_ARCH_LIST__=520] ==> ignore
           arg [-m64] ==> ignore
           arg [-Wl,--start-group] ==> ignore
@@ -243,8 +245,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-Wzptfa"
-      binary: "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-Wzptfa"
+      source: "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-ApEtIK"
+      binary: "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-ApEtIK"
     cmakeVariables:
       CMAKE_CUDA_ARCHITECTURES: "60"
       CMAKE_CXX_FLAGS: ""
@@ -252,21 +254,21 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-Wzptfa
+        Change Dir: /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-ApEtIK
         
-        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_32823/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_32823.dir/build.make CMakeFiles/cmTC_32823.dir/build
-        gmake[1]: Entering directory '/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-Wzptfa'
-        Building CXX object CMakeFiles/cmTC_32823.dir/CMakeCXXCompilerABI.cpp.o
-        /home/frankyin/Applications/gcc-12.2.0/build//bin/g++   -v -o CMakeFiles/cmTC_32823.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_06408/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_06408.dir/build.make CMakeFiles/cmTC_06408.dir/build
+        gmake[1]: Entering directory '/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-ApEtIK'
+        Building CXX object CMakeFiles/cmTC_06408.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/g++   -v -o CMakeFiles/cmTC_06408.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
-        COLLECT_GCC=/home/frankyin/Applications/gcc-12.2.0/build//bin/g++
+        COLLECT_GCC=/usr/bin/g++
         Target: x86_64-pc-linux-gnu
         Configured with: ../configure --prefix=/home/frankyin/Applications/gcc-12.2.0/build
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 12.2.0 (GCC) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_32823.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_32823.dir/'
-         /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_32823.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/ccjlILTd.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_06408.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_06408.dir/'
+         /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_06408.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/ccThri8S.s
         GNU C++17 (GCC) version 12.2.0 (x86_64-pc-linux-gnu)
         	compiled by GNU C version 12.2.0, GMP version 6.2.1, MPFR version 4.1.1-p1, MPC version 1.3.1, isl version isl-0.16.1-GMP
         
@@ -288,17 +290,17 @@ events:
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: aa8a17eb628c6e7ccc82757645229459
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_32823.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_32823.dir/'
-         as -v --64 -o CMakeFiles/cmTC_32823.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccjlILTd.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_06408.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_06408.dir/'
+         as -v --64 -o CMakeFiles/cmTC_06408.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccThri8S.s
         GNU assembler version 2.39 (x86_64-redhat-linux) using BFD version version 2.39-9.fc38
         COMPILER_PATH=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_32823.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_32823.dir/CMakeCXXCompilerABI.cpp.'
-        Linking CXX executable cmTC_32823
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_32823.dir/link.txt --verbose=1
-        /home/frankyin/Applications/gcc-12.2.0/build//bin/g++  -v -rdynamic CMakeFiles/cmTC_32823.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_32823 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_06408.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_06408.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_06408
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_06408.dir/link.txt --verbose=1
+        /usr/bin/g++  -v -rdynamic CMakeFiles/cmTC_06408.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_06408 
         Using built-in specs.
-        COLLECT_GCC=/home/frankyin/Applications/gcc-12.2.0/build//bin/g++
+        COLLECT_GCC=/usr/bin/g++
         COLLECT_LTO_WRAPPER=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/lto-wrapper
         Target: x86_64-pc-linux-gnu
         Configured with: ../configure --prefix=/home/frankyin/Applications/gcc-12.2.0/build
@@ -307,10 +309,10 @@ events:
         gcc version 12.2.0 (GCC) 
         COMPILER_PATH=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_32823' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_32823.'
-         /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/collect2 -plugin /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/liblto_plugin.so -plugin-opt=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccixyQte.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_32823 /lib/../lib64/crt1.o /lib/../lib64/crti.o /home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/crtbegin.o -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0 -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../.. CMakeFiles/cmTC_32823.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/crtend.o /lib/../lib64/crtn.o
-        COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_32823' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_32823.'
-        gmake[1]: Leaving directory '/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-Wzptfa'
+        COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_06408' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_06408.'
+         /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/collect2 -plugin /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/liblto_plugin.so -plugin-opt=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccaZK6iV.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_06408 /lib/../lib64/crt1.o /lib/../lib64/crti.o /home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/crtbegin.o -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0 -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../.. CMakeFiles/cmTC_06408.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/crtend.o /lib/../lib64/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_06408' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_06408.'
+        gmake[1]: Leaving directory '/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-ApEtIK'
         
       exitCode: 0
   -
@@ -352,21 +354,21 @@ events:
     message: |
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        ignore line: [Change Dir: /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-Wzptfa]
+        ignore line: [Change Dir: /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-ApEtIK]
         ignore line: []
-        ignore line: [Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_32823/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_32823.dir/build.make CMakeFiles/cmTC_32823.dir/build]
-        ignore line: [gmake[1]: Entering directory '/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-Wzptfa']
-        ignore line: [Building CXX object CMakeFiles/cmTC_32823.dir/CMakeCXXCompilerABI.cpp.o]
-        ignore line: [/home/frankyin/Applications/gcc-12.2.0/build//bin/g++   -v -o CMakeFiles/cmTC_32823.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_06408/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_06408.dir/build.make CMakeFiles/cmTC_06408.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-ApEtIK']
+        ignore line: [Building CXX object CMakeFiles/cmTC_06408.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/g++   -v -o CMakeFiles/cmTC_06408.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Using built-in specs.]
-        ignore line: [COLLECT_GCC=/home/frankyin/Applications/gcc-12.2.0/build//bin/g++]
+        ignore line: [COLLECT_GCC=/usr/bin/g++]
         ignore line: [Target: x86_64-pc-linux-gnu]
         ignore line: [Configured with: ../configure --prefix=/home/frankyin/Applications/gcc-12.2.0/build]
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 12.2.0 (GCC) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_32823.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_32823.dir/']
-        ignore line: [ /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_32823.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/ccjlILTd.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_06408.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_06408.dir/']
+        ignore line: [ /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_06408.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/ccThri8S.s]
         ignore line: [GNU C++17 (GCC) version 12.2.0 (x86_64-pc-linux-gnu)]
         ignore line: [	compiled by GNU C version 12.2.0  GMP version 6.2.1  MPFR version 4.1.1-p1  MPC version 1.3.1  isl version isl-0.16.1-GMP]
         ignore line: []
@@ -388,17 +390,17 @@ events:
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: aa8a17eb628c6e7ccc82757645229459]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_32823.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_32823.dir/']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_32823.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccjlILTd.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_06408.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_06408.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_06408.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccThri8S.s]
         ignore line: [GNU assembler version 2.39 (x86_64-redhat-linux) using BFD version version 2.39-9.fc38]
         ignore line: [COMPILER_PATH=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_32823.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_32823.dir/CMakeCXXCompilerABI.cpp.']
-        ignore line: [Linking CXX executable cmTC_32823]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_32823.dir/link.txt --verbose=1]
-        ignore line: [/home/frankyin/Applications/gcc-12.2.0/build//bin/g++  -v -rdynamic CMakeFiles/cmTC_32823.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_32823 ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_06408.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_06408.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_06408]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_06408.dir/link.txt --verbose=1]
+        ignore line: [/usr/bin/g++  -v -rdynamic CMakeFiles/cmTC_06408.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_06408 ]
         ignore line: [Using built-in specs.]
-        ignore line: [COLLECT_GCC=/home/frankyin/Applications/gcc-12.2.0/build//bin/g++]
+        ignore line: [COLLECT_GCC=/usr/bin/g++]
         ignore line: [COLLECT_LTO_WRAPPER=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/lto-wrapper]
         ignore line: [Target: x86_64-pc-linux-gnu]
         ignore line: [Configured with: ../configure --prefix=/home/frankyin/Applications/gcc-12.2.0/build]
@@ -407,13 +409,13 @@ events:
         ignore line: [gcc version 12.2.0 (GCC) ]
         ignore line: [COMPILER_PATH=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_32823' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_32823.']
-        link line: [ /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/collect2 -plugin /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/liblto_plugin.so -plugin-opt=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccixyQte.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_32823 /lib/../lib64/crt1.o /lib/../lib64/crti.o /home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/crtbegin.o -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0 -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../.. CMakeFiles/cmTC_32823.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/crtend.o /lib/../lib64/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_06408' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_06408.']
+        link line: [ /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/collect2 -plugin /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/liblto_plugin.so -plugin-opt=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccaZK6iV.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_06408 /lib/../lib64/crt1.o /lib/../lib64/crti.o /home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/crtbegin.o -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0 -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../.. CMakeFiles/cmTC_06408.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/crtend.o /lib/../lib64/crtn.o]
           arg [/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccixyQte.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccaZK6iV.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -426,7 +428,7 @@ events:
           arg [-dynamic-linker] ==> ignore
           arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_32823] ==> ignore
+          arg [cmTC_06408] ==> ignore
           arg [/lib/../lib64/crt1.o] ==> obj [/lib/../lib64/crt1.o]
           arg [/lib/../lib64/crti.o] ==> obj [/lib/../lib64/crti.o]
           arg [/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/crtbegin.o] ==> obj [/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/crtbegin.o]
@@ -435,7 +437,7 @@ events:
           arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
           arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
           arg [-L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../..] ==> dir [/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../..]
-          arg [CMakeFiles/cmTC_32823.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_06408.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc_s] ==> lib [gcc_s]
@@ -468,8 +470,8 @@ events:
     checks:
       - "Detecting CUDA compiler ABI info"
     directories:
-      source: "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-qYZN1K"
-      binary: "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-qYZN1K"
+      source: "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-i0Aztq"
+      binary: "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-i0Aztq"
     cmakeVariables:
       CMAKE_CUDA_ARCHITECTURES: "60"
       CMAKE_CUDA_FLAGS: " -G -gencode arch=compute_50,code=sm_50 \t\t\t\t\t--expt-extended-lambda -use_fast_math -Xcompiler -Wall,-Wextra, \t\t\t\t\t-fpermissive \t\t\t\t\t"
@@ -478,21 +480,21 @@ events:
       variable: "CMAKE_CUDA_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-qYZN1K
+        Change Dir: /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-i0Aztq
         
-        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_348fc/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_348fc.dir/build.make CMakeFiles/cmTC_348fc.dir/build
-        gmake[1]: Entering directory '/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-qYZN1K'
-        Building CUDA object CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.o
-        /usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler -ccbin=/home/frankyin/Applications/gcc-12.2.0/build//bin/gcc   -G -gencode arch=compute_50,code=sm_50 					--expt-extended-lambda -use_fast_math -Xcompiler -Wall,-Wextra, 					-fpermissive 					  --generate-code=arch=compute_60,code=[compute_60,sm_60]   -Xcompiler=-v -MD -MT CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.o -MF CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.o.d -x cu -c /usr/share/cmake/Modules/CMakeCUDACompilerABI.cu -o CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.o
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_2ae49/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_2ae49.dir/build.make CMakeFiles/cmTC_2ae49.dir/build
+        gmake[1]: Entering directory '/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-i0Aztq'
+        Building CUDA object CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.o
+        /usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler   -G -gencode arch=compute_50,code=sm_50 					--expt-extended-lambda -use_fast_math -Xcompiler -Wall,-Wextra, 					-fpermissive 					  --generate-code=arch=compute_60,code=[compute_60,sm_60]   -Xcompiler=-v -MD -MT CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.o -MF CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.o.d -x cu -c /usr/share/cmake/Modules/CMakeCUDACompilerABI.cu -o CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.o
         Using built-in specs.
-        COLLECT_GCC=/home/frankyin/Applications/gcc-12.2.0/build//bin/gcc
+        COLLECT_GCC=gcc
         Target: x86_64-pc-linux-gnu
         Configured with: ../configure --prefix=/home/frankyin/Applications/gcc-12.2.0/build
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 12.2.0 (GCC) 
-        COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=500' '-D' '__CUDA_ARCH_LIST__=500,600' '-E' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_0000459d_00000000-8_CMakeCUDACompilerABI.compute_50.cpp1.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/'
-         /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/cc1plus -E -quiet -v -I /usr/local/cuda/bin/../targets/x86_64-linux/include -D_GNU_SOURCE -D __CUDA_ARCH__=500 -D __CUDA_ARCH_LIST__=500,600 -D CUDA_DOUBLE_MATH_FUNCTIONS -D __CUDACC__ -D __NVCC__ -D __CUDACC_DEBUG__ -D __CUDACC_EXTENDED_LAMBDA__ -D __CUDACC_VER_MAJOR__=12 -D __CUDACC_VER_MINOR__=1 -D __CUDACC_VER_BUILD__=105 -D __CUDA_API_VER_MAJOR__=12 -D __CUDA_API_VER_MINOR__=1 -D __NVCC_DIAG_PRAGMA_SUPPORT__=1 -include cuda_runtime.h /usr/share/cmake/Modules/CMakeCUDACompilerABI.cu -o /tmp/tmpxft_0000459d_00000000-8_CMakeCUDACompilerABI.compute_50.cpp1.ii -m64 -mtune=generic -march=x86-64 -Wall -Wextra -fpermissive -dumpdir /tmp/ -dumpbase tmpxft_0000459d_00000000-8_CMakeCUDACompilerABI.compute_50.cpp1.cu -dumpbase-ext .cu
+        COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=500' '-D' '__CUDA_ARCH_LIST__=500,600' '-E' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_000041dc_00000000-8_CMakeCUDACompilerABI.compute_50.cpp1.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/'
+         /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/cc1plus -E -quiet -v -I /usr/local/cuda/bin/../targets/x86_64-linux/include -D_GNU_SOURCE -D __CUDA_ARCH__=500 -D __CUDA_ARCH_LIST__=500,600 -D CUDA_DOUBLE_MATH_FUNCTIONS -D __CUDACC__ -D __NVCC__ -D __CUDACC_DEBUG__ -D __CUDACC_EXTENDED_LAMBDA__ -D __CUDACC_VER_MAJOR__=12 -D __CUDACC_VER_MINOR__=1 -D __CUDACC_VER_BUILD__=105 -D __CUDA_API_VER_MAJOR__=12 -D __CUDA_API_VER_MINOR__=1 -D __NVCC_DIAG_PRAGMA_SUPPORT__=1 -include cuda_runtime.h /usr/share/cmake/Modules/CMakeCUDACompilerABI.cu -o /tmp/tmpxft_000041dc_00000000-8_CMakeCUDACompilerABI.compute_50.cpp1.ii -m64 -mtune=generic -march=x86-64 -Wall -Wextra -fpermissive -dumpdir /tmp/ -dumpbase tmpxft_000041dc_00000000-8_CMakeCUDACompilerABI.compute_50.cpp1.cu -dumpbase-ext .cu
         ignoring nonexistent directory "/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../x86_64-pc-linux-gnu/include"
         #include "..." search starts here:
         #include <...> search starts here:
@@ -508,16 +510,16 @@ events:
         End of search list.
         COMPILER_PATH=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=500' '-D' '__CUDA_ARCH_LIST__=500,600' '-E' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_0000459d_00000000-8_CMakeCUDACompilerABI.compute_50.cpp1.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/tmpxft_0000459d_00000000-8_CMakeCUDACompilerABI.compute_50.cpp1.'
+        COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=500' '-D' '__CUDA_ARCH_LIST__=500,600' '-E' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_000041dc_00000000-8_CMakeCUDACompilerABI.compute_50.cpp1.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/tmpxft_000041dc_00000000-8_CMakeCUDACompilerABI.compute_50.cpp1.'
         Using built-in specs.
-        COLLECT_GCC=/home/frankyin/Applications/gcc-12.2.0/build//bin/gcc
+        COLLECT_GCC=gcc
         Target: x86_64-pc-linux-gnu
         Configured with: ../configure --prefix=/home/frankyin/Applications/gcc-12.2.0/build
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 12.2.0 (GCC) 
-        COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=600' '-D' '__CUDA_ARCH_LIST__=500,600' '-E' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_0000459d_00000000-9_CMakeCUDACompilerABI.compute_60.cpp1.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/'
-         /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/cc1plus -E -quiet -v -I /usr/local/cuda/bin/../targets/x86_64-linux/include -D_GNU_SOURCE -D __CUDA_ARCH__=600 -D __CUDA_ARCH_LIST__=500,600 -D CUDA_DOUBLE_MATH_FUNCTIONS -D __CUDACC__ -D __NVCC__ -D __CUDACC_DEBUG__ -D __CUDACC_EXTENDED_LAMBDA__ -D __CUDACC_VER_MAJOR__=12 -D __CUDACC_VER_MINOR__=1 -D __CUDACC_VER_BUILD__=105 -D __CUDA_API_VER_MAJOR__=12 -D __CUDA_API_VER_MINOR__=1 -D __NVCC_DIAG_PRAGMA_SUPPORT__=1 -include cuda_runtime.h /usr/share/cmake/Modules/CMakeCUDACompilerABI.cu -o /tmp/tmpxft_0000459d_00000000-9_CMakeCUDACompilerABI.compute_60.cpp1.ii -m64 -mtune=generic -march=x86-64 -Wall -Wextra -fpermissive -dumpdir /tmp/ -dumpbase tmpxft_0000459d_00000000-9_CMakeCUDACompilerABI.compute_60.cpp1.cu -dumpbase-ext .cu
+        COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=600' '-D' '__CUDA_ARCH_LIST__=500,600' '-E' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_000041dc_00000000-9_CMakeCUDACompilerABI.compute_60.cpp1.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/'
+         /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/cc1plus -E -quiet -v -I /usr/local/cuda/bin/../targets/x86_64-linux/include -D_GNU_SOURCE -D __CUDA_ARCH__=600 -D __CUDA_ARCH_LIST__=500,600 -D CUDA_DOUBLE_MATH_FUNCTIONS -D __CUDACC__ -D __NVCC__ -D __CUDACC_DEBUG__ -D __CUDACC_EXTENDED_LAMBDA__ -D __CUDACC_VER_MAJOR__=12 -D __CUDACC_VER_MINOR__=1 -D __CUDACC_VER_BUILD__=105 -D __CUDA_API_VER_MAJOR__=12 -D __CUDA_API_VER_MINOR__=1 -D __NVCC_DIAG_PRAGMA_SUPPORT__=1 -include cuda_runtime.h /usr/share/cmake/Modules/CMakeCUDACompilerABI.cu -o /tmp/tmpxft_000041dc_00000000-9_CMakeCUDACompilerABI.compute_60.cpp1.ii -m64 -mtune=generic -march=x86-64 -Wall -Wextra -fpermissive -dumpdir /tmp/ -dumpbase tmpxft_000041dc_00000000-9_CMakeCUDACompilerABI.compute_60.cpp1.cu -dumpbase-ext .cu
         ignoring nonexistent directory "/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../x86_64-pc-linux-gnu/include"
         #include "..." search starts here:
         #include <...> search starts here:
@@ -533,16 +535,16 @@ events:
         End of search list.
         COMPILER_PATH=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=600' '-D' '__CUDA_ARCH_LIST__=500,600' '-E' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_0000459d_00000000-9_CMakeCUDACompilerABI.compute_60.cpp1.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/tmpxft_0000459d_00000000-9_CMakeCUDACompilerABI.compute_60.cpp1.'
+        COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=600' '-D' '__CUDA_ARCH_LIST__=500,600' '-E' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_000041dc_00000000-9_CMakeCUDACompilerABI.compute_60.cpp1.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/tmpxft_000041dc_00000000-9_CMakeCUDACompilerABI.compute_60.cpp1.'
         Using built-in specs.
-        COLLECT_GCC=/home/frankyin/Applications/gcc-12.2.0/build//bin/gcc
+        COLLECT_GCC=gcc
         Target: x86_64-pc-linux-gnu
         Configured with: ../configure --prefix=/home/frankyin/Applications/gcc-12.2.0/build
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 12.2.0 (GCC) 
-        COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH_LIST__=500,600' '-E' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_0000459d_00000000-5_CMakeCUDACompilerABI.cpp4.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/'
-         /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/cc1plus -E -quiet -v -I /usr/local/cuda/bin/../targets/x86_64-linux/include -D_GNU_SOURCE -D __CUDA_ARCH_LIST__=500,600 -D __CUDACC__ -D __NVCC__ -D __CUDACC_DEBUG__ -D __CUDACC_EXTENDED_LAMBDA__ -D __CUDACC_VER_MAJOR__=12 -D __CUDACC_VER_MINOR__=1 -D __CUDACC_VER_BUILD__=105 -D __CUDA_API_VER_MAJOR__=12 -D __CUDA_API_VER_MINOR__=1 -D __NVCC_DIAG_PRAGMA_SUPPORT__=1 -include cuda_runtime.h /usr/share/cmake/Modules/CMakeCUDACompilerABI.cu -o /tmp/tmpxft_0000459d_00000000-5_CMakeCUDACompilerABI.cpp4.ii -m64 -mtune=generic -march=x86-64 -Wall -Wextra -fpermissive -dumpdir /tmp/ -dumpbase tmpxft_0000459d_00000000-5_CMakeCUDACompilerABI.cpp4.cu -dumpbase-ext .cu
+        COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH_LIST__=500,600' '-E' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_000041dc_00000000-5_CMakeCUDACompilerABI.cpp4.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/'
+         /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/cc1plus -E -quiet -v -I /usr/local/cuda/bin/../targets/x86_64-linux/include -D_GNU_SOURCE -D __CUDA_ARCH_LIST__=500,600 -D __CUDACC__ -D __NVCC__ -D __CUDACC_DEBUG__ -D __CUDACC_EXTENDED_LAMBDA__ -D __CUDACC_VER_MAJOR__=12 -D __CUDACC_VER_MINOR__=1 -D __CUDACC_VER_BUILD__=105 -D __CUDA_API_VER_MAJOR__=12 -D __CUDA_API_VER_MINOR__=1 -D __NVCC_DIAG_PRAGMA_SUPPORT__=1 -include cuda_runtime.h /usr/share/cmake/Modules/CMakeCUDACompilerABI.cu -o /tmp/tmpxft_000041dc_00000000-5_CMakeCUDACompilerABI.cpp4.ii -m64 -mtune=generic -march=x86-64 -Wall -Wextra -fpermissive -dumpdir /tmp/ -dumpbase tmpxft_000041dc_00000000-5_CMakeCUDACompilerABI.cpp4.cu -dumpbase-ext .cu
         ignoring nonexistent directory "/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../x86_64-pc-linux-gnu/include"
         #include "..." search starts here:
         #include <...> search starts here:
@@ -558,16 +560,16 @@ events:
         End of search list.
         COMPILER_PATH=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH_LIST__=500,600' '-E' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_0000459d_00000000-5_CMakeCUDACompilerABI.cpp4.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/tmpxft_0000459d_00000000-5_CMakeCUDACompilerABI.cpp4.'
+        COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH_LIST__=500,600' '-E' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_000041dc_00000000-5_CMakeCUDACompilerABI.cpp4.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/tmpxft_000041dc_00000000-5_CMakeCUDACompilerABI.cpp4.'
         Using built-in specs.
-        COLLECT_GCC=/home/frankyin/Applications/gcc-12.2.0/build//bin/gcc
+        COLLECT_GCC=gcc
         Target: x86_64-pc-linux-gnu
         Configured with: ../configure --prefix=/home/frankyin/Applications/gcc-12.2.0/build
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 12.2.0 (GCC) 
-        COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=600' '-D' '__CUDA_ARCH_LIST__=500,600' '-c' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-m64' '-o' 'CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_348fc.dir/'
-         /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/cc1plus -quiet -v -I /usr/local/cuda/bin/../targets/x86_64-linux/include -D_GNU_SOURCE -D __CUDA_ARCH__=600 -D __CUDA_ARCH_LIST__=500,600 -D CUDA_DOUBLE_MATH_FUNCTIONS /tmp/tmpxft_0000459d_00000000-6_CMakeCUDACompilerABI.compute_60.cudafe1.cpp -quiet -dumpdir CMakeFiles/cmTC_348fc.dir/ -dumpbase CMakeCUDACompilerABI.cu.cpp -dumpbase-ext .cpp -m64 -mtune=generic -march=x86-64 -Wall -Wextra -version -fpermissive -o /tmp/ccHII7Zh.s
+        COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=600' '-D' '__CUDA_ARCH_LIST__=500,600' '-c' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-m64' '-o' 'CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_2ae49.dir/'
+         /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/cc1plus -quiet -v -I /usr/local/cuda/bin/../targets/x86_64-linux/include -D_GNU_SOURCE -D __CUDA_ARCH__=600 -D __CUDA_ARCH_LIST__=500,600 -D CUDA_DOUBLE_MATH_FUNCTIONS /tmp/tmpxft_000041dc_00000000-6_CMakeCUDACompilerABI.compute_60.cudafe1.cpp -quiet -dumpdir CMakeFiles/cmTC_2ae49.dir/ -dumpbase CMakeCUDACompilerABI.cu.cpp -dumpbase-ext .cpp -m64 -mtune=generic -march=x86-64 -Wall -Wextra -version -fpermissive -o /tmp/ccl5cHVk.s
         GNU C++17 (GCC) version 12.2.0 (x86_64-pc-linux-gnu)
         	compiled by GNU C version 12.2.0, GMP version 6.2.1, MPFR version 4.1.1-p1, MPC version 1.3.1, isl version isl-0.16.1-GMP
         
@@ -590,17 +592,17 @@ events:
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: aa8a17eb628c6e7ccc82757645229459
-        COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=600' '-D' '__CUDA_ARCH_LIST__=500,600' '-c' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-m64' '-o' 'CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_348fc.dir/'
-         as -v -I /usr/local/cuda/bin/../targets/x86_64-linux/include --64 -o CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.o /tmp/ccHII7Zh.s
+        COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=600' '-D' '__CUDA_ARCH_LIST__=500,600' '-c' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-m64' '-o' 'CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_2ae49.dir/'
+         as -v -I /usr/local/cuda/bin/../targets/x86_64-linux/include --64 -o CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.o /tmp/ccl5cHVk.s
         GNU assembler version 2.39 (x86_64-redhat-linux) using BFD version version 2.39-9.fc38
         COMPILER_PATH=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=600' '-D' '__CUDA_ARCH_LIST__=500,600' '-c' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-m64' '-o' 'CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.'
-        Linking CUDA executable cmTC_348fc
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_348fc.dir/link.txt --verbose=1
-        /home/frankyin/Applications/gcc-12.2.0/build//bin/g++  -v CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.o -o cmTC_348fc  -lcudadevrt -lcudart_static -lrt -lpthread -ldl  -L"/usr/local/cuda/targets/x86_64-linux/lib/stubs" -L"/usr/local/cuda/targets/x86_64-linux/lib"
+        COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=600' '-D' '__CUDA_ARCH_LIST__=500,600' '-c' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-m64' '-o' 'CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.'
+        Linking CUDA executable cmTC_2ae49
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2ae49.dir/link.txt --verbose=1
+        /usr/bin/g++  -v CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.o -o cmTC_2ae49  -lcudadevrt -lcudart_static -lrt -lpthread -ldl  -L"/usr/local/cuda/targets/x86_64-linux/lib/stubs" -L"/usr/local/cuda/targets/x86_64-linux/lib"
         Using built-in specs.
-        COLLECT_GCC=/home/frankyin/Applications/gcc-12.2.0/build//bin/g++
+        COLLECT_GCC=/usr/bin/g++
         COLLECT_LTO_WRAPPER=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/lto-wrapper
         Target: x86_64-pc-linux-gnu
         Configured with: ../configure --prefix=/home/frankyin/Applications/gcc-12.2.0/build
@@ -609,10 +611,10 @@ events:
         gcc version 12.2.0 (GCC) 
         COMPILER_PATH=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_348fc' '-L/usr/local/cuda/targets/x86_64-linux/lib/stubs' '-L/usr/local/cuda/targets/x86_64-linux/lib' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_348fc.'
-         /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/collect2 -plugin /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/liblto_plugin.so -plugin-opt=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/cc1OtKIy.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_348fc /lib/../lib64/crt1.o /lib/../lib64/crti.o /home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/crtbegin.o -L/usr/local/cuda/targets/x86_64-linux/lib/stubs -L/usr/local/cuda/targets/x86_64-linux/lib -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0 -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../.. CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.o -lcudadevrt -lcudart_static -lrt -lpthread -ldl -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/crtend.o /lib/../lib64/crtn.o
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_348fc' '-L/usr/local/cuda/targets/x86_64-linux/lib/stubs' '-L/usr/local/cuda/targets/x86_64-linux/lib' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_348fc.'
-        gmake[1]: Leaving directory '/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-qYZN1K'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_2ae49' '-L/usr/local/cuda/targets/x86_64-linux/lib/stubs' '-L/usr/local/cuda/targets/x86_64-linux/lib' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_2ae49.'
+         /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/collect2 -plugin /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/liblto_plugin.so -plugin-opt=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/cchdRF0o.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_2ae49 /lib/../lib64/crt1.o /lib/../lib64/crti.o /home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/crtbegin.o -L/usr/local/cuda/targets/x86_64-linux/lib/stubs -L/usr/local/cuda/targets/x86_64-linux/lib -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0 -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../.. CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.o -lcudadevrt -lcudart_static -lrt -lpthread -ldl -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/crtend.o /lib/../lib64/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_2ae49' '-L/usr/local/cuda/targets/x86_64-linux/lib/stubs' '-L/usr/local/cuda/targets/x86_64-linux/lib' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_2ae49.'
+        gmake[1]: Leaving directory '/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-i0Aztq'
         
       exitCode: 0
   -
@@ -656,21 +658,21 @@ events:
     message: |
       Parsed CUDA implicit link information:
         link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        ignore line: [Change Dir: /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-qYZN1K]
+        ignore line: [Change Dir: /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-i0Aztq]
         ignore line: []
-        ignore line: [Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_348fc/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_348fc.dir/build.make CMakeFiles/cmTC_348fc.dir/build]
-        ignore line: [gmake[1]: Entering directory '/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-qYZN1K']
-        ignore line: [Building CUDA object CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.o]
-        ignore line: [/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler -ccbin=/home/frankyin/Applications/gcc-12.2.0/build//bin/gcc   -G -gencode arch=compute_50 code=sm_50 					--expt-extended-lambda -use_fast_math -Xcompiler -Wall -Wextra  					-fpermissive 					  --generate-code=arch=compute_60 code=[compute_60 sm_60]   -Xcompiler=-v -MD -MT CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.o -MF CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.o.d -x cu -c /usr/share/cmake/Modules/CMakeCUDACompilerABI.cu -o CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.o]
+        ignore line: [Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_2ae49/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_2ae49.dir/build.make CMakeFiles/cmTC_2ae49.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build/CMakeFiles/CMakeScratch/TryCompile-i0Aztq']
+        ignore line: [Building CUDA object CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.o]
+        ignore line: [/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler   -G -gencode arch=compute_50 code=sm_50 					--expt-extended-lambda -use_fast_math -Xcompiler -Wall -Wextra  					-fpermissive 					  --generate-code=arch=compute_60 code=[compute_60 sm_60]   -Xcompiler=-v -MD -MT CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.o -MF CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.o.d -x cu -c /usr/share/cmake/Modules/CMakeCUDACompilerABI.cu -o CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.o]
         ignore line: [Using built-in specs.]
-        ignore line: [COLLECT_GCC=/home/frankyin/Applications/gcc-12.2.0/build//bin/gcc]
+        ignore line: [COLLECT_GCC=gcc]
         ignore line: [Target: x86_64-pc-linux-gnu]
         ignore line: [Configured with: ../configure --prefix=/home/frankyin/Applications/gcc-12.2.0/build]
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 12.2.0 (GCC) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=500' '-D' '__CUDA_ARCH_LIST__=500 600' '-E' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_0000459d_00000000-8_CMakeCUDACompilerABI.compute_50.cpp1.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/']
-        ignore line: [ /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/cc1plus -E -quiet -v -I /usr/local/cuda/bin/../targets/x86_64-linux/include -D_GNU_SOURCE -D __CUDA_ARCH__=500 -D __CUDA_ARCH_LIST__=500 600 -D CUDA_DOUBLE_MATH_FUNCTIONS -D __CUDACC__ -D __NVCC__ -D __CUDACC_DEBUG__ -D __CUDACC_EXTENDED_LAMBDA__ -D __CUDACC_VER_MAJOR__=12 -D __CUDACC_VER_MINOR__=1 -D __CUDACC_VER_BUILD__=105 -D __CUDA_API_VER_MAJOR__=12 -D __CUDA_API_VER_MINOR__=1 -D __NVCC_DIAG_PRAGMA_SUPPORT__=1 -include cuda_runtime.h /usr/share/cmake/Modules/CMakeCUDACompilerABI.cu -o /tmp/tmpxft_0000459d_00000000-8_CMakeCUDACompilerABI.compute_50.cpp1.ii -m64 -mtune=generic -march=x86-64 -Wall -Wextra -fpermissive -dumpdir /tmp/ -dumpbase tmpxft_0000459d_00000000-8_CMakeCUDACompilerABI.compute_50.cpp1.cu -dumpbase-ext .cu]
+        ignore line: [COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=500' '-D' '__CUDA_ARCH_LIST__=500 600' '-E' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_000041dc_00000000-8_CMakeCUDACompilerABI.compute_50.cpp1.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/']
+        ignore line: [ /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/cc1plus -E -quiet -v -I /usr/local/cuda/bin/../targets/x86_64-linux/include -D_GNU_SOURCE -D __CUDA_ARCH__=500 -D __CUDA_ARCH_LIST__=500 600 -D CUDA_DOUBLE_MATH_FUNCTIONS -D __CUDACC__ -D __NVCC__ -D __CUDACC_DEBUG__ -D __CUDACC_EXTENDED_LAMBDA__ -D __CUDACC_VER_MAJOR__=12 -D __CUDACC_VER_MINOR__=1 -D __CUDACC_VER_BUILD__=105 -D __CUDA_API_VER_MAJOR__=12 -D __CUDA_API_VER_MINOR__=1 -D __NVCC_DIAG_PRAGMA_SUPPORT__=1 -include cuda_runtime.h /usr/share/cmake/Modules/CMakeCUDACompilerABI.cu -o /tmp/tmpxft_000041dc_00000000-8_CMakeCUDACompilerABI.compute_50.cpp1.ii -m64 -mtune=generic -march=x86-64 -Wall -Wextra -fpermissive -dumpdir /tmp/ -dumpbase tmpxft_000041dc_00000000-8_CMakeCUDACompilerABI.compute_50.cpp1.cu -dumpbase-ext .cu]
         ignore line: [ignoring nonexistent directory "/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../x86_64-pc-linux-gnu/include"]
         ignore line: [#include "..." search starts here:]
         ignore line: [#include <...> search starts here:]
@@ -686,16 +688,16 @@ events:
         ignore line: [End of search list.]
         ignore line: [COMPILER_PATH=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=500' '-D' '__CUDA_ARCH_LIST__=500 600' '-E' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_0000459d_00000000-8_CMakeCUDACompilerABI.compute_50.cpp1.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/tmpxft_0000459d_00000000-8_CMakeCUDACompilerABI.compute_50.cpp1.']
+        ignore line: [COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=500' '-D' '__CUDA_ARCH_LIST__=500 600' '-E' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_000041dc_00000000-8_CMakeCUDACompilerABI.compute_50.cpp1.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/tmpxft_000041dc_00000000-8_CMakeCUDACompilerABI.compute_50.cpp1.']
         ignore line: [Using built-in specs.]
-        ignore line: [COLLECT_GCC=/home/frankyin/Applications/gcc-12.2.0/build//bin/gcc]
+        ignore line: [COLLECT_GCC=gcc]
         ignore line: [Target: x86_64-pc-linux-gnu]
         ignore line: [Configured with: ../configure --prefix=/home/frankyin/Applications/gcc-12.2.0/build]
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 12.2.0 (GCC) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=600' '-D' '__CUDA_ARCH_LIST__=500 600' '-E' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_0000459d_00000000-9_CMakeCUDACompilerABI.compute_60.cpp1.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/']
-        ignore line: [ /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/cc1plus -E -quiet -v -I /usr/local/cuda/bin/../targets/x86_64-linux/include -D_GNU_SOURCE -D __CUDA_ARCH__=600 -D __CUDA_ARCH_LIST__=500 600 -D CUDA_DOUBLE_MATH_FUNCTIONS -D __CUDACC__ -D __NVCC__ -D __CUDACC_DEBUG__ -D __CUDACC_EXTENDED_LAMBDA__ -D __CUDACC_VER_MAJOR__=12 -D __CUDACC_VER_MINOR__=1 -D __CUDACC_VER_BUILD__=105 -D __CUDA_API_VER_MAJOR__=12 -D __CUDA_API_VER_MINOR__=1 -D __NVCC_DIAG_PRAGMA_SUPPORT__=1 -include cuda_runtime.h /usr/share/cmake/Modules/CMakeCUDACompilerABI.cu -o /tmp/tmpxft_0000459d_00000000-9_CMakeCUDACompilerABI.compute_60.cpp1.ii -m64 -mtune=generic -march=x86-64 -Wall -Wextra -fpermissive -dumpdir /tmp/ -dumpbase tmpxft_0000459d_00000000-9_CMakeCUDACompilerABI.compute_60.cpp1.cu -dumpbase-ext .cu]
+        ignore line: [COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=600' '-D' '__CUDA_ARCH_LIST__=500 600' '-E' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_000041dc_00000000-9_CMakeCUDACompilerABI.compute_60.cpp1.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/']
+        ignore line: [ /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/cc1plus -E -quiet -v -I /usr/local/cuda/bin/../targets/x86_64-linux/include -D_GNU_SOURCE -D __CUDA_ARCH__=600 -D __CUDA_ARCH_LIST__=500 600 -D CUDA_DOUBLE_MATH_FUNCTIONS -D __CUDACC__ -D __NVCC__ -D __CUDACC_DEBUG__ -D __CUDACC_EXTENDED_LAMBDA__ -D __CUDACC_VER_MAJOR__=12 -D __CUDACC_VER_MINOR__=1 -D __CUDACC_VER_BUILD__=105 -D __CUDA_API_VER_MAJOR__=12 -D __CUDA_API_VER_MINOR__=1 -D __NVCC_DIAG_PRAGMA_SUPPORT__=1 -include cuda_runtime.h /usr/share/cmake/Modules/CMakeCUDACompilerABI.cu -o /tmp/tmpxft_000041dc_00000000-9_CMakeCUDACompilerABI.compute_60.cpp1.ii -m64 -mtune=generic -march=x86-64 -Wall -Wextra -fpermissive -dumpdir /tmp/ -dumpbase tmpxft_000041dc_00000000-9_CMakeCUDACompilerABI.compute_60.cpp1.cu -dumpbase-ext .cu]
         ignore line: [ignoring nonexistent directory "/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../x86_64-pc-linux-gnu/include"]
         ignore line: [#include "..." search starts here:]
         ignore line: [#include <...> search starts here:]
@@ -711,16 +713,16 @@ events:
         ignore line: [End of search list.]
         ignore line: [COMPILER_PATH=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=600' '-D' '__CUDA_ARCH_LIST__=500 600' '-E' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_0000459d_00000000-9_CMakeCUDACompilerABI.compute_60.cpp1.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/tmpxft_0000459d_00000000-9_CMakeCUDACompilerABI.compute_60.cpp1.']
+        ignore line: [COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=600' '-D' '__CUDA_ARCH_LIST__=500 600' '-E' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_000041dc_00000000-9_CMakeCUDACompilerABI.compute_60.cpp1.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/tmpxft_000041dc_00000000-9_CMakeCUDACompilerABI.compute_60.cpp1.']
         ignore line: [Using built-in specs.]
-        ignore line: [COLLECT_GCC=/home/frankyin/Applications/gcc-12.2.0/build//bin/gcc]
+        ignore line: [COLLECT_GCC=gcc]
         ignore line: [Target: x86_64-pc-linux-gnu]
         ignore line: [Configured with: ../configure --prefix=/home/frankyin/Applications/gcc-12.2.0/build]
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 12.2.0 (GCC) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH_LIST__=500 600' '-E' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_0000459d_00000000-5_CMakeCUDACompilerABI.cpp4.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/']
-        ignore line: [ /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/cc1plus -E -quiet -v -I /usr/local/cuda/bin/../targets/x86_64-linux/include -D_GNU_SOURCE -D __CUDA_ARCH_LIST__=500 600 -D __CUDACC__ -D __NVCC__ -D __CUDACC_DEBUG__ -D __CUDACC_EXTENDED_LAMBDA__ -D __CUDACC_VER_MAJOR__=12 -D __CUDACC_VER_MINOR__=1 -D __CUDACC_VER_BUILD__=105 -D __CUDA_API_VER_MAJOR__=12 -D __CUDA_API_VER_MINOR__=1 -D __NVCC_DIAG_PRAGMA_SUPPORT__=1 -include cuda_runtime.h /usr/share/cmake/Modules/CMakeCUDACompilerABI.cu -o /tmp/tmpxft_0000459d_00000000-5_CMakeCUDACompilerABI.cpp4.ii -m64 -mtune=generic -march=x86-64 -Wall -Wextra -fpermissive -dumpdir /tmp/ -dumpbase tmpxft_0000459d_00000000-5_CMakeCUDACompilerABI.cpp4.cu -dumpbase-ext .cu]
+        ignore line: [COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH_LIST__=500 600' '-E' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_000041dc_00000000-5_CMakeCUDACompilerABI.cpp4.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/']
+        ignore line: [ /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/cc1plus -E -quiet -v -I /usr/local/cuda/bin/../targets/x86_64-linux/include -D_GNU_SOURCE -D __CUDA_ARCH_LIST__=500 600 -D __CUDACC__ -D __NVCC__ -D __CUDACC_DEBUG__ -D __CUDACC_EXTENDED_LAMBDA__ -D __CUDACC_VER_MAJOR__=12 -D __CUDACC_VER_MINOR__=1 -D __CUDACC_VER_BUILD__=105 -D __CUDA_API_VER_MAJOR__=12 -D __CUDA_API_VER_MINOR__=1 -D __NVCC_DIAG_PRAGMA_SUPPORT__=1 -include cuda_runtime.h /usr/share/cmake/Modules/CMakeCUDACompilerABI.cu -o /tmp/tmpxft_000041dc_00000000-5_CMakeCUDACompilerABI.cpp4.ii -m64 -mtune=generic -march=x86-64 -Wall -Wextra -fpermissive -dumpdir /tmp/ -dumpbase tmpxft_000041dc_00000000-5_CMakeCUDACompilerABI.cpp4.cu -dumpbase-ext .cu]
         ignore line: [ignoring nonexistent directory "/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../x86_64-pc-linux-gnu/include"]
         ignore line: [#include "..." search starts here:]
         ignore line: [#include <...> search starts here:]
@@ -736,16 +738,16 @@ events:
         ignore line: [End of search list.]
         ignore line: [COMPILER_PATH=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH_LIST__=500 600' '-E' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_0000459d_00000000-5_CMakeCUDACompilerABI.cpp4.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/tmpxft_0000459d_00000000-5_CMakeCUDACompilerABI.cpp4.']
+        ignore line: [COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH_LIST__=500 600' '-E' '-D' '__CUDACC__' '-D' '__NVCC__' '-D' '__CUDACC_DEBUG__' '-D' '__CUDACC_EXTENDED_LAMBDA__' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-D' '__CUDACC_VER_MAJOR__=12' '-D' '__CUDACC_VER_MINOR__=1' '-D' '__CUDACC_VER_BUILD__=105' '-D' '__CUDA_API_VER_MAJOR__=12' '-D' '__CUDA_API_VER_MINOR__=1' '-D' '__NVCC_DIAG_PRAGMA_SUPPORT__=1' '-include' 'cuda_runtime.h' '-m64' '-o' '/tmp/tmpxft_000041dc_00000000-5_CMakeCUDACompilerABI.cpp4.ii' '-mtune=generic' '-march=x86-64' '-dumpdir' '/tmp/tmpxft_000041dc_00000000-5_CMakeCUDACompilerABI.cpp4.']
         ignore line: [Using built-in specs.]
-        ignore line: [COLLECT_GCC=/home/frankyin/Applications/gcc-12.2.0/build//bin/gcc]
+        ignore line: [COLLECT_GCC=gcc]
         ignore line: [Target: x86_64-pc-linux-gnu]
         ignore line: [Configured with: ../configure --prefix=/home/frankyin/Applications/gcc-12.2.0/build]
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 12.2.0 (GCC) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=600' '-D' '__CUDA_ARCH_LIST__=500 600' '-c' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-m64' '-o' 'CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_348fc.dir/']
-        ignore line: [ /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/cc1plus -quiet -v -I /usr/local/cuda/bin/../targets/x86_64-linux/include -D_GNU_SOURCE -D __CUDA_ARCH__=600 -D __CUDA_ARCH_LIST__=500 600 -D CUDA_DOUBLE_MATH_FUNCTIONS /tmp/tmpxft_0000459d_00000000-6_CMakeCUDACompilerABI.compute_60.cudafe1.cpp -quiet -dumpdir CMakeFiles/cmTC_348fc.dir/ -dumpbase CMakeCUDACompilerABI.cu.cpp -dumpbase-ext .cpp -m64 -mtune=generic -march=x86-64 -Wall -Wextra -version -fpermissive -o /tmp/ccHII7Zh.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=600' '-D' '__CUDA_ARCH_LIST__=500 600' '-c' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-m64' '-o' 'CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_2ae49.dir/']
+        ignore line: [ /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/cc1plus -quiet -v -I /usr/local/cuda/bin/../targets/x86_64-linux/include -D_GNU_SOURCE -D __CUDA_ARCH__=600 -D __CUDA_ARCH_LIST__=500 600 -D CUDA_DOUBLE_MATH_FUNCTIONS /tmp/tmpxft_000041dc_00000000-6_CMakeCUDACompilerABI.compute_60.cudafe1.cpp -quiet -dumpdir CMakeFiles/cmTC_2ae49.dir/ -dumpbase CMakeCUDACompilerABI.cu.cpp -dumpbase-ext .cpp -m64 -mtune=generic -march=x86-64 -Wall -Wextra -version -fpermissive -o /tmp/ccl5cHVk.s]
         ignore line: [GNU C++17 (GCC) version 12.2.0 (x86_64-pc-linux-gnu)]
         ignore line: [	compiled by GNU C version 12.2.0  GMP version 6.2.1  MPFR version 4.1.1-p1  MPC version 1.3.1  isl version isl-0.16.1-GMP]
         ignore line: []
@@ -768,17 +770,17 @@ events:
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: aa8a17eb628c6e7ccc82757645229459]
-        ignore line: [COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=600' '-D' '__CUDA_ARCH_LIST__=500 600' '-c' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-m64' '-o' 'CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_348fc.dir/']
-        ignore line: [ as -v -I /usr/local/cuda/bin/../targets/x86_64-linux/include --64 -o CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.o /tmp/ccHII7Zh.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=600' '-D' '__CUDA_ARCH_LIST__=500 600' '-c' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-m64' '-o' 'CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_2ae49.dir/']
+        ignore line: [ as -v -I /usr/local/cuda/bin/../targets/x86_64-linux/include --64 -o CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.o /tmp/ccl5cHVk.s]
         ignore line: [GNU assembler version 2.39 (x86_64-redhat-linux) using BFD version version 2.39-9.fc38]
         ignore line: [COMPILER_PATH=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=600' '-D' '__CUDA_ARCH_LIST__=500 600' '-c' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-m64' '-o' 'CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.']
-        ignore line: [Linking CUDA executable cmTC_348fc]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_348fc.dir/link.txt --verbose=1]
-        ignore line: [/home/frankyin/Applications/gcc-12.2.0/build//bin/g++  -v CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.o -o cmTC_348fc  -lcudadevrt -lcudart_static -lrt -lpthread -ldl  -L"/usr/local/cuda/targets/x86_64-linux/lib/stubs" -L"/usr/local/cuda/targets/x86_64-linux/lib"]
+        ignore line: [COLLECT_GCC_OPTIONS='-D' '__CUDA_ARCH__=600' '-D' '__CUDA_ARCH_LIST__=500 600' '-c' '-D' 'CUDA_DOUBLE_MATH_FUNCTIONS' '-Wall' '-Wextra' '-v' '-fpermissive' '-I' '/usr/local/cuda/bin/../targets/x86_64-linux/include' '-m64' '-o' 'CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.']
+        ignore line: [Linking CUDA executable cmTC_2ae49]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2ae49.dir/link.txt --verbose=1]
+        ignore line: [/usr/bin/g++  -v CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.o -o cmTC_2ae49  -lcudadevrt -lcudart_static -lrt -lpthread -ldl  -L"/usr/local/cuda/targets/x86_64-linux/lib/stubs" -L"/usr/local/cuda/targets/x86_64-linux/lib"]
         ignore line: [Using built-in specs.]
-        ignore line: [COLLECT_GCC=/home/frankyin/Applications/gcc-12.2.0/build//bin/g++]
+        ignore line: [COLLECT_GCC=/usr/bin/g++]
         ignore line: [COLLECT_LTO_WRAPPER=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/lto-wrapper]
         ignore line: [Target: x86_64-pc-linux-gnu]
         ignore line: [Configured with: ../configure --prefix=/home/frankyin/Applications/gcc-12.2.0/build]
@@ -787,13 +789,13 @@ events:
         ignore line: [gcc version 12.2.0 (GCC) ]
         ignore line: [COMPILER_PATH=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_348fc' '-L/usr/local/cuda/targets/x86_64-linux/lib/stubs' '-L/usr/local/cuda/targets/x86_64-linux/lib' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_348fc.']
-        link line: [ /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/collect2 -plugin /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/liblto_plugin.so -plugin-opt=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/cc1OtKIy.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_348fc /lib/../lib64/crt1.o /lib/../lib64/crti.o /home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/crtbegin.o -L/usr/local/cuda/targets/x86_64-linux/lib/stubs -L/usr/local/cuda/targets/x86_64-linux/lib -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0 -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../.. CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.o -lcudadevrt -lcudart_static -lrt -lpthread -ldl -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/crtend.o /lib/../lib64/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_2ae49' '-L/usr/local/cuda/targets/x86_64-linux/lib/stubs' '-L/usr/local/cuda/targets/x86_64-linux/lib' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_2ae49.']
+        link line: [ /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/collect2 -plugin /home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/liblto_plugin.so -plugin-opt=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/cchdRF0o.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_2ae49 /lib/../lib64/crt1.o /lib/../lib64/crti.o /home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/crtbegin.o -L/usr/local/cuda/targets/x86_64-linux/lib/stubs -L/usr/local/cuda/targets/x86_64-linux/lib -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0 -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../.. CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.o -lcudadevrt -lcudart_static -lrt -lpthread -ldl -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/crtend.o /lib/../lib64/crtn.o]
           arg [/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/home/frankyin/Applications/gcc-12.2.0/build/libexec/gcc/x86_64-pc-linux-gnu/12.2.0/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/cc1OtKIy.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/cchdRF0o.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -805,7 +807,7 @@ events:
           arg [-dynamic-linker] ==> ignore
           arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_348fc] ==> ignore
+          arg [cmTC_2ae49] ==> ignore
           arg [/lib/../lib64/crt1.o] ==> obj [/lib/../lib64/crt1.o]
           arg [/lib/../lib64/crti.o] ==> obj [/lib/../lib64/crti.o]
           arg [/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/crtbegin.o] ==> obj [/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/crtbegin.o]
@@ -816,7 +818,7 @@ events:
           arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
           arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
           arg [-L/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../..] ==> dir [/home/frankyin/Applications/gcc-12.2.0/build/lib/gcc/x86_64-pc-linux-gnu/12.2.0/../../..]
-          arg [CMakeFiles/cmTC_348fc.dir/CMakeCUDACompilerABI.cu.o] ==> ignore
+          arg [CMakeFiles/cmTC_2ae49.dir/CMakeCUDACompilerABI.cu.o] ==> ignore
           arg [-lcudadevrt] ==> lib [cudadevrt]
           arg [-lcudart_static] ==> lib [cudart_static]
           arg [-lrt] ==> lib [rt]

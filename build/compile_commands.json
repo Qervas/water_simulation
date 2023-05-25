@@ -1,0 +1,56 @@
+[
+{
+  "directory": "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build",
+  "command": "/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler -DDEBUG --options-file CMakeFiles/app.dir/includes_CUDA.rsp  -G -gencode arch=compute_50,code=sm_50 \t\t\t\t\t--expt-extended-lambda -use_fast_math -Xcompiler -Wall,-Wextra, \t\t\t\t\t-fpermissive \t\t\t\t\t -g -std=c++17 --generate-code=arch=compute_60,code=[compute_60,sm_60] -Wall -Wextra -x cu -c /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/BasicSPHSolver.cu -o CMakeFiles/app.dir/src/BasicSPHSolver.cu.o",
+  "file": "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/BasicSPHSolver.cu",
+  "output": "CMakeFiles/app.dir/src/BasicSPHSolver.cu.o"
+},
+{
+  "directory": "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build",
+  "command": "/usr/bin/g++ -DDEBUG -I/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/include -I/usr/local/cuda/include -I/usr/local/cuda-samples/Common -g -g -std=gnu++17 -Wall -Wextra -o CMakeFiles/app.dir/src/Camera.cpp.o -c /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/Camera.cpp",
+  "file": "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/Camera.cpp",
+  "output": "CMakeFiles/app.dir/src/Camera.cpp.o"
+},
+{
+  "directory": "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build",
+  "command": "/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler -DDEBUG --options-file CMakeFiles/app.dir/includes_CUDA.rsp  -G -gencode arch=compute_50,code=sm_50 \t\t\t\t\t--expt-extended-lambda -use_fast_math -Xcompiler -Wall,-Wextra, \t\t\t\t\t-fpermissive \t\t\t\t\t -g -std=c++17 --generate-code=arch=compute_60,code=[compute_60,sm_60] -Wall -Wextra -x cu -c /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/MarchingCubes.cu -o CMakeFiles/app.dir/src/MarchingCubes.cu.o",
+  "file": "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/MarchingCubes.cu",
+  "output": "CMakeFiles/app.dir/src/MarchingCubes.cu.o"
+},
+{
+  "directory": "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build",
+  "command": "/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler -DDEBUG --options-file CMakeFiles/app.dir/includes_CUDA.rsp  -G -gencode arch=compute_50,code=sm_50 \t\t\t\t\t--expt-extended-lambda -use_fast_math -Xcompiler -Wall,-Wextra, \t\t\t\t\t-fpermissive \t\t\t\t\t -g -std=c++17 --generate-code=arch=compute_60,code=[compute_60,sm_60] -Wall -Wextra -x cu -c /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/Particles.cu -o CMakeFiles/app.dir/src/Particles.cu.o",
+  "file": "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/Particles.cu",
+  "output": "CMakeFiles/app.dir/src/Particles.cu.o"
+},
+{
+  "directory": "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build",
+  "command": "/usr/bin/g++ -DDEBUG -I/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/include -I/usr/local/cuda/include -I/usr/local/cuda-samples/Common -g -g -std=gnu++17 -Wall -Wextra -o CMakeFiles/app.dir/src/Render.cpp.o -c /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/Render.cpp",
+  "file": "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/Render.cpp",
+  "output": "CMakeFiles/app.dir/src/Render.cpp.o"
+},
+{
+  "directory": "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build",
+  "command": "/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler -DDEBUG --options-file CMakeFiles/app.dir/includes_CUDA.rsp  -G -gencode arch=compute_50,code=sm_50 \t\t\t\t\t--expt-extended-lambda -use_fast_math -Xcompiler -Wall,-Wextra, \t\t\t\t\t-fpermissive \t\t\t\t\t -g -std=c++17 --generate-code=arch=compute_60,code=[compute_60,sm_60] -Wall -Wextra -x cu -c /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/SPHSystem.cu -o CMakeFiles/app.dir/src/SPHSystem.cu.o",
+  "file": "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/SPHSystem.cu",
+  "output": "CMakeFiles/app.dir/src/SPHSystem.cu.o"
+},
+{
+  "directory": "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build",
+  "command": "/usr/bin/g++ -DDEBUG -I/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/include -I/usr/local/cuda/include -I/usr/local/cuda-samples/Common -g -g -std=gnu++17 -Wall -Wextra -o CMakeFiles/app.dir/src/ShaderUtils.cpp.o -c /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/ShaderUtils.cpp",
+  "file": "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/ShaderUtils.cpp",
+  "output": "CMakeFiles/app.dir/src/ShaderUtils.cpp.o"
+},
+{
+  "directory": "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build",
+  "command": "/usr/bin/g++ -DDEBUG -I/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/include -I/usr/local/cuda/include -I/usr/local/cuda-samples/Common -g -g -std=gnu++17 -Wall -Wextra -o CMakeFiles/app.dir/src/main.cpp.o -c /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/main.cpp",
+  "file": "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/main.cpp",
+  "output": "CMakeFiles/app.dir/src/main.cpp.o"
+},
+{
+  "directory": "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/build",
+  "command": "/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler -DDEBUG --options-file CMakeFiles/app.dir/includes_CUDA.rsp  -G -gencode arch=compute_50,code=sm_50 \t\t\t\t\t--expt-extended-lambda -use_fast_math -Xcompiler -Wall,-Wextra, \t\t\t\t\t-fpermissive \t\t\t\t\t -g -std=c++17 --generate-code=arch=compute_60,code=[compute_60,sm_60] -Wall -Wextra -x cu -c /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/vbo.cu -o CMakeFiles/app.dir/src/vbo.cu.o",
+  "file": "/home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/src/vbo.cu",
+  "output": "CMakeFiles/app.dir/src/vbo.cu.o"
+}
+]

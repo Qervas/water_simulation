@@ -93,7 +93,8 @@
 		"__string": "cpp",
 		"__hash_table": "cpp",
 		"__tree": "cpp",
-		"filesystem": "cpp"
+		"filesystem": "cpp",
+		"stack": "cpp"
 	},
 	"C_Cpp.default.compilerPath": "/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/bin/g++",
 	"C_Cpp.default.includePath": [
@@ -110,5 +111,6 @@
 	},
 	"cmake.generator": "Unix Makefiles",
 	"cmake.buildDirectory": "${workspaceFolder}/build",
-	"cmake.configureOnOpen": true
+	"cmake.configureOnOpen": true,
+	"C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
   }

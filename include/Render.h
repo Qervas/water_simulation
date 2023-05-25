@@ -9,15 +9,14 @@
 #include "DArray.h"
 #include "Particles.h"
 #include "SPHParticles.h"
-#include "BaseSolver.h"
 #include "BasicSPHSolver.h"
 #include "SPHSystem.h"
 #include "global.h"
 #include "ShaderUtils.h"
 
 #include "MarchingCubes.cuh"
-#define WIDTH 1920
-#define HEIGHT 1080
+#define WIDTH 2560
+#define HEIGHT 1600
 
 
 namespace particle_attributes {
@@ -60,7 +59,7 @@ private:
 
 	GLuint particles_vbo;
 	GLuint particles_color_vbo;
-	GLuint m_particles_program;
+	GLuint particleShaderProgram;
 	
 	GLuint surface_vao;
 	GLuint surface_vbo[2];

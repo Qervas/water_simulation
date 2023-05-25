@@ -8,15 +8,14 @@ in mat4 u_Persp;
 
 out vec4 FragColor;
 
-void main(void)
-{
+void main(void){
     // calculate normal from texture coordinates
     vec3 N;
 
     N.xy = gl_PointCoord.xy * vec2(2.0, -2.0) + vec2(-1.0, 1.0);
 
     float mag = dot(N.xy, N.xy);
-    if (mag > 1.0) discard;   // kill pixels outside circle
+    if (mag > 1.0) discard;   // kill pixels outside sphere
     N.z = sqrt(1.0 - mag);
 
     // calculate depth

@@ -1,26 +1,25 @@
 
 
 #pragma once
-#include "BaseSolver.h"
-class BasicSPHSolver: public BaseSolver {
+class BasicSPHSolver{
 public:
-	virtual void step(std::shared_ptr<SPHParticles>& fluids, const std::shared_ptr<SPHParticles>& boundaries,
+	void step(std::shared_ptr<SPHParticles>& fluids, const std::shared_ptr<SPHParticles>& boundaries,
 		const DArray<int>& cellStartFluid, const DArray<int>& cellStartBoundary, float3 spaceSize,
 		int3 cellSize, float cellLength, float radius, float dt,
 		float rho0, float rhoB, float stiff, float visc, float3 G,
-		float surfaceTensionIntensity, float airPressure) override;
+		float surfaceTensionIntensity, float airPressure) ;
 	explicit BasicSPHSolver(int num) :bufferFloat3(num) {}
-	virtual ~BasicSPHSolver() noexcept { }
+	 ~BasicSPHSolver() noexcept { }
 protected:
-	virtual void force(std::shared_ptr<SPHParticles>& fluids, float dt, float3 G) override final;
-	virtual void advect(std::shared_ptr<SPHParticles>& fluids, float dt, float3 spaceSize) override final;
-	virtual void project(std::shared_ptr<SPHParticles>& fluids, const std::shared_ptr<SPHParticles>& boundaries,
+	 void force(std::shared_ptr<SPHParticles>& fluids, float dt, float3 G);
+	 void advect(std::shared_ptr<SPHParticles>& fluids, float dt, float3 spaceSize);
+	 void project(std::shared_ptr<SPHParticles>& fluids, const std::shared_ptr<SPHParticles>& boundaries,
 		const DArray<int>& cellStartFluid, const DArray<int>& cellStartBoundary, float rho0, float stiff,
 		int3 cellSize, float cellLength, float radius, float dt);
-	virtual void diffuse(std::shared_ptr<SPHParticles>& fluids, const DArray<int>& cellStartFluid,
+	 void diffuse(std::shared_ptr<SPHParticles>& fluids, const DArray<int>& cellStartFluid,
 		int3 cellSize, float cellLength, float rho0,
 		float radius, float visc, float dt);
-	virtual void handleSurface(std::shared_ptr<SPHParticles>& fluids, const std::shared_ptr<SPHParticles>& boundaries,
+	 void handleSurface(std::shared_ptr<SPHParticles>& fluids, const std::shared_ptr<SPHParticles>& boundaries,
 		const DArray<int>& cellStartFluid, const DArray<int>& cellStartBoundary,
 		float rho0, float rhoB, int3 cellSize, float cellLength, float radius,
 		float dt, float surfaceTensionIntensity, float airPressure);

@@ -1,18 +1,20 @@
 #version 330 core
 
+layout(location = 1) in vec4 color;
+
 uniform float pointRadius;  // point size in world space
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 uniform float pointScale;
 
 in vec4 vertex;
-in vec4 color;
+// in vec4 color;
 
-out vec4 fs_Color;
-out float fs_pointSize;
+out vec4 fs_Color; //fragment shader color
+out float fs_pointSize; //fragment shader point size
 
 out vec3 fs_PosEye;     // center of the viewpoint space
-out mat4 u_Persp;
+out mat4 u_Persp;       // perspective matrix
 
 void main(void) {
 

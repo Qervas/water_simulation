@@ -793,5 +793,4 @@ CMakeFiles/app.dir/src/BasicSPHSolver.cu.o : /home/frankyin/Desktop/Workspace/wa
     /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/include/DArray.h \
     /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/include/Particles.h \
     /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/include/SPHParticles.h \
-    /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/include/BaseSolver.h \
     /home/frankyin/Desktop/Workspace/water_sim_proj/SPH/CPP-Fluid-Particles/include/BasicSPHSolver.h

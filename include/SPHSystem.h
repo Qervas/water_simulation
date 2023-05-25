@@ -1,13 +1,15 @@
 
 
 #pragma once
+#include<memory>
+#include "BasicSPHSolver.h"
 
 class SPHSystem {
 public:
 	SPHSystem(
 		std::shared_ptr<SPHParticles>& fluidParticles,
 		std::shared_ptr<SPHParticles>& boundaryParticles,
-		std::shared_ptr<BaseSolver>& solver,
+		std::shared_ptr<BasicSPHSolver>& solver,
 		float3 spaceSize,
 		float sphCellLength,
 		float sphSmoothingRadius,
@@ -48,7 +50,7 @@ public:
 private:
 	std::shared_ptr<SPHParticles> _fluids;
 	const std::shared_ptr<SPHParticles> _boundaries;
-	std::shared_ptr<BaseSolver> _solver;
+	std::shared_ptr<BasicSPHSolver> _solver;
 	DArray<int> cellStartFluid;
 	DArray<int> cellStartBoundary;
 	const float3 _spaceSize;

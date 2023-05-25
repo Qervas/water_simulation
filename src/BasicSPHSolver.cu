@@ -11,54 +11,48 @@
 #include "DArray.h"
 #include "Particles.h"
 #include "SPHParticles.h"
-#include "BaseSolver.h"
+#include "BasicSPHSolver.h"
 #include "BasicSPHSolver.h"
 
-__device__ void contributeFluidDensity(float* density, const int i, float3* pos, float* mass, const int cellStart, const int cellEnd, const float radius)
-{
+__device__ void contributeFluidDensity(float* density, const int i, float3* pos, float* mass, const int cellStart, 
+										const int cellEnd, const float radius){
 	auto j = cellStart;
-	while (j < cellEnd)
-	{
+	while (j < cellEnd)	{
 		*density += mass[j] * cubic_spline_kernel(length(pos[i] - pos[j]), radius);
 		++j;
 	}
-	return;
 }
 
-__device__ void contributeBoundaryDensity(float* density, const float3 pos_i, float3* pos, float* mass, const int cellStart, const int cellEnd, const float radius)
-{
+__device__ void contributeBoundaryDensity(float* density, const float3 pos_i, float3* pos, float* mass, const int cellStart,
+										 const int cellEnd, const float radius){
 	auto j = cellStart;
-	while (j < cellEnd)
-	{
+	while (j < cellEnd)	{
 		*density += mass[j] * cubic_spline_kernel(length(pos_i - pos[j]), radius);
 		++j;
 	}
-	return;
 }
 
 __global__ void computeDensity_CUDA(float* density, const int num,
 	float3* posFluid, float* massFluid, int* cellStartFluid, 
 	float3* posBoundary, float* massBoundary, int* cellStartBoundary,
 	const int3 cellSize, const float cellLength, const float radius)
-{
+	{
 	const unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
 	if (i >= num) return;
 	__syncthreads();
 #pragma unroll
-	for (auto m = 0; m < 27; __syncthreads(), ++m)
-	{
+	for (auto m = 0; m < 27; __syncthreads(), ++m)	{
 		const auto cellID = particlePos2cellIdx(
 			make_int3(posFluid[i] / cellLength) + make_int3(m / 9 - 1, (m % 9) / 3 - 1, m % 3 - 1), cellSize);
 		if (cellID == (cellSize.x * cellSize.y * cellSize.z)) continue;
 		contributeFluidDensity(&density[i], i, posFluid, massFluid, cellStartFluid[cellID], cellStartFluid[cellID + 1], radius);
 		contributeBoundaryDensity(&density[i], posFluid[i], posBoundary, massBoundary, cellStartBoundary[cellID], cellStartBoundary[cellID + 1], radius);
 	}
-	return;
 }
 
-void BasicSPHSolver::computeDensity(std::shared_ptr<SPHParticles>& fluids, const std::shared_ptr<SPHParticles>& boundaries,
-		const DArray<int>& cellStartFluid, const DArray<int>& cellStartBoundary, int3 cellSize, float cellLength, float radius) const
-{
+void BasicSPHSolver::computeDensity(std::shared_ptr<SPHParticles>& fluids, const std::shared_ptr<SPHParticles>& boundaries, 
+									const DArray<int>& cellStartFluid, const DArray<int>& cellStartBoundary, 
+									int3 cellSize, float cellLength, float radius) const{
 	int num = fluids->size();
 	thrust::fill(thrust::device, fluids->getDensityPtr(), fluids->getDensityPtr() + num, 0);
 	computeDensity_CUDA <<<(num - 1) / block_size + 1, block_size >>> (fluids->getDensityPtr(), num,
@@ -67,8 +61,7 @@ void BasicSPHSolver::computeDensity(std::shared_ptr<SPHParticles>& fluids, const
 		cellSize, cellLength, radius);
 }
 
-__global__ void enforceBoundary_CUDA(float3* pos, float3* vel, const int num, const float3 spaceSize)
-{
+__global__ void enforceBoundary_CUDA(float3* pos, float3* vel, const int num, const float3 spaceSize){
 	const unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
 	if (i >= num) return;
 	if (pos[i].x <= spaceSize.x * .00f) { pos[i].x = spaceSize.x * .00f;	vel[i].x = fmaxf(vel[i].x, 0.0f); }
@@ -85,8 +78,8 @@ void BasicSPHSolver::advect(std::shared_ptr<SPHParticles>& fluids, float dt, flo
 	enforceBoundary_CUDA <<<((fluids->size())-1)/block_size+1, block_size >>> (fluids->getPosPtr(), fluids->getVelPtr(), fluids->size(), spaceSize);
 }
 
-__global__ void computePressure_CUDA(float* pressure, float* density, const int num, const float rho0, const float stiff)
-{
+__global__ void computePressure_CUDA(float* pressure, float* density, const int num, const float rho0, const float stiff){
+
 	const unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
 	if (i >= num) return;
 	pressure[i] = stiff * (powf((density[i] / rho0), 7) - 1.0f);
@@ -96,26 +89,22 @@ __global__ void computePressure_CUDA(float* pressure, float* density, const int 
 }
 
 __device__ void contributeFluidPressure(float3* a, const int i, float3* pos, float* mass, 
-	float* density, float* pressure, const int cellStart, const int cellEnd, const float radius)
-{
+	float* density, float* pressure, const int cellStart, const int cellEnd, const float radius){
+
 	auto j = cellStart;
-	while (j < cellEnd)
-	{
+	while (j < cellEnd)	{
 		if (i != j)
 			* a += -mass[j] * 
 			(pressure[i] / fmaxf(EPSILON, density[i] * density[i]) + pressure[j] / fmaxf(EPSILON, density[j] * density[j]))
 			* cubic_spline_kernel_gradient(pos[i] - pos[j], radius);
 		++j;
 	}
-	return;
 }
 
 __device__ void contributeBoundaryPressure(float3* a, const float3 pos_i, float3* pos, float* mass,
-                                           const float density, const float pressure, const int cellStart, const int cellEnd, const float radius)
-{
+                                           const float density, const float pressure, const int cellStart, const int cellEnd, const float radius){
 	auto j = cellStart;
-	while (j < cellEnd)
-	{
+	while (j < cellEnd)	{
 		*a += -mass[j] * (pressure / fmaxf(EPSILON, density * density)) * cubic_spline_kernel_gradient(pos_i - pos[j], radius);
 		++j;
 	}

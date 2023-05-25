@@ -9,16 +9,14 @@
 #include "DArray.h"
 #include "Particles.h"
 #include "SPHParticles.h"
-#include "BaseSolver.h"
+#include "BasicSPHSolver.h"
 #include "SPHSystem.h"
 #include "CUDAFunctions.cuh"
 
-// __global__ void countingInCell_CUDA(int* cellStart, int* particle2cell, const unsigned int& num);
-// __global__ void mapParticles2Cells_CUDA(int* particles2cells, float3* pos, const float& cellLength, const int3& cellSize, const unsigned int& num);
 SPHSystem::SPHSystem(
 	std::shared_ptr<SPHParticles>& fluidParticles,
 	std::shared_ptr<SPHParticles>& boundaryParticles,
-	std::shared_ptr<BaseSolver>& solver,
+	std::shared_ptr<BasicSPHSolver>& solver,
 	const float3 spaceSize,
 	const float sphCellLength,
 	const float sphSmoothingRadius,
@@ -48,56 +46,50 @@ SPHSystem::SPHSystem(
 	_sphSurfaceTensionIntensity(sphSurfaceTensionIntensity),
 	_sphAirPressure(sphAirPressure),
 	_cellSize(cellSize),
-	bufferInt(max(totalSize(), cellSize.x* cellSize.y* cellSize.z + 1))
-{
-	// step 1: init boundary particles
-	neighborSearch(_boundaries, cellStartBoundary);
-	// step 2: calculate boundary particles' mass
-	computeBoundaryMass();
-	// step 3: init fluid particles
-	thrust::fill(thrust::device, _fluids->getMassPtr(), _fluids->getMassPtr() + _fluids->size(), sphM0);
-	neighborSearch(_fluids, cellStartFluid);
-	// step 4: fill all fluid particles' properties by calling step()
-	step();
+	bufferInt(max(totalSize(), cellSize.x* cellSize.y* cellSize.z + 1)){
+
+		// 1: init boundary particles
+		neighborSearch(_boundaries, cellStartBoundary);
+		// 2: calculate boundary particles' mass
+		computeBoundaryMass();
+		// 3: init fluid particles
+		thrust::fill(thrust::device, _fluids->getMassPtr(), _fluids->getMassPtr() + _fluids->size(), sphM0);
+		neighborSearch(_fluids, cellStartFluid);
+		// 4: fill all fluid particles' properties by calling step()
+		step();
 }
 
-__device__ void contributeBoundaryKernel(float* sum_kernel, const int i, const int cellID, float3* pos, int* cellStart, const int3 cellSize, const float radius)
-{
+__device__ void contributeBoundaryKernel(float* sum_kernel, const int i, const int cellID, float3* pos, 
+										int* cellStart, const int3 cellSize, const float radius){
 	if (cellID == (cellSize.x * cellSize.y * cellSize.z)) return;
 	auto j = cellStart[cellID];
 	const auto end = cellStart[cellID + 1];
-	while (j < end)
-	{
+	while (j < end)	{
 		*sum_kernel += cubic_spline_kernel(length(pos[i] - pos[j]), radius);
 		++j;
 	}
-	return;
 }
 
-__global__ void computeBoundaryMass_CUDA(float* mass, float3* pos, const int num, int* cellStart, const int3 cellSize, const float cellLength, const float rhoB, const float radius)
-{
+__global__ void computeBoundaryMass_CUDA(float* mass, float3* pos, const int num, int* cellStart, const int3 cellSize, 
+										const float cellLength, const float rhoB, const float radius){
 	const unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
 	if (i >= num) return;
 	const auto cellPos = make_int3(pos[i] / cellLength);
 #pragma unroll
-	for (auto m = 0; m < 27; ++m)
-	{
+	for (auto m = 0; m < 27; ++m){
 		const auto cellID = particlePos2cellIdx(cellPos + make_int3(m / 9 - 1, (m % 9) / 3 - 1, m % 3 - 1), cellSize);
 		contributeBoundaryKernel(&mass[i], i, cellID, pos, cellStart, cellSize, radius);
 	}
 	mass[i] = rhoB / fmaxf(EPSILON, mass[i]);
-	return;
 }
 
-void SPHSystem::computeBoundaryMass()
-{
+void SPHSystem::computeBoundaryMass(){
 	computeBoundaryMass_CUDA <<<(_boundaries->size() - 1) / block_size + 1, block_size >>> (
 		_boundaries->getMassPtr(), _boundaries->getPosPtr(), _boundaries->size(),
 		cellStartBoundary.addr(), _cellSize, _sphCellLength, _sphRhoBoundary, _sphSmoothingRadius);
 }
 
-void SPHSystem::neighborSearch(const std::shared_ptr<SPHParticles> &particles, DArray<int> &cellStart)
-{
+void SPHSystem::neighborSearch(const std::shared_ptr<SPHParticles> &particles, DArray<int> &cellStart){
 	int num = particles->size();
 	mapParticles2Cells_CUDA <<<(num - 1) / block_size + 1, block_size >>> (particles->getParticle2Cell(), particles->getPosPtr(), _sphCellLength, _cellSize, num);
 	checkCudaErrors(cudaMemcpy(bufferInt.addr(), particles->getParticle2Cell(), sizeof(int) * num, cudaMemcpyDeviceToDevice));
@@ -111,8 +103,8 @@ void SPHSystem::neighborSearch(const std::shared_ptr<SPHParticles> &particles, D
 	return;
 }
 
-float SPHSystem::step()
-{
+float SPHSystem::step(){
+	
 	cudaEvent_t start, stop;
 	checkCudaErrors(cudaEventCreate(&start));
 	checkCudaErrors(cudaEventCreate(&stop));

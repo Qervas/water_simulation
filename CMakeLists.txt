@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.0)
 
-set(GCC_12 "/home/frankyin/Applications/gcc-12.2.0/build/")
-set(CMAKE_C_COMPILER "${GCC_12}/bin/gcc")
-set(CMAKE_CXX_COMPILER "${GCC_12}/bin/g++")
+# set(GCC_12 "/home/frankyin/Applications/gcc-12.2.0/build/")
+# set(CMAKE_C_COMPILER "${GCC_12}/bin/gcc")
+# set(CMAKE_CXX_COMPILER "${GCC_12}/bin/g++")
 
 # Set C and C++ compilers for CUDA
-set(CMAKE_CUDA_HOST_COMPILER "${GCC_12}/bin/gcc" CACHE STRING "")
+# set(CMAKE_CUDA_HOST_COMPILER "${GCC_12}/bin/gcc" CACHE STRING "")
 
 set(CUDA_HOME "/usr/local/cuda")
 set(CMAKE_CUDA_COMPILER "${CUDA_HOME}/bin/nvcc")

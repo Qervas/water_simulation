@@ -9,8 +9,8 @@ Render::Render(GLFWwindow* window):camera(window), window(window), cellStart(cel
 	
 	GLuint vertexShader = ShaderUtils::loadShader("shaders/particles.vert", GL_VERTEX_SHADER);
     GLuint fragmentShader = ShaderUtils::loadShader("shaders/particles.frag", GL_FRAGMENT_SHADER);
-    m_particles_program = ShaderUtils::createShaderProgram(vertexShader, fragmentShader);
-	glBindAttribLocation(m_particles_program, particle_attributes::SIZE, "pointSize");
+    particleShaderProgram = ShaderUtils::createShaderProgram(vertexShader, fragmentShader);
+	glBindAttribLocation(particleShaderProgram, particle_attributes::SIZE, "pointSize");
     GLuint containerVertexShader = ShaderUtils::loadShader("shaders/container.vert", GL_VERTEX_SHADER);
     GLuint containerFragmentShader = ShaderUtils::loadShader("shaders/container.frag", GL_FRAGMENT_SHADER);
     containerShaderProgram = ShaderUtils::createShaderProgram(containerVertexShader, containerFragmentShader);
@@ -25,6 +25,10 @@ Render::Render(GLFWwindow* window):camera(window), window(window), cellStart(cel
     glDeleteShader(containerFragmentShader);
 	glDeleteShader(surfaceVertexShader);
 	glDeleteShader(surfacaeFragmentShader);
+
+	
+	// glBindAttribLocation(particleShaderProgram, 1, "color");
+
 }
 
 Render::~Render(){
@@ -119,7 +123,7 @@ void Render::initSPHSystem() {
 	}
 	auto boundaryParticles = std::make_shared<SPHParticles>(pos);
 	// initiate solver and particle system
-	std::shared_ptr<BaseSolver> pSolver;
+	std::shared_ptr<BasicSPHSolver> pSolver;
 	pSolver = std::make_shared<BasicSPHSolver>(fluidParticles->size());
 	pSystem = std::make_shared<SPHSystem>(fluidParticles, boundaryParticles, pSolver,
 		spaceSize, sphCellLength, sphSmoothingRadius, dt, sphM0,
@@ -145,14 +149,13 @@ void Render::deleteVBO(GLuint* vbo) {
 
 	glBindBuffer(1, *vbo);
 	glDeleteBuffers(1, vbo);
-	// *vbo = NULL;
 }
 
 void Render::renderParticles() {
 
-	glUseProgram(m_particles_program);
-	glUniform1f(glGetUniformLocation(m_particles_program, "pointScale"), WIDTH / tanf(m_fov*0.5f*float(PI) / 180.0f));
-	glUniform1f(glGetUniformLocation(m_particles_program, "pointRadius"), particle_radius);
+	glUseProgram(particleShaderProgram);
+	glUniform1f(glGetUniformLocation(particleShaderProgram, "pointScale"), WIDTH / tanf(m_fov*0.5f*float(PI) / 180.0f));
+	glUniform1f(glGetUniformLocation(particleShaderProgram, "pointRadius"), particle_radius);
 	glEnable(GL_POINT_SPRITE_ARB);
 	glTexEnvi(GL_POINT_SPRITE_ARB, GL_COORD_REPLACE_ARB, GL_TRUE);
 	glEnable(GL_VERTEX_PROGRAM_POINT_SIZE_NV);
@@ -161,10 +164,7 @@ void Render::renderParticles() {
     // map OpenGL buffer object for writing from CUDA
     float3 *dptr;
     float3 *cptr;
-	// size_t num_bytes;
 	
-	// checkCudaErrors(cudaGraphicsResourceGetMappedPointer((void**)&dptr, &num_bytes, resource_particles));
-	// checkCudaErrors(cudaGraphicsResourceGetMappedPointer((void**)&cptr, &num_bytes, resources_particle_color));
 	checkCudaErrors(cudaGLMapBufferObject((void**)&dptr, particles_vbo));
 	checkCudaErrors(cudaGLMapBufferObject((void**)&cptr, particles_color_vbo));
 
@@ -173,31 +173,30 @@ void Render::renderParticles() {
     generate_dots(dptr, cptr, pSystem->getFluids());
 	
     // unmap buffer object
-	// checkCudaErrors(cudaGraphicsUnmapResources(1, &resource_particles, 0));
-	// checkCudaErrors(cudaGraphicsUnmapResources(1, &resources_particle_color, 0));
 	checkCudaErrors(cudaGLUnmapBufferObject(particles_vbo));
 	checkCudaErrors(cudaGLUnmapBufferObject(particles_color_vbo));
 
 
-    glBindBuffer(GL_ARRAY_BUFFER, particles_vbo);
-    glVertexPointer(3, GL_FLOAT, 0, nullptr);
-    glEnableClientState(GL_VERTEX_ARRAY);
 
-    glBindBuffer(GL_ARRAY_BUFFER, particles_color_vbo);
-    glColorPointer(3, GL_FLOAT, 0, nullptr);
-    glEnableClientState(GL_COLOR_ARRAY);
 
     // Pass the camera's view and projection matrices to the shaders
     glm::mat4 view = camera.getViewMatrix();
     glm::mat4 projection = glm::perspective(glm::radians(camera.getZoom()), static_cast<float>(WIDTH) / static_cast<float>(HEIGHT), 0.001f, 100.0f);
 
-    glUniformMatrix4fv(glGetUniformLocation(m_particles_program, "viewMatrix"), 1, GL_FALSE, glm::value_ptr(view));
-    glUniformMatrix4fv(glGetUniformLocation(m_particles_program, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projection));
+    glUniformMatrix4fv(glGetUniformLocation(particleShaderProgram, "viewMatrix"), 1, GL_FALSE, glm::value_ptr(view));
+    glUniformMatrix4fv(glGetUniformLocation(particleShaderProgram, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projection));
+
+	glBindBuffer(GL_ARRAY_BUFFER, particles_vbo);
+    glVertexPointer(3, GL_FLOAT, 0, nullptr);
+    glEnableClientState(GL_VERTEX_ARRAY);
+
+	GLuint colorAttribLocation = 1; // index 1, for instance, but should be the same index used for 'color' in shader
+	glVertexAttribPointer(colorAttribLocation, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+	glEnableVertexAttribArray(colorAttribLocation);
 
     glDrawArrays(GL_POINTS, 0, pSystem->size());
 
     glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_COLOR_ARRAY);
     glUseProgram(0);
 }
 
@@ -325,11 +324,9 @@ void Render::createContainerMesh() {
 
     // Buffer the container data
     glBufferData(GL_ARRAY_BUFFER, sizeof(containerVertices), containerVertices, GL_STATIC_DRAW);
-    // glBufferData(GL_ARRAY_BUFFER, containerVertices.size() * sizeof(containerVertices), &containerVertices[0], GL_STATIC_DRAW);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(containerIndices), containerIndices, GL_STATIC_DRAW);
-    //  //  glBufferData(GL_ELEMENT_ARRAY_BUFFER, containerIndices.size() * sizeof(unsigned int), &containerIndices[0], GL_STATIC_DRAW);
 
-   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)0);
+   	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
@@ -364,7 +361,7 @@ void Render::renderContainer() {
 
     //set light direction
     glm::vec3 lightPos(camera.getFront());
-   glUniform3fv(glGetUniformLocation(containerShaderProgram, "lightPos"), 1, glm::value_ptr(lightPos));
+   	glUniform3fv(glGetUniformLocation(containerShaderProgram, "lightPos"), 1, glm::value_ptr(lightPos));
 
 
     glBindVertexArray(container_vao);
