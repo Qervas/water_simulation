@@ -11,13 +11,13 @@ class DArray {
 public:
 	explicit DArray(const unsigned int length) :
 		_length(length),
- 		d_array([length]() {
-		T* ptr; 
-		checkCudaErrors(cudaMalloc((void**)& ptr, sizeof(T) * length));
-		std::shared_ptr<T> t(new(ptr)T[length], [](T* ptr) {checkCudaErrors(cudaFree(ptr)); });
- 		return t;
-	}()) {
-		this->clear();
+		d_array([length]() {
+			T* ptr; 
+			checkCudaErrors(cudaMalloc((void**)& ptr, sizeof(T) * length));
+			std::shared_ptr<T> t(new(ptr)T[length], [](T* ptr) {checkCudaErrors(cudaFree(ptr)); });
+			return t;
+		}()) {
+			this->clear();
 	}
 
 	DArray(const DArray&) = delete;
@@ -28,8 +28,7 @@ public:
 	}
 
 	unsigned int length() const { return _length; }
-	void clear()
-	{ checkCudaErrors(cudaMemset(this->addr(), 0, sizeof(T) * this->length())); }
+	void clear(){ checkCudaErrors(cudaMemset(this->addr(), 0, sizeof(T) * this->length())); }
 	
 	~DArray() noexcept { }
 

@@ -15,8 +15,8 @@
 #include "ShaderUtils.h"
 
 #include "MarchingCubes.cuh"
-#define WIDTH 2560
-#define HEIGHT 1600
+#define WIDTH 1920
+#define HEIGHT 1080
 
 
 namespace particle_attributes {

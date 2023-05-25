@@ -6,7 +6,6 @@ Render::Render(GLFWwindow* window):camera(window), window(window), cellStart(cel
 
 
 	createContainerMesh();
-	
 	GLuint vertexShader = ShaderUtils::loadShader("shaders/particles.vert", GL_VERTEX_SHADER);
     GLuint fragmentShader = ShaderUtils::loadShader("shaders/particles.frag", GL_FRAGMENT_SHADER);
     particleShaderProgram = ShaderUtils::createShaderProgram(vertexShader, fragmentShader);
@@ -26,9 +25,6 @@ Render::Render(GLFWwindow* window):camera(window), window(window), cellStart(cel
 	glDeleteShader(surfaceVertexShader);
 	glDeleteShader(surfacaeFragmentShader);
 
-	
-	// glBindAttribLocation(particleShaderProgram, 1, "color");
-
 }
 
 Render::~Render(){
@@ -44,7 +40,6 @@ Render::~Render(){
 	glDeleteVertexArrays(1, &surface_vao);
 	glDeleteBuffers(2, surface_vbo);
     glDeleteBuffers(1, &surface_ebo);
-	
 	
 }
 void Render::render(float deltaTime){
@@ -151,6 +146,7 @@ void Render::deleteVBO(GLuint* vbo) {
 	glDeleteBuffers(1, vbo);
 }
 
+
 void Render::renderParticles() {
 
 	glUseProgram(particleShaderProgram);
@@ -176,9 +172,6 @@ void Render::renderParticles() {
 	checkCudaErrors(cudaGLUnmapBufferObject(particles_vbo));
 	checkCudaErrors(cudaGLUnmapBufferObject(particles_color_vbo));
 
-
-
-
     // Pass the camera's view and projection matrices to the shaders
     glm::mat4 view = camera.getViewMatrix();
     glm::mat4 projection = glm::perspective(glm::radians(camera.getZoom()), static_cast<float>(WIDTH) / static_cast<float>(HEIGHT), 0.001f, 100.0f);
@@ -193,6 +186,19 @@ void Render::renderParticles() {
 	GLuint colorAttribLocation = 1; // index 1, for instance, but should be the same index used for 'color' in shader
 	glVertexAttribPointer(colorAttribLocation, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 	glEnableVertexAttribArray(colorAttribLocation);
+
+
+	glm::vec3 spotDirection = camera.getFront();
+	float cutOff = 12.5f; // adjust this value to your liking
+	float outerCutOff = 15.0f; // adjust this value to your liking
+	glUniform3fv(glGetUniformLocation(particleShaderProgram, "spotDir"), 1, glm::value_ptr(spotDirection));
+	glUniform1f(glGetUniformLocation(particleShaderProgram, "spotCutOff"), cutOff);
+	glUniform1f(glGetUniformLocation(particleShaderProgram, "spotOuterCutOff"), outerCutOff);
+
+	glm::vec3 lightPos = camera.getPosition();
+	glUniform3fv(glGetUniformLocation(particleShaderProgram, "lightPos"), 1, glm::value_ptr(lightPos));
+
+
 
     glDrawArrays(GL_POINTS, 0, pSystem->size());
 
@@ -230,11 +236,7 @@ void Render::renderSurface(){
 }
 
 void Render::oneStep() {
-	++frameId;
-	const auto milliseconds = pSystem->step();
-	totalTime += milliseconds;
-	// printf("Frame %d - %2.2f ms, avg time - %2.2f ms/frame (%3.2f FPS)\r", 
-		// frameId%10000, milliseconds, totalTime / float(frameId), float(frameId)*1000.0f/totalTime);
+	pSystem->step();
 }
 
 void Render::keyboardEvent(){
@@ -362,8 +364,7 @@ void Render::renderContainer() {
     //set light direction
     glm::vec3 lightPos(camera.getFront());
    	glUniform3fv(glGetUniformLocation(containerShaderProgram, "lightPos"), 1, glm::value_ptr(lightPos));
-
-
+	
     glBindVertexArray(container_vao);
     glDrawElements(GL_TRIANGLES, 30, GL_UNSIGNED_INT, 0);//set 30 as 24 to remove the front wall view
     glBindVertexArray(0);

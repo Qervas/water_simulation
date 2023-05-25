@@ -14,7 +14,7 @@ void main() {
     vec3 diffuse = diff * vec3(1.0, 1.0, 1.0);
 
     // Ambient lighting
-    vec3 ambient = 0.2 * vec3(1.0, 1.0, 1.0);
+    vec3 ambient = 0.2 * vec3(0.5,0.5,0.5);
 
     FragColor = vec4(ambient + diffuse, 0.5); // No transparency
 }

@@ -58,8 +58,6 @@ void Camera::processMouseMovement() {
     }
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-    
-
     if (firstMouse) {
         
         glfwSetCursorPos(window, ( width/ 2), (height / 2));
@@ -88,9 +86,7 @@ void Camera::processMouseMovement() {
     if (pitch < -89.0f) {
         pitch = -89.0f;
     }
-
     updateCameraVectors();
-   
 }
 
 void Camera::processMouseScroll() {

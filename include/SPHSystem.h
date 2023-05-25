@@ -26,7 +26,7 @@ public:
 	SPHSystem(const SPHSystem&) = delete;
 	SPHSystem& operator=(const SPHSystem&) = delete;
 
-	float step();
+	void step();
 
 	int size() const {
 		return fluidSize();

@@ -27,8 +27,6 @@ public:
 	const DArray<float3>& getPos() const {
 		return pos;
 	}
-	
-
 	void advect(float dt);
 
 	virtual ~Particles() noexcept { }

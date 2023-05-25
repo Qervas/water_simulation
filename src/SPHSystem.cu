@@ -100,16 +100,10 @@ void SPHSystem::neighborSearch(const std::shared_ptr<SPHParticles> &particles, D
 	thrust::fill(thrust::device, cellStart.addr(), cellStart.addr() + _cellSize.x * _cellSize.y * _cellSize.z + 1, 0);
 	countingInCell_CUDA <<<(num - 1) / block_size + 1, block_size >>> (cellStart.addr(), particles->getParticle2Cell(), num);
 	thrust::exclusive_scan(thrust::device, cellStart.addr(), cellStart.addr() + _cellSize.x * _cellSize.y * _cellSize.z + 1, cellStart.addr());
-	return;
 }
 
-float SPHSystem::step(){
+void SPHSystem::step(){
 	
-	cudaEvent_t start, stop;
-	checkCudaErrors(cudaEventCreate(&start));
-	checkCudaErrors(cudaEventCreate(&stop));
-	checkCudaErrors(cudaEventRecord(start, 0));
-
 	neighborSearch(_fluids, cellStartFluid);
 	try {
 		_solver->step(_fluids, _boundaries, cellStartFluid, cellStartBoundary,
@@ -125,11 +119,4 @@ float SPHSystem::step(){
 		std::cout << "Unknown Exception at "<<__FILE__<<": line "<<__LINE__ << "\n";
 	}
 
-	float milliseconds;
-	checkCudaErrors(cudaEventRecord(stop, 0));
-	checkCudaErrors(cudaEventSynchronize(stop));
-	checkCudaErrors(cudaEventElapsedTime(&milliseconds, start, stop));
-	checkCudaErrors(cudaEventDestroy(start));
-	checkCudaErrors(cudaEventDestroy(stop));
-	return milliseconds;
 }

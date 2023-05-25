@@ -17,6 +17,7 @@ public:
     float getZoom() const {return zoom;}
     const glm::vec3& getPosition() const { return position; }
     const glm::vec3& getFront() const {return front;}
+    const glm::vec3& getRight() const {return right;}
 
 private:
     GLFWwindow* window;

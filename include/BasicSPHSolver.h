@@ -13,7 +13,7 @@ public:
 protected:
 	 void force(std::shared_ptr<SPHParticles>& fluids, float dt, float3 G);
 	 void advect(std::shared_ptr<SPHParticles>& fluids, float dt, float3 spaceSize);
-	 void project(std::shared_ptr<SPHParticles>& fluids, const std::shared_ptr<SPHParticles>& boundaries,
+	 void pressure(std::shared_ptr<SPHParticles>& fluids, const std::shared_ptr<SPHParticles>& boundaries,
 		const DArray<int>& cellStartFluid, const DArray<int>& cellStartBoundary, float rho0, float stiff,
 		int3 cellSize, float cellLength, float radius, float dt);
 	 void diffuse(std::shared_ptr<SPHParticles>& fluids, const DArray<int>& cellStartFluid,
