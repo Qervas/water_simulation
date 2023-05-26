@@ -1,13 +1,12 @@
 #version 330 core
 
+layout(location = 0) in vec4 vertex;
 layout(location = 1) in vec4 color;
 
 uniform float pointRadius;  // point size in world space
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 uniform float pointScale;
-
-in vec4 vertex;
 
 out vec4 fs_Color; //fragment shader color
 out float fs_pointSize; //fragment shader point size

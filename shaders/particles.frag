@@ -3,7 +3,6 @@
 in vec4 fs_Color;
 in float fs_pointSize;
 
-
 in mat4 u_Persp;
 
 out vec4 FragColor;
@@ -13,10 +12,8 @@ uniform vec3 spotDir; // the direction in which the spotlight is pointing
 uniform float spotCutOff; // the cutoff angle for the spotlight
 uniform float spotOuterCutOff; // the outer cutoff angle for the spotlight, for soft edges
 
-
 in vec3 vs_WorldPos;
 uniform mat4 viewMatrix;
-
 
 void main(void) {
 

@@ -51,7 +51,7 @@ void Render::render(float deltaTime){
 	}
 	camera.update(deltaTime);
 	renderParticles();
-	// renderContainer();
+	renderContainer();
 	// renderSurface();
 	keyboardEvent();
 }
@@ -175,27 +175,28 @@ void Render::renderParticles() {
     // Pass the camera's view and projection matrices to the shaders
     glm::mat4 view = camera.getViewMatrix();
     glm::mat4 projection = glm::perspective(glm::radians(camera.getZoom()), static_cast<float>(WIDTH) / static_cast<float>(HEIGHT), 0.001f, 100.0f);
+    glUniformMatrix4fv(glGetUniformLocation(particleShaderProgram, "viewMatrix"), 1, GL_FALSE, glm::value_ptr(view));
+    glUniformMatrix4fv(glGetUniformLocation(particleShaderProgram, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projection));
 
 	//light position
 	glm::vec3 lightPos = glm::vec3(view * glm::vec4(camera.getPosition(), 1.0f));
+	// glm::vec3 lightPos = camera.getPosition();
 	glUniform3fv(glGetUniformLocation(particleShaderProgram, "lightPos"), 1, glm::value_ptr(lightPos));
 
-	glm::vec3 spotDirection = camera.getFront();
-	float cutOff = 10.0f; // adjust this value to your liking
-	float outerCutOff = 18.5f; // adjust this value to your liking
+	//spot light
+	glm::vec3 spotDirection = glm::vec3(view * glm::vec4(camera.getFront(), 0.0f));
+	float cutOff = 10.0f; 
+	float outerCutOff = 18.5f;
 	glUniform3fv(glGetUniformLocation(particleShaderProgram, "spotDir"), 1, glm::value_ptr(spotDirection));
 	glUniform1f(glGetUniformLocation(particleShaderProgram, "spotCutOff"), cutOff);
 	glUniform1f(glGetUniformLocation(particleShaderProgram, "spotOuterCutOff"), outerCutOff);
 
 
-    glUniformMatrix4fv(glGetUniformLocation(particleShaderProgram, "viewMatrix"), 1, GL_FALSE, glm::value_ptr(view));
-    glUniformMatrix4fv(glGetUniformLocation(particleShaderProgram, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projection));
-
 	glBindBuffer(GL_ARRAY_BUFFER, particles_vbo);
-    glVertexPointer(3, GL_FLOAT, 0, nullptr);
-    glEnableClientState(GL_VERTEX_ARRAY);
-
-	GLuint colorAttribLocation = 1; // index 1, for instance, but should be the same index used for 'color' in shader
+	GLuint posAttribLocation = 0; 
+	glVertexAttribPointer(posAttribLocation, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+	glEnableVertexAttribArray(posAttribLocation);
+	GLuint colorAttribLocation = 1;
 	glVertexAttribPointer(colorAttribLocation, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 	glEnableVertexAttribArray(colorAttribLocation);
 
