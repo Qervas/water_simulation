@@ -51,7 +51,7 @@ void Render::render(float deltaTime){
 	}
 	camera.update(deltaTime);
 	renderParticles();
-	renderContainer();
+	// renderContainer();
 	// renderSurface();
 	keyboardEvent();
 }
@@ -176,6 +176,18 @@ void Render::renderParticles() {
     glm::mat4 view = camera.getViewMatrix();
     glm::mat4 projection = glm::perspective(glm::radians(camera.getZoom()), static_cast<float>(WIDTH) / static_cast<float>(HEIGHT), 0.001f, 100.0f);
 
+	//light position
+	glm::vec3 lightPos = glm::vec3(view * glm::vec4(camera.getPosition(), 1.0f));
+	glUniform3fv(glGetUniformLocation(particleShaderProgram, "lightPos"), 1, glm::value_ptr(lightPos));
+
+	glm::vec3 spotDirection = camera.getFront();
+	float cutOff = 10.0f; // adjust this value to your liking
+	float outerCutOff = 18.5f; // adjust this value to your liking
+	glUniform3fv(glGetUniformLocation(particleShaderProgram, "spotDir"), 1, glm::value_ptr(spotDirection));
+	glUniform1f(glGetUniformLocation(particleShaderProgram, "spotCutOff"), cutOff);
+	glUniform1f(glGetUniformLocation(particleShaderProgram, "spotOuterCutOff"), outerCutOff);
+
+
     glUniformMatrix4fv(glGetUniformLocation(particleShaderProgram, "viewMatrix"), 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(glGetUniformLocation(particleShaderProgram, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projection));
 
@@ -186,19 +198,6 @@ void Render::renderParticles() {
 	GLuint colorAttribLocation = 1; // index 1, for instance, but should be the same index used for 'color' in shader
 	glVertexAttribPointer(colorAttribLocation, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 	glEnableVertexAttribArray(colorAttribLocation);
-
-
-	glm::vec3 spotDirection = camera.getFront();
-	float cutOff = 12.5f; // adjust this value to your liking
-	float outerCutOff = 15.0f; // adjust this value to your liking
-	glUniform3fv(glGetUniformLocation(particleShaderProgram, "spotDir"), 1, glm::value_ptr(spotDirection));
-	glUniform1f(glGetUniformLocation(particleShaderProgram, "spotCutOff"), cutOff);
-	glUniform1f(glGetUniformLocation(particleShaderProgram, "spotOuterCutOff"), outerCutOff);
-
-	glm::vec3 lightPos = camera.getPosition();
-	glUniform3fv(glGetUniformLocation(particleShaderProgram, "lightPos"), 1, glm::value_ptr(lightPos));
-
-
 
     glDrawArrays(GL_POINTS, 0, pSystem->size());
 
@@ -366,7 +365,7 @@ void Render::renderContainer() {
    	glUniform3fv(glGetUniformLocation(containerShaderProgram, "lightPos"), 1, glm::value_ptr(lightPos));
 	
     glBindVertexArray(container_vao);
-    glDrawElements(GL_TRIANGLES, 30, GL_UNSIGNED_INT, 0);//set 30 as 24 to remove the front wall view
+    glDrawElements(GL_TRIANGLES, 24, GL_UNSIGNED_INT, 0);//set 30 as 24 to remove the front wall view
     glBindVertexArray(0);
 }
 

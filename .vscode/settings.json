@@ -94,7 +94,8 @@
 		"__hash_table": "cpp",
 		"__tree": "cpp",
 		"filesystem": "cpp",
-		"stack": "cpp"
+		"stack": "cpp",
+		"locale": "cpp"
 	},
 	"C_Cpp.default.compilerPath": "/home/franktudor/Application/Library/gcc-12.2.0/build/gcc-12.2.0/bin/g++",
 	"C_Cpp.default.includePath": [

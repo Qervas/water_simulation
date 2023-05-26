@@ -3,14 +3,11 @@
 #include <stdio.h>
 Camera::Camera(GLFWwindow* window, glm::vec3 position, glm::vec3 up, float yaw, float pitch)
     : window(window), position(position), worldUp(up), yaw(yaw), pitch(pitch),
-      movementSpeed(2.5f), mouseSensitivity(0.1f), zoom(45.0f),
+      movementSpeed(2.5f), mouseSensitivity(0.1f), zoom(60.0f),
       lastX(0.0f), lastY(0.0f), firstMouse(true) {
     updateCameraVectors();
     glfwSetWindowUserPointer(window, this);
     // Set the callback functions
-    glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
-    glfwSetCursorPosCallback(window, mouseCallback);
-    glfwSetScrollCallback(window, scrollCallback);
     glfwGetWindowSize(window, &width, &height);
 }
 
@@ -21,7 +18,6 @@ glm::mat4 Camera::getViewMatrix() const {
 void Camera::update(float deltaTime) {
     processKeyboardInput(deltaTime);
     processMouseMovement();
-    processMouseScroll();
 }
 
 void Camera::processKeyboardInput(float deltaTime) {
@@ -59,7 +55,6 @@ void Camera::processMouseMovement() {
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     if (firstMouse) {
-        
         glfwSetCursorPos(window, ( width/ 2), (height / 2));
         lastX = ( width/ 2);
         lastY = (height / 2);
@@ -69,16 +64,23 @@ void Camera::processMouseMovement() {
     glfwGetCursorPos(window, &xpos, &ypos);
 
 
+    //direct 
     float xOffset = xpos - lastX;
     float yOffset = lastY - ypos;
     lastX = xpos;
     lastY = ypos;
 
-    xOffset *= mouseSensitivity;
-    yOffset *= mouseSensitivity;
+    // smooth
+    // double xOffset = xpos - double(width/ 2);
+    // double yOffset =double(height/ 2) - ypos;
+    // xOffset = xOffset * mouseSensitivity / (double)width;
+    // yOffset = yOffset * mouseSensitivity / (double)height;
 
-    yaw += xOffset;
-    pitch += yOffset;
+    yaw += xOffset * mouseSensitivity ;
+    pitch += yOffset  * mouseSensitivity;
+    //gimbal lock
+    // yaw = fmod(yaw, 360.0f);
+    // pitch = fmod(pitch, 360.0f);
 
     if (pitch > 89.0f) {
         pitch = 89.0f;
@@ -86,20 +88,8 @@ void Camera::processMouseMovement() {
     if (pitch < -89.0f) {
         pitch = -89.0f;
     }
-    updateCameraVectors();
-}
 
-void Camera::processMouseScroll() {
-    double xoffset, yoffset;
-    glfwSetScrollCallback(window, scrollCallback);
-    
-    zoom -= yoffset;
-    if (zoom < 1.0f) {
-        zoom = 1.0f;
-    }
-    if (zoom > 45.0f) {
-        zoom = 45.0f;
-    }
+    updateCameraVectors();
 }
 
 void Camera::updateCameraVectors() {
@@ -112,16 +102,3 @@ void Camera::updateCameraVectors() {
     up = glm::normalize(glm::cross(right, front));
 }
 
-void Camera::mouseCallback(GLFWwindow* window, double xpos, double ypos) {
-    Camera* camera = static_cast<Camera*>(glfwGetWindowUserPointer(window));
-    camera->processMouseMovement();
-}
-
-void Camera::scrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
-    Camera* camera = static_cast<Camera*>(glfwGetWindowUserPointer(window));
-    camera->processMouseScroll();
-}
-
-void Camera::framebufferSizeCallback(GLFWwindow* window, int width, int height) {
-    glViewport(0, 0, width, height);
-}

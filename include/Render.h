@@ -16,7 +16,7 @@
 
 #include "MarchingCubes.cuh"
 #define WIDTH 1920
-#define HEIGHT 1080
+#define HEIGHT 1440
 
 
 namespace particle_attributes {
@@ -65,6 +65,11 @@ private:
 	GLuint surface_vbo[2];
 	GLuint surface_ebo;
 	GLuint surfaceShaderProgram;
+
+	GLuint crosshair_vao;
+	GLuint crosshair_vbo;
+	GLuint crosshair_ebo;
+	GLuint crosshairShaderProgram;
 
 	const int m_fov = 30;
 	const float particle_radius = 0.004f;
