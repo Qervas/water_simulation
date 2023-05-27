@@ -17,6 +17,9 @@ Render::Render(GLFWwindow* window):camera(window), window(window), cellStart(cel
     GLuint surfacaeFragmentShader = ShaderUtils::loadShader("shaders/surface.frag", GL_FRAGMENT_SHADER);
     surfaceShaderProgram = ShaderUtils::createShaderProgram(surfaceVertexShader, surfacaeFragmentShader);
 
+	container_texture = ShaderUtils::loadTexture("texture/texture.jpg");
+
+
     // Clean up shader resources
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
@@ -185,8 +188,8 @@ void Render::renderParticles() {
 
 	//spot light
 	glm::vec3 spotDirection = glm::vec3(view * glm::vec4(camera.getFront(), 0.0f));
-	float cutOff = 10.0f; 
-	float outerCutOff = 18.5f;
+	float cutOff = 20.0f; 
+	float outerCutOff = 25.5f;
 	glUniform3fv(glGetUniformLocation(particleShaderProgram, "spotDir"), 1, glm::value_ptr(spotDirection));
 	glUniform1f(glGetUniformLocation(particleShaderProgram, "spotCutOff"), cutOff);
 	glUniform1f(glGetUniformLocation(particleShaderProgram, "spotOuterCutOff"), outerCutOff);
@@ -263,37 +266,43 @@ void Render::keyboardEvent(){
 void Render::createContainerMesh() {
     // Container vertices and indices
 	const float cuboid_height = 0.75f;
+	float repeat = 2.0f;
+	float length = 1.5f;
     float containerVertices[] = {
-          // Base (position, normal, color)
-        -0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f,
-        0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f,
-        0.5f, 0.0f,  0.5f, 0.0f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f,
-        -0.5f, 0.0f,  0.5f, 0.0f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f,
+          // Base (position, normal, color, texcoord)
+        -0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f, //a
+        0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f, repeat, 0.0f, //b
+        0.5f, 0.0f,  0.5f, 0.0f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f, repeat, repeat * length, //c
+        -0.5f, 0.0f,  0.5f, 0.0f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, repeat * length, //d
 
         // Left wall (position, normal, color)
-        -0.5f, 0.0f, -0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f,
-        -0.5f, cuboid_height, -0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f,
-        -0.5f, cuboid_height,  0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f,
-        -0.5f, 0.0f,  0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f,
+        -0.5f, 0.0f, -0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f, //a
+        -0.5f, cuboid_height, -0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, repeat, 0.0f,
+        -0.5f, cuboid_height,  0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, repeat, repeat * length,
+        -0.5f, 0.0f,  0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, repeat * length,
 
         // Right wall (position, normal, color)
-        0.5f, 0.0f, -0.5f, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f,
-        0.5f, cuboid_height, -0.5f, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f,
-        0.5f, cuboid_height,  0.5f, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f,
-        0.5f, 0.0f,  0.5f, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f,
+        0.5f, 0.0f, -0.5f, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, repeat, 0.0f,
+        0.5f, cuboid_height, -0.5f, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
+        0.5f, cuboid_height,  0.5f, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, repeat * length,
+        0.5f, 0.0f,  0.5f, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, repeat, repeat * length,
 
         // Front wall (position, normal, color)
-        -0.5f, 0.0f, -0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f,
-        -0.5f, cuboid_height, -0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f,
-        0.5f, cuboid_height, -0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f,
-        0.5f, 0.0f, -0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f,
+        -0.5f, 0.0f, -0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 
+        -0.5f, cuboid_height, -0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f, 0.0f, repeat,
+        0.5f, cuboid_height, -0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f, repeat, repeat,
+        0.5f, 0.0f, -0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f, repeat, 0.0f,
 
         // Back wall (position, normal, color)
-        -0.5f, 0.0f,  0.5f, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f,
-        -0.5f, cuboid_height,  0.5f, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f,
-        0.5f, cuboid_height,  0.5f, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f,
-        0.5f, 0.0f,  0.5f, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f,
+        -0.5f, 0.0f,  0.5f, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f, 0.0f, repeat,
+        -0.5f, cuboid_height,  0.5f, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
+        0.5f, cuboid_height,  0.5f, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f, repeat, 0.0f,
+        0.5f, 0.0f,  0.5f, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f, repeat, repeat
     };
+
+//todo: specular map of container
+//todo: ambient light of particles
+
 
 
     unsigned int containerIndices[] = {
@@ -328,12 +337,15 @@ void Render::createContainerMesh() {
     glBufferData(GL_ARRAY_BUFFER, sizeof(containerVertices), containerVertices, GL_STATIC_DRAW);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(containerIndices), containerIndices, GL_STATIC_DRAW);
 
-   	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)0);
+   	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(6 * sizeof(float)));
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(2);
+	glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void*)(9 * sizeof(float)));
+	glEnableVertexAttribArray(3);
+
 
 
     // Unbind VAO, VBO, and EBO
@@ -364,9 +376,16 @@ void Render::renderContainer() {
     //set light direction
     glm::vec3 lightPos(camera.getFront());
    	glUniform3fv(glGetUniformLocation(containerShaderProgram, "lightPos"), 1, glm::value_ptr(lightPos));
-	
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, container_texture);
+	glUniform1i(glGetUniformLocation(containerShaderProgram, "texture1"), 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+
     glBindVertexArray(container_vao);
-    glDrawElements(GL_TRIANGLES, 24, GL_UNSIGNED_INT, 0);//set 30 as 24 to remove the front wall view
+    glDrawElements(GL_TRIANGLES, 30, GL_UNSIGNED_INT, 0);//set 30 as 24 to remove the front wall view
     glBindVertexArray(0);
 }
 

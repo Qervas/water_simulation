@@ -38,7 +38,7 @@ file(GLOB SOURCES "src/*.cpp" "src/*.cu")
 add_executable(app ${SOURCES})
 
 # add libraries
-target_link_libraries(app -lstdc++fs glfw GLEW GL GLU glut cudart)
+target_link_libraries(app -lstdc++fs glfw GLEW GL GLU glut cudart )
 
 # add include files
 target_include_directories(app PUBLIC include)
@@ -51,3 +51,4 @@ target_compile_definitions(app PUBLIC -DDEBUG)
 
 #symlink  content under ./shaders to build, not the folder itself
 file(CREATE_LINK ${CMAKE_SOURCE_DIR}/shaders ${CMAKE_BINARY_DIR}/shaders SYMBOLIC)
+file(CREATE_LINK ${CMAKE_SOURCE_DIR}/texture ${CMAKE_BINARY_DIR}/texture SYMBOLIC)

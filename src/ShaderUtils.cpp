@@ -4,6 +4,9 @@
 #include <sstream>
 #include <vector>
 
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
+
 GLuint ShaderUtils::loadShader(const std::string& filename, GLenum shaderType) {
     std::ifstream shaderFile(filename);
 
@@ -64,4 +67,23 @@ GLuint ShaderUtils::createShaderProgram(GLuint vertexShader, GLuint fragmentShad
     }
 
     return program;
+}
+
+GLuint ShaderUtils::loadTexture(const char* filename){
+    int width, height, numChannels;
+    unsigned char* img = stbi_load(filename, &width, &height, &numChannels, 0);
+    if( img == nullptr){
+        std::cerr << "failed to load texture: " << filename << std::endl;
+        return 0;
+    }
+
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, img);
+
+    stbi_image_free(img);
+    return texture;
 }

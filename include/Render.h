@@ -56,6 +56,7 @@ private:
 	GLuint container_vbo;
 	GLuint container_ebo;
 	GLuint containerShaderProgram;
+	GLuint container_texture;
 
 	GLuint particles_vbo;
 	GLuint particles_color_vbo;
