@@ -43,7 +43,7 @@ void main(void) {
     
     vec3 colorWithLight;
     // check if point is inside the spotlight
-    if(theta > cos(radians(spotCutOff))) {
+    if(theta > cos(radians(spotOuterCutOff))) {
         float intensity = diff * (1.0 - smoothstep(cos(radians(spotCutOff)), cos(radians(spotOuterCutOff)), theta));
         colorWithLight = ambient + intensity * fs_Color.rgb;
     } else {

@@ -24,7 +24,7 @@ void main() {
 
     float theta = dot(lightDir, normalize(-spotDir));
     float intensity;
-    if(theta > cos(radians(spotCutOff))){
+    if(theta > cos(radians(spotOuterCutOff))){
         intensity = diff * (1.0 - smoothstep(cos(radians(spotCutOff)), cos(radians(spotOuterCutOff)), theta));
     }else{
         intensity = 0.01 * diff;
