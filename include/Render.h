@@ -73,6 +73,10 @@ private:
 	GLuint crosshair_ebo;
 	GLuint crosshairShaderProgram;
 
+	//SpotLight cone
+	float spotCutOff =20.0f; 
+	float spotOuterCutOff = 25.5f;
+
 	const int m_fov = 30;
 	const float particle_radius = 0.004f;
 	// state variables
@@ -99,7 +103,7 @@ private:
 	int3 gridSize = make_int3(ceil(spaceSize.x / mcCellSize.x), ceil(spaceSize.y / mcCellSize.y), ceil(spaceSize.z / mcCellSize.z));
 
 
-	DArray<int> cellStart;
+	DArray<int> cellStart;	
 
 	float isolevel = 0.5;
 

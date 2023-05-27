@@ -188,11 +188,9 @@ void Render::renderParticles() {
 
 	//spot light
 	glm::vec3 spotDirection = glm::vec3(view * glm::vec4(camera.getFront(), 0.0f));
-	float cutOff = 20.0f; 
-	float outerCutOff = 25.5f;
 	glUniform3fv(glGetUniformLocation(particleShaderProgram, "spotDir"), 1, glm::value_ptr(spotDirection));
-	glUniform1f(glGetUniformLocation(particleShaderProgram, "spotCutOff"), cutOff);
-	glUniform1f(glGetUniformLocation(particleShaderProgram, "spotOuterCutOff"), outerCutOff);
+	glUniform1f(glGetUniformLocation(particleShaderProgram, "spotCutOff"), spotCutOff);
+	glUniform1f(glGetUniformLocation(particleShaderProgram, "spotOuterCutOff"), spotOuterCutOff);
 
 
 	glBindBuffer(GL_ARRAY_BUFFER, particles_vbo);
@@ -375,6 +373,13 @@ void Render::renderContainer() {
     //set light direction
     glm::vec3 lightPos(camera.getPosition());
    	glUniform3fv(glGetUniformLocation(containerShaderProgram, "lightPos"), 1, glm::value_ptr(lightPos));
+	
+	glm::vec3 spotDir(camera.getFront());
+	glUniform3fv(glGetUniformLocation(containerShaderProgram, "spotDir"), 1, glm::value_ptr(spotDir));
+
+
+	glUniform1f(glGetUniformLocation(containerShaderProgram, "spotCutOff"), spotCutOff);
+	glUniform1f(glGetUniformLocation(containerShaderProgram, "spotOuterCutOff"), spotOuterCutOff);
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, container_texture);
