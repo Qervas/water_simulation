@@ -17,7 +17,8 @@ Render::Render(GLFWwindow* window):camera(window), window(window), cellStart(cel
     GLuint surfacaeFragmentShader = ShaderUtils::loadShader("shaders/surface.frag", GL_FRAGMENT_SHADER);
     surfaceShaderProgram = ShaderUtils::createShaderProgram(surfaceVertexShader, surfacaeFragmentShader);
 
-	container_texture = ShaderUtils::loadTexture("texture/texture.jpg");
+	container_texture = ShaderUtils::loadTexture("texture/texture.jpg", GL_RGB);
+	container_texture_specular_map = ShaderUtils::loadTexture("texture/specular_map.jpg", GL_RED);
 
 
     // Clean up shader resources
@@ -183,7 +184,6 @@ void Render::renderParticles() {
 
 	//light position
 	glm::vec3 lightPos = glm::vec3(view * glm::vec4(camera.getPosition(), 1.0f));
-	// glm::vec3 lightPos = camera.getPosition();
 	glUniform3fv(glGetUniformLocation(particleShaderProgram, "lightPos"), 1, glm::value_ptr(lightPos));
 
 	//spot light
@@ -266,8 +266,8 @@ void Render::keyboardEvent(){
 void Render::createContainerMesh() {
     // Container vertices and indices
 	const float cuboid_height = 0.75f;
-	float repeat = 2.0f;
-	float length = 1.5f;
+	float repeat = 2.0f;//2.0
+	float length = 1.0f;//1.5
     float containerVertices[] = {
           // Base (position, normal, color, texcoord)
         -0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f, //a
@@ -300,7 +300,6 @@ void Render::createContainerMesh() {
         0.5f, 0.0f,  0.5f, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f, repeat, repeat
     };
 
-//todo: specular map of container
 //todo: ambient light of particles
 
 
@@ -366,23 +365,26 @@ void Render::renderContainer() {
     glUniformMatrix4fv(glGetUniformLocation(containerShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
 
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(0.5f, 0.02f, 1.0f)); // Move the container down slightly
-    model = glm::scale(model, glm::vec3(1.0f, 1.3f, 2.0f)); // Scale the container
+    model = glm::translate(model, glm::vec3(0.5f, 0.011f, 1.0f)); // Move the container slightly
+    model = glm::scale(model, glm::vec3(1.0f, 1.3f, 1.97f)); // Scale the container
     glUniformMatrix4fv(glGetUniformLocation(containerShaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 
     //set light direction
-    glm::vec3 lightPos(camera.getFront());
+    glm::vec3 lightPos(camera.getPosition());
    	glUniform3fv(glGetUniformLocation(containerShaderProgram, "lightPos"), 1, glm::value_ptr(lightPos));
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, container_texture);
-	glUniform1i(glGetUniformLocation(containerShaderProgram, "texture1"), 0);
+	glUniform1i(glGetUniformLocation(containerShaderProgram, "texture_diffuse"), 0);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, container_texture_specular_map);
+	glUniform1i(glGetUniformLocation(containerShaderProgram, "texture_specular_map"), 1);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
 
     glBindVertexArray(container_vao);
     glDrawElements(GL_TRIANGLES, 30, GL_UNSIGNED_INT, 0);//set 30 as 24 to remove the front wall view

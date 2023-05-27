@@ -57,6 +57,7 @@ private:
 	GLuint container_ebo;
 	GLuint containerShaderProgram;
 	GLuint container_texture;
+	GLuint container_texture_specular_map;
 
 	GLuint particles_vbo;
 	GLuint particles_color_vbo;

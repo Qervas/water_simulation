@@ -7,7 +7,7 @@
 class Camera {
 public:
     Camera(GLFWwindow* window,
-           glm::vec3 position = glm::vec3(0.6f, 0.7f, 2.0f),
+           glm::vec3 position = glm::vec3(0.6f, 0.6f, 1.8f),
            glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f),
            float yaw = -90.0f,
            float pitch = 0.0f);

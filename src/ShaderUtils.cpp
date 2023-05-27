@@ -69,7 +69,7 @@ GLuint ShaderUtils::createShaderProgram(GLuint vertexShader, GLuint fragmentShad
     return program;
 }
 
-GLuint ShaderUtils::loadTexture(const char* filename){
+GLuint ShaderUtils::loadTexture(const char* filename, GLenum format){
     int width, height, numChannels;
     unsigned char* img = stbi_load(filename, &width, &height, &numChannels, 0);
     if( img == nullptr){
@@ -82,7 +82,7 @@ GLuint ShaderUtils::loadTexture(const char* filename){
     glBindTexture(GL_TEXTURE_2D, texture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, img);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, format, GL_UNSIGNED_BYTE, img);
 
     stbi_image_free(img);
     return texture;
