@@ -47,7 +47,7 @@ Render::~Render(){
 	
 }
 void Render::render(float deltaTime){
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glClearColor(0.1, 0.1f ,0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glViewport(0, 0, WIDTH, HEIGHT);
 	if (running) {
@@ -265,7 +265,7 @@ void Render::createContainerMesh() {
     // Container vertices and indices
 	const float cuboid_height = 0.75f;
 	float repeat = 2.0f;//2.0
-	float length = 1.0f;//1.5
+	float length = 1.5f;//1.5
     float containerVertices[] = {
           // Base (position, normal, color, texcoord)
         -0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f, //a
@@ -297,10 +297,6 @@ void Render::createContainerMesh() {
         0.5f, cuboid_height,  0.5f, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f, repeat, 0.0f,
         0.5f, 0.0f,  0.5f, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f, repeat, repeat
     };
-
-//todo: ambient light of particles
-
-
 
     unsigned int containerIndices[] = {
         // Base

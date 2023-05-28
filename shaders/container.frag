@@ -15,10 +15,14 @@ uniform sampler2D texture_specular_map;
 out vec4 FragColor;
 
 void main() {
-    vec3 norm = normalize(Normal);
-    vec3 lightDir= normalize(lightPos - FragPos);
+
+    // Ambient lighting
+    float ambientStrength = 0.1;
+    vec3 ambient = ambientStrength * vec3(1.0, 1.0, 1.0);
 
     // Diffuse lighting
+    vec3 norm = normalize(Normal);
+    vec3 lightDir= normalize(lightPos - FragPos);
     float diff = max(dot(norm, lightDir), 0.0);
     vec3 diffuse = diff * vec3(1.0, 1.0, 1.0);
 
@@ -27,13 +31,8 @@ void main() {
     if(theta > cos(radians(spotOuterCutOff))){
         intensity = diff * (1.0 - smoothstep(cos(radians(spotCutOff)), cos(radians(spotOuterCutOff)), theta));
     }else{
-        intensity = 0.01 * diff;
+        intensity = 0.1 * diff;
     }
-
-
-    // Ambient lighting
-    float ambientStrength = 0.1;
-    vec3 ambient = ambientStrength * vec3(1.0, 1.0, 1.0);
 
 
 
