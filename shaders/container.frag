@@ -34,16 +34,14 @@ void main() {
         intensity = 0.1 * diff;
     }
 
-
-
     // Specular lighting
     vec3 viewDir = normalize(lightPos - FragPos);
     vec3 reflectDir = reflect(-lightDir, norm);  
     vec3 spec = vec3(texture(texture_specular_map, TexCoords));
-    float specStrength = pow(max(dot(viewDir, reflectDir), 0.0), 8.0);
+    float specStrength = pow(max(dot(viewDir, reflectDir), 0.0), 32.0);
     vec3 specular = specStrength * spec;
 
-    vec3 result = (ambient + diffuse + specular.r * 0.25) * intensity;
+    vec3 result = (ambient + 0.4 * diffuse + 0.6 * specular.r) * intensity * 1.5;
     vec4 texColor = texture(texture_diffuse, TexCoords);
     
     FragColor = vec4(result, 1.0) * texColor;

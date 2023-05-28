@@ -42,6 +42,8 @@ public:
 	void createContainerMesh();
 	void renderContainer();
 	void renderSurface();
+	void createSkyboxMesh();
+	void renderSkybox();
 
 	int numTriangles;
 
@@ -68,10 +70,12 @@ private:
 	GLuint surface_ebo;
 	GLuint surfaceShaderProgram;
 
-	GLuint crosshair_vao;
-	GLuint crosshair_vbo;
-	GLuint crosshair_ebo;
-	GLuint crosshairShaderProgram;
+	GLuint skybox_vao;
+	GLuint skybox_vbo;
+	GLuint skybox_ebo;
+	GLuint skyboxShaderProgram;
+	GLuint skybox_texture;
+	std::string skybox_filename[6];
 
 	//SpotLight cone
 	float spotCutOff =20.0f; 

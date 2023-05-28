@@ -12,6 +12,7 @@ uniform float spotOuterCutOff; // the outer cutoff angle for the spotlight, for 
 
 in vec3 vs_WorldPos;
 uniform mat4 viewMatrix;
+uniform vec3 viewPos; // the viewer's position
 
 void main(void) {
 
@@ -32,7 +33,13 @@ void main(void) {
     vec3 lightDir = normalize(lightPos - FragPos);
 
     // calculate diffuse light intensity
-    float diff = max(dot(N, lightDir), 0.0);
+    float diff = 0.7 * max(dot(N, lightDir), 0.0);
+
+    // calculate specular lighting
+    vec3 viewDir = normalize(viewPos - FragPos);
+    vec3 reflectDir = reflect(-lightDir, N); 
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+    vec3 specular = spec * fs_Color.rgb;
 
     // calculate spotlight intensity
     float theta = dot(lightDir, normalize(-spotDir)); 
@@ -45,10 +52,13 @@ void main(void) {
     // check if point is inside the spotlight
     if(theta > cos(radians(spotOuterCutOff))) {
         float intensity = diff * (1.0 - smoothstep(cos(radians(spotCutOff)), cos(radians(spotOuterCutOff)), theta));
-        colorWithLight = ambient + intensity * fs_Color.rgb;
+        colorWithLight = ambient + (intensity + specular) * fs_Color.rgb;
     } else {
         colorWithLight = ambient; // point is outside the spotlight, apply only ambient light
     }
     
-    FragColor = vec4(exp(-mag * mag) * colorWithLight, 1.0f);
+    // Using diff for the alpha value, but this could be any function or value that suits your needs
+    float alpha = 0.7;
+    
+    FragColor = vec4(exp(-mag * mag) * colorWithLight, alpha);
 }

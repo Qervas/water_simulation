@@ -69,7 +69,7 @@ GLuint ShaderUtils::createShaderProgram(GLuint vertexShader, GLuint fragmentShad
     return program;
 }
 
-GLuint ShaderUtils::loadTexture(const char* filename, GLenum format){
+GLuint ShaderUtils::load2DTexture(const char* filename, GLenum format){
     int width, height, numChannels;
     unsigned char* img = stbi_load(filename, &width, &height, &numChannels, 0);
     if( img == nullptr){
@@ -85,5 +85,32 @@ GLuint ShaderUtils::loadTexture(const char* filename, GLenum format){
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, format, GL_UNSIGNED_BYTE, img);
 
     stbi_image_free(img);
+    return texture;
+}
+
+GLuint ShaderUtils::loadSkyboxTexture(const std::string* filesname){
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
+    int width, height, numChannels;
+    unsigned char* img;
+    for(GLuint i = 0; i < 6; i++){
+        img = stbi_load(filesname[i].c_str(), &width, &height, &numChannels, 0);
+        if(img){
+            glTexImage2D(
+                GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+                0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img
+            );  
+        }
+        else{
+            std::cerr << "Skybox texture failed to load: " << filesname[i] << std::endl;
+        }
+        stbi_image_free(img);
+    }
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
     return texture;
 }

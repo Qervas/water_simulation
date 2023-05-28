@@ -6,6 +6,7 @@ Render::Render(GLFWwindow* window):camera(window), window(window), cellStart(cel
 
 
 	createContainerMesh();
+	createSkyboxMesh();
 	GLuint vertexShader = ShaderUtils::loadShader("shaders/particles.vert", GL_VERTEX_SHADER);
     GLuint fragmentShader = ShaderUtils::loadShader("shaders/particles.frag", GL_FRAGMENT_SHADER);
     particleShaderProgram = ShaderUtils::createShaderProgram(vertexShader, fragmentShader);
@@ -17,8 +18,19 @@ Render::Render(GLFWwindow* window):camera(window), window(window), cellStart(cel
     GLuint surfacaeFragmentShader = ShaderUtils::loadShader("shaders/surface.frag", GL_FRAGMENT_SHADER);
     surfaceShaderProgram = ShaderUtils::createShaderProgram(surfaceVertexShader, surfacaeFragmentShader);
 
-	container_texture = ShaderUtils::loadTexture("texture/texture.jpg", GL_RGB);
-	container_texture_specular_map = ShaderUtils::loadTexture("texture/specular_map.jpg", GL_RED);
+	container_texture = ShaderUtils::load2DTexture("texture/container.jpg", GL_RGB);
+	container_texture_specular_map = ShaderUtils::load2DTexture("texture/container_specular_map.jpg", GL_RED);
+
+	GLuint skyboxVertexShader = ShaderUtils::loadShader("shaders/skybox.vert", GL_VERTEX_SHADER);
+	GLuint skyboxFragmentShader = ShaderUtils::loadShader("shaders/skybox.frag", GL_FRAGMENT_SHADER);
+	skyboxShaderProgram = ShaderUtils::createShaderProgram(skyboxVertexShader, skyboxFragmentShader);
+	
+	for(int i = 0; i < 6; i++){
+		skybox_filename[i] = "texture/face"+ std::to_string(i) +".png";
+	}
+	skybox_texture = ShaderUtils::loadSkyboxTexture(skybox_filename);
+
+	
 
 
     // Clean up shader resources
@@ -28,6 +40,8 @@ Render::Render(GLFWwindow* window):camera(window), window(window), cellStart(cel
     glDeleteShader(containerFragmentShader);
 	glDeleteShader(surfaceVertexShader);
 	glDeleteShader(surfacaeFragmentShader);
+	glDeleteShader(skyboxVertexShader);
+	glDeleteShader(skyboxFragmentShader);
 
 }
 
@@ -55,8 +69,8 @@ void Render::render(float deltaTime){
 	}
 	camera.update(deltaTime);
 	renderParticles();
+	renderSkybox();
 	renderContainer();
-	// renderSurface();
 	keyboardEvent();
 }
 
@@ -264,38 +278,46 @@ void Render::keyboardEvent(){
 void Render::createContainerMesh() {
     // Container vertices and indices
 	const float cuboid_height = 0.75f;
+	const float cuboid_width = 0.5f;
+	const float cuboid_depth = 0.5f;
 	float repeat = 2.0f;//2.0
-	float length = 1.5f;//1.5
+	float factor = 1.5f;//1.5
     float containerVertices[] = {
           // Base (position, normal, color, texcoord)
-        -0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f, //a
-        0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f, repeat, 0.0f, //b
-        0.5f, 0.0f,  0.5f, 0.0f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f, repeat, repeat * length, //c
-        -0.5f, 0.0f,  0.5f, 0.0f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, repeat * length, //d
+        -cuboid_width, 0.0f, -cuboid_depth, 0.0f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f, //a
+        cuboid_width, 0.0f, -cuboid_depth, 0.0f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f, repeat, 0.0f, //b
+        cuboid_width, 0.0f,  cuboid_depth, 0.0f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f, repeat, repeat * factor, //c
+        -cuboid_width, 0.0f,  cuboid_depth, 0.0f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, repeat * factor, //d
 
         // Left wall (position, normal, color)
-        -0.5f, 0.0f, -0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f, //a
-        -0.5f, cuboid_height, -0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, repeat, 0.0f,
-        -0.5f, cuboid_height,  0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, repeat, repeat * length,
-        -0.5f, 0.0f,  0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, repeat * length,
+        -cuboid_width, 0.0f, -cuboid_depth, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f, //a
+        -cuboid_width, cuboid_height, -cuboid_depth, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, repeat, 0.0f,
+        -cuboid_width, cuboid_height,  cuboid_depth, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, repeat, repeat * factor,
+        -cuboid_width, 0.0f,  cuboid_depth, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, repeat * factor,
 
         // Right wall (position, normal, color)
-        0.5f, 0.0f, -0.5f, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, repeat, 0.0f,
-        0.5f, cuboid_height, -0.5f, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
-        0.5f, cuboid_height,  0.5f, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, repeat * length,
-        0.5f, 0.0f,  0.5f, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, repeat, repeat * length,
+        cuboid_width, 0.0f, -cuboid_depth, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, repeat, 0.0f,
+        cuboid_width, cuboid_height, -cuboid_depth, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
+        cuboid_width, cuboid_height,  cuboid_depth, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, repeat * factor,
+        cuboid_width, 0.0f,  cuboid_depth, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, repeat, repeat * factor,
 
         // Front wall (position, normal, color)
-        -0.5f, 0.0f, -0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 
-        -0.5f, cuboid_height, -0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f, 0.0f, repeat,
-        0.5f, cuboid_height, -0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f, repeat, repeat,
-        0.5f, 0.0f, -0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f, repeat, 0.0f,
+        -cuboid_width, 0.0f, -cuboid_depth, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 
+        -cuboid_width, cuboid_height, -cuboid_depth, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f, 0.0f, repeat,
+        cuboid_width, cuboid_height, -cuboid_depth, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f, repeat, repeat,
+        cuboid_width, 0.0f, -cuboid_depth, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f, 0.5f, repeat, 0.0f,
 
         // Back wall (position, normal, color)
-        -0.5f, 0.0f,  0.5f, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f, 0.0f, repeat,
-        -0.5f, cuboid_height,  0.5f, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
-        0.5f, cuboid_height,  0.5f, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f, repeat, 0.0f,
-        0.5f, 0.0f,  0.5f, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f, repeat, repeat
+        -cuboid_width, 0.0f,  cuboid_depth, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f, 0.0f, repeat,
+        -cuboid_width, cuboid_height,  cuboid_depth, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
+        cuboid_width, cuboid_height,  cuboid_depth, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f, repeat, 0.0f,
+        cuboid_width, 0.0f,  cuboid_depth, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f, 0.5f, repeat, repeat,
+
+		// Top (position, normal, color)
+		-cuboid_width, cuboid_height, -cuboid_depth, 0.0f, -1.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, repeat * factor,
+		-cuboid_width, cuboid_height,  cuboid_depth, 0.0f, -1.0f, 0.0f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
+		cuboid_width, cuboid_height,  cuboid_depth, 0.0f, -1.0f, 0.0f, 0.5f, 0.5f, 0.5f, repeat * factor, 0.0f,
+		cuboid_width, cuboid_height, -cuboid_depth, 0.0f, -1.0f, 0.0f, 0.5f, 0.5f, 0.5f, repeat * factor, repeat * factor
     };
 
     unsigned int containerIndices[] = {
@@ -314,6 +336,9 @@ void Render::createContainerMesh() {
         // Back wall
         16, 17, 18,
         16, 18, 19,
+		// Top
+		20, 21, 22,
+		20, 22, 23
     };
 
     // VAO, VBO, and EBO setup
@@ -321,8 +346,8 @@ void Render::createContainerMesh() {
     glGenBuffers(1, &container_vbo);
     glGenBuffers(1, &container_ebo);
 
+	// Bind the VAO, VBO, and EBO
     glBindVertexArray(container_vao);
-
     glBindBuffer(GL_ARRAY_BUFFER, container_vbo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, container_ebo);
 
@@ -330,6 +355,7 @@ void Render::createContainerMesh() {
     glBufferData(GL_ARRAY_BUFFER, sizeof(containerVertices), containerVertices, GL_STATIC_DRAW);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(containerIndices), containerIndices, GL_STATIC_DRAW);
 
+	// Set the vertex attribute pointers
    	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void*)(3 * sizeof(float)));
@@ -339,8 +365,6 @@ void Render::createContainerMesh() {
 	glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void*)(9 * sizeof(float)));
 	glEnableVertexAttribArray(3);
 
-
-
     // Unbind VAO, VBO, and EBO
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -348,6 +372,9 @@ void Render::createContainerMesh() {
 }
 
 void Render::renderContainer() {
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     glUseProgram(containerShaderProgram);
 
     // Set the projection and view matrices
@@ -388,7 +415,104 @@ void Render::renderContainer() {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
     glBindVertexArray(container_vao);
-    glDrawElements(GL_TRIANGLES, 30, GL_UNSIGNED_INT, 0);//set 30 as 24 to remove the front wall view
+    glDrawElements(GL_TRIANGLES, 24, GL_UNSIGNED_INT, 0);//set 30 as 24 to remove the front wall view
     glBindVertexArray(0);
 }
 
+void Render::createSkyboxMesh(){
+	float skyboxVertices[] =
+	{
+		//   Coordinates
+		-1.0f, -1.0f,  1.0f,//        7--------6
+		1.0f, -1.0f,  1.0f,//       /|       /|
+		1.0f, -1.0f, -1.0f,//      4--------5 |
+		-1.0f, -1.0f, -1.0f,//      | |      | |
+		-1.0f,  1.0f,  1.0f,//      | 3------|-2
+		1.0f,  1.0f,  1.0f,//      |/       |/
+		1.0f,  1.0f, -1.0f,//      0--------1
+		-1.0f,  1.0f, -1.0f
+	};
+
+	unsigned int skyboxIndices[] =
+	{
+		// Right
+		1, 2, 6,
+		6, 5, 1,
+		// Left
+		0, 4, 7,
+		7, 3, 0,
+		// Top
+		4, 5, 6,
+		6, 7, 4,
+		// Bottom
+		0, 3, 2,
+		2, 1, 0,
+		// Back
+		0, 1, 5,
+		5, 4, 0,
+		// Front
+		3, 7, 6,
+		6, 2, 3
+	};
+
+
+
+	// Create VAO, VBO, and EBO
+	glGenVertexArrays(1, &skybox_vao);
+	glGenBuffers(1, &skybox_vbo);
+	glGenBuffers(1, &skybox_ebo);
+
+	// Bind VAO, VBO, and EBO
+	glBindVertexArray(skybox_vao);
+	glBindBuffer(GL_ARRAY_BUFFER, skybox_vbo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, skybox_ebo);
+
+	// Copy our vertices array in a buffer for OpenGL to use
+	glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), skyboxVertices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(skyboxIndices), skyboxIndices, GL_STATIC_DRAW);
+
+	// Position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	// Unbind VAO, VBO, and EBO
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+void Render::renderSkybox(){
+    // Use the skybox shader program
+	glUseProgram(skyboxShaderProgram);
+	
+    // Depth buffer setup for skybox
+	glDepthFunc(GL_LEQUAL); 
+	
+    // Set the view matrix (remove translation)
+	glm::mat4 view = glm::mat4(glm::mat3(camera.getViewMatrix()));
+	glUniformMatrix4fv(glGetUniformLocation(skyboxShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
+
+    // Set the projection matrix
+	glm::mat4 projection = glm::perspective(glm::radians(camera.getZoom()), (float)WIDTH/(float)HEIGHT, 0.01f, 100.0f);
+	glUniformMatrix4fv(glGetUniformLocation(skyboxShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+    // Bind VAO
+	glBindVertexArray(skybox_vao);
+
+    // Bind the skybox texture
+	glActiveTexture(GL_TEXTURE0);
+    glUniform1i(glGetUniformLocation(skyboxShaderProgram, "skybox"), 0);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, skybox_texture);
+
+    // Draw the skybox
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+    // Unbind VAO
+	glBindVertexArray(0);
+	
+    // Set the depth function back to default
+	glDepthFunc(GL_LESS); 
+
+    // Unbind shader program
+	glUseProgram(0);
+}
