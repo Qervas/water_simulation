@@ -75,11 +75,11 @@ private:
 	GLuint skybox_ebo;
 	GLuint skyboxShaderProgram;
 	GLuint skybox_texture;
-	std::string skybox_filename[6];
+	
 
 	//SpotLight cone
-	float spotCutOff =20.0f; 
-	float spotOuterCutOff = 25.5f;
+	float spotCutOff =25.0f; 
+	float spotOuterCutOff = 30.5f;
 
 	const int m_fov = 30;
 	const float particle_radius = 0.004f;

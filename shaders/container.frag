@@ -12,6 +12,7 @@ uniform float spotOuterCutOff;
 uniform sampler2D texture_diffuse;
 uniform sampler2D texture_specular_map;
 
+
 out vec4 FragColor;
 
 void main() {

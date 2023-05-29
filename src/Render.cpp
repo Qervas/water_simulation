@@ -25,13 +25,13 @@ Render::Render(GLFWwindow* window):camera(window), window(window), cellStart(cel
 	GLuint skyboxFragmentShader = ShaderUtils::loadShader("shaders/skybox.frag", GL_FRAGMENT_SHADER);
 	skyboxShaderProgram = ShaderUtils::createShaderProgram(skyboxVertexShader, skyboxFragmentShader);
 	
+	std::string skybox_filename[6];
 	for(int i = 0; i < 6; i++){
 		skybox_filename[i] = "texture/face"+ std::to_string(i) +".png";
 	}
 	skybox_texture = ShaderUtils::loadSkyboxTexture(skybox_filename);
 
 	
-
 
     // Clean up shader resources
     glDeleteShader(vertexShader);
@@ -58,6 +58,9 @@ Render::~Render(){
 	glDeleteVertexArrays(1, &surface_vao);
 	glDeleteBuffers(2, surface_vbo);
     glDeleteBuffers(1, &surface_ebo);
+	glDeleteVertexArrays(1, &skybox_vao);
+	glDeleteBuffers(1, &skybox_vbo);
+	glDeleteBuffers(1, &skybox_ebo);
 	
 }
 void Render::render(float deltaTime){
@@ -96,9 +99,9 @@ void Render::initSPHSystem() {
 	for (auto i = 0; i < 36; ++i) {
 		for (auto j = 0; j < 24; ++j) {
 			for (auto k = 0; k < 24; ++k) {
-				auto x = make_float3(0.27f + sphSpacing * j,//0.27f
-					0.10f + sphSpacing * i,//0.10f
-					0.27f + sphSpacing * k);//0.27f
+				auto x = make_float3(0.3f + sphSpacing * j,//0.27f
+					0.1f + sphSpacing * i,//0.10f
+					0.3f + sphSpacing * k);//0.27f
 				pos.push_back(x);
 			}
 		}
@@ -415,26 +418,24 @@ void Render::renderContainer() {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
     glBindVertexArray(container_vao);
-    glDrawElements(GL_TRIANGLES, 24, GL_UNSIGNED_INT, 0);//set 30 as 24 to remove the front wall view
+    glDrawElements(GL_TRIANGLES, 30, GL_UNSIGNED_INT, 0);//set 30 as 24 to remove the front wall view
     glBindVertexArray(0);
 }
 
 void Render::createSkyboxMesh(){
-	float skyboxVertices[] =
-	{
+	float skyboxVertices[] = 	{
 		//   Coordinates
-		-1.0f, -1.0f,  1.0f,//        7--------6
+		-1.0f, -1.0f,  1.0f,//       7--------6
 		1.0f, -1.0f,  1.0f,//       /|       /|
 		1.0f, -1.0f, -1.0f,//      4--------5 |
-		-1.0f, -1.0f, -1.0f,//      | |      | |
-		-1.0f,  1.0f,  1.0f,//      | 3------|-2
+		-1.0f, -1.0f, -1.0f,//     | |      | |
+		-1.0f,  1.0f,  1.0f,//     | 3------|-2
 		1.0f,  1.0f,  1.0f,//      |/       |/
 		1.0f,  1.0f, -1.0f,//      0--------1
 		-1.0f,  1.0f, -1.0f
 	};
 
-	unsigned int skyboxIndices[] =
-	{
+	unsigned int skyboxIndices[] = 	{
 		// Right
 		1, 2, 6,
 		6, 5, 1,

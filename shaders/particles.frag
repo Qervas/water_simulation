@@ -58,7 +58,7 @@ void main(void) {
     }
     
     // Using diff for the alpha value, but this could be any function or value that suits your needs
-    float alpha = 0.7;
+    float alpha = 0.75;
     
     FragColor = vec4(exp(-mag * mag) * colorWithLight, alpha);
 }

@@ -7,7 +7,7 @@ template <typename T>
 class DArray {
 	static_assert(
 		std::is_same<T, float3>::value || std::is_same<T, float>::value || 
-		std::is_same<T, int>::value, "DArray must be of int, float or float3.");
+		std::is_same<T, int>::value, "DataArray must be of int, float or float3.");
 public:
 	explicit DArray(const unsigned int length) :
 		_length(length),
