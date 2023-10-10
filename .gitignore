@@ -1,2 +1,7 @@
 build
 .vscode
+.vscode/*
+deprecated
+.idea
+OLD_README.md
+image/OLD_README

@@ -1,11 +1,10 @@
 #pragma once
 #include <GL/glew.h>
-#include"Camera.h"
 #include<memory>
 #include<cuda_runtime.h>
 #include <cuda_gl_interop.h>
-#include <cuda_runtime.h>
-#include <helper_math.h>
+#include"Camera.h"
+#include "helper_math.h"
 #include "DArray.h"
 #include "Particles.h"
 #include "SPHParticles.h"

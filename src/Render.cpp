@@ -176,8 +176,11 @@ void Render::renderParticles() {
 	glEnable(GL_POINT_SPRITE_ARB);
 	glTexEnvi(GL_POINT_SPRITE_ARB, GL_COORD_REPLACE_ARB, GL_TRUE);
 	glEnable(GL_VERTEX_PROGRAM_POINT_SIZE_NV);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDepthMask(GL_TRUE);
 	glEnable(GL_DEPTH_TEST);
+	//todo: sort the depth of particles
     // map OpenGL buffer object for writing from CUDA
     float3 *dptr;
     float3 *cptr;
@@ -221,6 +224,9 @@ void Render::renderParticles() {
     glDrawArrays(GL_POINTS, 0, pSystem->size());
 
     glDisableClientState(GL_VERTEX_ARRAY);
+	// glEnable(GL_DEPTH_TEST);
+	glDisable(GL_BLEND);
+	glDisable(GL_POINT_SPRITE_ARB);
     glUseProgram(0);
 }
 
@@ -343,9 +349,9 @@ void Render::createContainerMesh() {
 		20, 21, 22,
 		20, 22, 23
     };
-
+	
     // VAO, VBO, and EBO setup
-    glGenVertexArrays(1, &container_vao);
+	glGenVertexArrays(1, &container_vao);
     glGenBuffers(1, &container_vbo);
     glGenBuffers(1, &container_ebo);
 
@@ -377,6 +383,7 @@ void Render::createContainerMesh() {
 void Render::renderContainer() {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 
     glUseProgram(containerShaderProgram);
 

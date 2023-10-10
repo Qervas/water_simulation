@@ -6,7 +6,7 @@
 #include <thrust/fill.h>
 #include <thrust/transform.h>
 #include <thrust/execution_policy.h>
-#include <helper_math.h>
+#include "helper_math.h"
 #include "CUDAFunctions.cuh"
 #include "DArray.h"
 #include "Particles.h"

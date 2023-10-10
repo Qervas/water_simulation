@@ -1,5 +1,6 @@
 #include <iostream>
 #include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include <cuda_gl_interop.h>
 #include <cuda_runtime.h>
 #include <helper_math.h>
@@ -8,10 +9,10 @@
 
 int main() {
 
+	//initialize GLFW and GLEW
 	if (!glfwInit()) {
 		return -1;
 	}
-
 	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Water Simulation", NULL, NULL);
 	if (!window) {
 		glfwTerminate();
@@ -19,11 +20,10 @@ int main() {
 	}
 
 	glfwMakeContextCurrent(window);
-
-	glewExperimental = GL_TRUE;
-	if (glewInit() != GLEW_OK) {
-		return -1;
-	}
+    glewExperimental = GL_TRUE;  
+    if (glewInit() != GLEW_OK) {
+        return -1;
+    }
 
 	Render render(window);
 	render.init();
