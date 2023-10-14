@@ -4,10 +4,7 @@ Combined SPH and OpenGL.
 
 ![1696963993957](image/README/1696963993957.png)
 
-<video width="320" height="240" controls>
-  <source src="https://github.com/Qervas/qervas.github.io/blob/master/assets/video/water_simulation.mp4?raw=true" type="video/mp4">
-Your browser does not support the video tag.
-</video>
+[Demonstration Video](https://github.com/Qervas/qervas.github.io/blob/master/assets/video/water_simulation.mp4?raw=true)
 
 
 ## Todo
