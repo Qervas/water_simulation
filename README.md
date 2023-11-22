@@ -4,7 +4,7 @@ Combined SPH and OpenGL.
 
 ![1696963993957](image/README/1696963993957.png)
 
-[Demonstration Video](https://github.com/Qervas/qervas.github.io/blob/master/assets/video/water_simulation.mp4?raw=true)
+[Demonstration Video](https://youtu.be/V2EF1tZfBZM)
 
 
 ## Todo
