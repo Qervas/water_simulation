@@ -5,7 +5,7 @@
 #include <vector>
 
 #define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
+#include <stb/stb_image.h>
 
 GLuint ShaderUtils::loadShader(const std::string& filename, GLenum shaderType) {
     std::ifstream shaderFile(filename);
@@ -100,7 +100,7 @@ GLuint ShaderUtils::loadSkyboxTexture(const std::string* filesname){
             glTexImage2D(
                 GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
                 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img
-            );  
+            );
         }
         else{
             std::cerr << "Skybox texture failed to load: " << filesname[i] << std::endl;
