@@ -5,7 +5,7 @@
 #include <vector>
 
 #define STB_IMAGE_IMPLEMENTATION
-#include <stb/stb_image.h>
+#include <stb_image.h>
 
 GLuint ShaderUtils::loadShader(const std::string& filename, GLenum shaderType) {
     std::ifstream shaderFile(filename);
@@ -32,11 +32,13 @@ GLuint ShaderUtils::loadShader(const std::string& filename, GLenum shaderType) {
         GLint maxLength = 0;
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
 
-        std::vector<char> errorLog(maxLength);
-        glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]);
-
-        std::cerr << "Error: Shader compilation failed for " << filename << ": " << &errorLog[0] << std::endl;
-
+        if (maxLength > 1) { // length includes terminating null
+            std::vector<char> errorLog(static_cast<size_t>(maxLength));
+            glGetShaderInfoLog(shader, maxLength, &maxLength, errorLog.data());
+            std::cerr << "Error: Shader compilation failed for " << filename << ": " << errorLog.data() << std::endl;
+        } else {
+            std::cerr << "Error: Shader compilation failed for " << filename << " (no log available)." << std::endl;
+        }
         glDeleteShader(shader);
         return 0;
     }
@@ -57,11 +59,13 @@ GLuint ShaderUtils::createShaderProgram(GLuint vertexShader, GLuint fragmentShad
         GLint maxLength = 0;
         glGetProgramiv(program, GL_INFO_LOG_LENGTH, &maxLength);
 
-        std::vector<char> errorLog(maxLength);
-        glGetProgramInfoLog(program, maxLength, &maxLength, &errorLog[0]);
-
-        std::cerr << "Error: Shader program linking failed: " << &errorLog[0] << std::endl;
-
+        if (maxLength > 1) {
+            std::vector<char> errorLog(static_cast<size_t>(maxLength));
+            glGetProgramInfoLog(program, maxLength, &maxLength, errorLog.data());
+            std::cerr << "Error: Shader program linking failed: " << errorLog.data() << std::endl;
+        } else {
+            std::cerr << "Error: Shader program linking failed (no log available)." << std::endl;
+        }
         glDeleteProgram(program);
         return 0;
     }
