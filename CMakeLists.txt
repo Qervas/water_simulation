@@ -55,7 +55,8 @@ endif()
 # CUDA compile flags
 set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} --expt-extended-lambda --expt-relaxed-constexpr -use_fast_math")
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -G -lineinfo")
+    # -G enables full device debug. Cannot combine with -lineinfo.
+    set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -G")
 elseif(CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
     set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -lineinfo")
 endif()
