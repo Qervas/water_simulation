@@ -1,4 +1,14 @@
-# Water Simulation
+# Legacy (pre-2026 water simulation)
+
+> **This is the original 2023 bachelor-project water simulation: WCSPH solver, OpenGL viewer, unfinished marching cubes. Preserved untouched for reference.**
+>
+> The active codebase has been rebuilt at the repo root. See [`../docs/superpowers/specs/2026-04-23-water-simulation-rebuild-design.md`](../docs/superpowers/specs/2026-04-23-water-simulation-rebuild-design.md) for the design.
+>
+> The legacy code does not build with the new top-level CMake. To build it standalone, `cd legacy && cmake -B build && cmake --build build` (you may need to fix include paths first).
+
+---
+
+# Water Simulation (legacy)
 
 Combined SPH and OpenGL.
 
