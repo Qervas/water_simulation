@@ -1,6 +1,7 @@
 build/
 build-*/
 out/
+CMakeUserPresets.json
 .cache/
 .vscode/
 .idea/

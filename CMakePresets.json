@@ -1,0 +1,44 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {"major": 3, "minor": 27, "patch": 0},
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_CUDA_ARCHITECTURES": "120"
+      }
+    },
+    {
+      "name": "linux-debug",
+      "inherits": "base",
+      "displayName": "Linux Debug",
+      "cacheVariables": {"CMAKE_BUILD_TYPE": "Debug"}
+    },
+    {
+      "name": "linux-release",
+      "inherits": "base",
+      "displayName": "Linux Release",
+      "cacheVariables": {"CMAKE_BUILD_TYPE": "Release"}
+    },
+    {
+      "name": "linux-relwithdebinfo",
+      "inherits": "base",
+      "displayName": "Linux RelWithDebInfo (for profiling)",
+      "cacheVariables": {"CMAKE_BUILD_TYPE": "RelWithDebInfo"}
+    }
+  ],
+  "buildPresets": [
+    {"name": "linux-debug",          "configurePreset": "linux-debug"},
+    {"name": "linux-release",        "configurePreset": "linux-release"},
+    {"name": "linux-relwithdebinfo", "configurePreset": "linux-relwithdebinfo"}
+  ],
+  "testPresets": [
+    {"name": "linux-debug",          "configurePreset": "linux-debug",          "output": {"outputOnFailure": true}},
+    {"name": "linux-release",        "configurePreset": "linux-release",        "output": {"outputOnFailure": true}},
+    {"name": "linux-relwithdebinfo", "configurePreset": "linux-relwithdebinfo", "output": {"outputOnFailure": true}}
+  ]
+}
