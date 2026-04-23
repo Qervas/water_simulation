@@ -1,0 +1,72 @@
+# water_sim
+
+GPU-native water simulation and offline cinematic renderer.
+Modern rebuild of a 2023 bachelor project.
+
+## Status
+
+**Phase 1 (Foundation) complete.** The modern toolchain — CUDA 13.2 + Vulkan 1.4 + Slang + LBVH spatial accel + JSON scene loader + test harness — is wired and green.
+
+What's *not* yet built: the DFSPH solver (Phase 2), screen-space dev viewport (Phase 3), anisotropic surface reconstruction (Phase 4), Vulkan-RT path tracer (Phase 5), and OIDN denoise + ffmpeg cinematic mux (Phase 6). See [`docs/superpowers/specs/2026-04-23-water-simulation-rebuild-design.md`](docs/superpowers/specs/2026-04-23-water-simulation-rebuild-design.md) for the full design and [`docs/superpowers/plans/`](docs/superpowers/plans/) for incremental implementation plans.
+
+## Tech stack
+
+CUDA 13.2 · Vulkan 1.4 + ray tracing extensions · Slang shaders → SPIR-V · CMake 3.27 · C++20 · CCCL (Thrust + CUB + libcu++) · doctest · nlohmann/json.
+
+No OpenGL anywhere.
+
+## Hardware target
+
+Primary: **NVIDIA RTX 5070 Mobile** (Blackwell, sm_120, 8 GB VRAM). Should also work on any RTX with VK_KHR_ray_tracing support; override `CMAKE_CUDA_ARCHITECTURES` for non-Blackwell GPUs.
+
+## Building
+
+### Prerequisites
+- CUDA Toolkit 13.x
+- Vulkan SDK 1.4 (LunarG; on Fedora `sudo dnf install vulkan-devel vulkan-tools vulkan-validation-layers-devel`)
+- `slangc` 2026.x on PATH (download from [shader-slang releases](https://github.com/shader-slang/slang/releases))
+- gcc ≤ 15 *or* clang as the CUDA host compiler (CUDA 13.2 doesn't support gcc 16; on Fedora 44 with gcc 16, use a conda gcc-14 toolchain — see `CMakeUserPresets.json` template).
+- CMake 3.27+ and Ninja
+
+### Build & test
+```bash
+# If you needed to override the CUDA host compiler, copy the template:
+#   (see "CMakeUserPresets.json" in repo root for an example — gitignored)
+
+cmake --preset linux-debug                 # or linux-debug-local if using user preset
+cmake --build build/linux-debug -j
+ctest --preset linux-debug
+./build/linux-debug/bin/sim_cli --scene scenes/single_drop.json
+```
+
+Expected smoke-test output:
+```
+=== water_sim sim_cli ===
+scene:        single_drop
+output:       320x240 @ 24.0 fps, frames 0..4
+solver:       dfsph
+particle r:   0.0100 m
+rest density: 1000.0 kg/m^3
+vulkan:       NVIDIA GeForce RTX 5070 Laptop GPU (api 1.4.x, RT yes)
+particles:    180 (initial block)
+lbvh leaves:  180
+first dt:     0.004000 s (CFL with v=1 m/s)
+=== sim_cli OK ===
+```
+
+## Repository layout
+
+```
+water_simulation/
+├── core/      # CUDA particle store, LBVH, boundary, timestepper
+├── scene/     # JSON scene loader
+├── renderer/  # Vulkan 1.4 device + Slang shader build pipeline
+├── apps/      # sim_cli (Phase 1) + viewport (Phase 3) entry points
+├── tests/     # doctest unit tests
+├── scenes/    # example scene JSON files
+├── docs/      # design spec + per-phase implementation plans
+└── legacy/    # original 2023 SPH+OpenGL code preserved as-is
+```
+
+## License
+TBD — currently personal portfolio.
