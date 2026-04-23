@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.27)
 
+# Some FetchContent dependencies have very old cmake_minimum_required values
+# (doctest, glm, etc.) that CMake 4+ refuses to honor. Setting a minimum
+# policy version makes them configurable again.
+set(CMAKE_POLICY_VERSION_MINIMUM 3.5 CACHE STRING "")
+
 # CUDA 13.2 supports gcc up to 15. If your system gcc is newer (e.g. Fedora 44
 # ships gcc 16), set CMAKE_CUDA_HOST_COMPILER to point at a supported gcc.
 # See CMakeUserPresets.json (gitignored) for an example using a conda-forge
