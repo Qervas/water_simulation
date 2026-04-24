@@ -71,4 +71,36 @@ TEST_CASE("DFSPHSolver: dense pack center density approaches rest_density") {
     CHECK(d == doctest::Approx(cfg.rest_density).epsilon(0.30f));
     CHECK(d > 500.0f);
     CHECK(d < 1500.0f);
+
+    // Alpha is finite and non-negative for an interior particle.
+    const f32 a = solver.alpha_at(555);
+    CHECK(a >= 0.0f);
+    CHECK(std::isfinite(a));
+}
+
+TEST_CASE("DFSPHSolver: single particle falls under gravity, settles on floor") {
+    ParticleStore store(1);
+    store.resize(1);
+    Vec3f p{0.5f, 0.5f, 0.5f};
+    Vec3f v{0.f, 0.f, 0.f};
+    WATER_CUDA_CHECK(cudaMemcpy(store.positions(),  &p, sizeof(Vec3f), cudaMemcpyHostToDevice));
+    WATER_CUDA_CHECK(cudaMemcpy(store.velocities(), &v, sizeof(Vec3f), cudaMemcpyHostToDevice));
+
+    DFSPHSolver::Config cfg;
+    cfg.rest_density     = 1000.0f;
+    cfg.particle_radius  = 0.01f;
+    cfg.smoothing_length = 0.04f;
+    cfg.domain_min       = {0.f, 0.f, 0.f};
+    cfg.domain_max       = {1.f, 1.f, 1.f};
+    DFSPHSolver solver(store, cfg);
+
+    for (int k = 0; k < 100; ++k) solver.step(0.01f);
+    cudaDeviceSynchronize();
+
+    Vec3f p_final{};
+    WATER_CUDA_CHECK(cudaMemcpy(&p_final, store.positions(), sizeof(Vec3f),
+                                 cudaMemcpyDeviceToHost));
+    CHECK(p_final.y < 0.05f);
+    CHECK(p_final.x == doctest::Approx(0.5f).epsilon(0.05f));
+    CHECK(p_final.z == doctest::Approx(0.5f).epsilon(0.05f));
 }

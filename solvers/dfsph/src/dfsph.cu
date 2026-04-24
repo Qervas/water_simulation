@@ -8,6 +8,11 @@ namespace detail {
 __global__ void density_kernel(
     const Vec3f*, const u32*, const u32*, f32*,
     std::size_t, Vec3f, Vec3i, f32, f32, f32);
+__global__ void alpha_kernel(
+    const Vec3f*, const f32*, const u32*, const u32*, f32*,
+    std::size_t, Vec3f, Vec3i, f32, f32, f32);
+__global__ void apply_gravity_kernel(Vec3f*, std::size_t, Vec3f, f32);
+__global__ void advect_kernel(Vec3f*, Vec3f*, std::size_t, Vec3f, Vec3f, f32);
 }
 
 
@@ -43,9 +48,12 @@ DFSPHSolver::DFSPHSolver(ParticleStore& store, Config cfg, cudaStream_t stream)
     reduce_out_ = DeviceBuffer<f32>(1, stream_);
 }
 
-void DFSPHSolver::step(f32 /*dt*/) {
+void DFSPHSolver::step(f32 dt) {
     grid_.build(store_.positions(), store_.count());
     compute_density();
+    compute_alpha();
+    apply_external_forces(dt);
+    advect(dt);
 }
 
 f32 DFSPHSolver::density_at(std::size_t i) const {
@@ -83,12 +91,50 @@ void DFSPHSolver::compute_density() {
     WATER_CUDA_CHECK_LAST();
 }
 
+void DFSPHSolver::compute_alpha() {
+    const std::size_t n = store_.count();
+    if (n == 0) return;
+    constexpr int block = 128;
+    const int grid = static_cast<int>((n + block - 1) / block);
+    detail::alpha_kernel<<<grid, block, 0, stream_>>>(
+        store_.positions(),
+        store_.attribute_data(density_),
+        grid_.sorted_indices(),
+        grid_.cell_start(),
+        store_.attribute_data(alpha_),
+        n,
+        grid_.origin(),
+        grid_.cells_per_axis(),
+        grid_.cell_length(),
+        mass_,
+        cfg_.smoothing_length);
+    WATER_CUDA_CHECK_LAST();
+}
+
+void DFSPHSolver::apply_external_forces(f32 dt) {
+    const std::size_t n = store_.count();
+    if (n == 0) return;
+    constexpr int block = 128;
+    const int grid = static_cast<int>((n + block - 1) / block);
+    detail::apply_gravity_kernel<<<grid, block, 0, stream_>>>(
+        store_.velocities(), n, cfg_.gravity, dt);
+    WATER_CUDA_CHECK_LAST();
+}
+
+void DFSPHSolver::advect(f32 dt) {
+    const std::size_t n = store_.count();
+    if (n == 0) return;
+    constexpr int block = 128;
+    const int grid = static_cast<int>((n + block - 1) / block);
+    detail::advect_kernel<<<grid, block, 0, stream_>>>(
+        store_.positions(), store_.velocities(), n,
+        cfg_.domain_min, cfg_.domain_max, dt);
+    WATER_CUDA_CHECK_LAST();
+}
+
 // Stub host methods — populated in subsequent tasks.
-void DFSPHSolver::compute_alpha() {}
-void DFSPHSolver::apply_external_forces(f32 /*dt*/) {}
 void DFSPHSolver::surface_tension(f32 /*dt*/) {}
 void DFSPHSolver::density_solve(f32 /*dt*/) {}
-void DFSPHSolver::advect(f32 /*dt*/) {}
 void DFSPHSolver::divergence_solve(f32 /*dt*/) {}
 f32  DFSPHSolver::mean_density_error_()    { return 0.0f; }
 f32  DFSPHSolver::mean_divergence_error_() { return 0.0f; }
