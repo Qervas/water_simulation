@@ -10,6 +10,7 @@ find_package(CUDAToolkit REQUIRED)
 add_library(water_core STATIC
     src/particle_store.cu
     src/spatial_accel.cu
+    src/cell_grid.cu
     src/boundary.cu
     src/timestep.cpp
 )
