@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "name": "falling_block",
+  "output": {
+    "resolution": [640, 360],
+    "fps": 30,
+    "frame_range": [0, 60],
+    "format": "bin"
+  },
+  "camera": {
+    "position": [0.5, 0.4, 1.2],
+    "look_at": [0.5, 0.2, 0.5],
+    "up": [0.0, 1.0, 0.0],
+    "fov_y_deg": 30.0
+  },
+  "scene": {
+    "fluid": {
+      "solver": "dfsph",
+      "particle_radius": 0.012,
+      "rest_density": 1000.0,
+      "viscosity": 0.001,
+      "surface_tension": 0.0,
+      "gravity": [0.0, -9.81, 0.0],
+      "initial_block_min": [0.30, 0.50, 0.30],
+      "initial_block_max": [0.70, 0.80, 0.70]
+    }
+  }
+}

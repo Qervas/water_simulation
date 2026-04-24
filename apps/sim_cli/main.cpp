@@ -1,38 +1,56 @@
 #include "water/scene/scene.h"
 #include "water/core/particle_store.h"
-#include "water/core/spatial_accel.h"
 #include "water/core/timestep.h"
 #include "water/core/cuda_check.h"
+#include "water/solvers/dfsph.h"
 #include "water/renderer/vk_device.h"
 
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <string>
 #include <vector>
+#include <fstream>
 #include <stdexcept>
+#include <sys/stat.h>
 
 namespace {
 
 struct Args {
     std::string scene_path;
+    int         frames_start = -1;        // -1 = use scene
+    int         frames_end   = -1;
+    bool        record       = false;
+    bool        skip_vulkan  = false;     // skip Vulkan device creation (faster startup)
+    std::string out_dir      = "out";
 };
 
 Args parse(int argc, char** argv) {
     Args a;
     for (int i = 1; i < argc; ++i) {
         std::string s = argv[i];
-        if (s == "--scene" && i + 1 < argc) { a.scene_path = argv[++i]; }
+        if      (s == "--scene"  && i + 1 < argc) { a.scene_path = argv[++i]; }
+        else if (s == "--frames" && i + 1 < argc) {
+            std::string r = argv[++i];
+            auto colon = r.find(':');
+            if (colon == std::string::npos) {
+                std::fprintf(stderr, "--frames expects START:END\n"); std::exit(2);
+            }
+            a.frames_start = std::stoi(r.substr(0, colon));
+            a.frames_end   = std::stoi(r.substr(colon + 1));
+        }
+        else if (s == "--record")             { a.record = true; }
+        else if (s == "--out" && i + 1 < argc){ a.out_dir = argv[++i]; }
+        else if (s == "--no-vulkan")          { a.skip_vulkan = true; }
         else if (s == "-h" || s == "--help") {
-            std::puts("Usage: sim_cli --scene PATH");
+            std::puts("Usage: sim_cli --scene PATH [--frames START:END] [--record] [--out DIR] [--no-vulkan]");
             std::exit(0);
         } else {
-            std::fprintf(stderr, "Unknown arg: %s\n", s.c_str());
-            std::exit(2);
+            std::fprintf(stderr, "Unknown arg: %s\n", s.c_str()); std::exit(2);
         }
     }
     if (a.scene_path.empty()) {
-        std::fprintf(stderr, "Error: --scene required\n");
-        std::exit(2);
+        std::fprintf(stderr, "Error: --scene required\n"); std::exit(2);
     }
     return a;
 }
@@ -48,24 +66,35 @@ std::vector<water::Vec3f> generate_initial_block(const water::scene::FluidCfg& f
     return pts;
 }
 
+void write_frame_binary(const std::string& path, const water::Vec3f* positions,
+                         std::size_t count) {
+    std::ofstream out(path, std::ios::binary);
+    if (!out) throw std::runtime_error("cannot open " + path + " for writing");
+    std::uint32_t n = static_cast<std::uint32_t>(count);
+    out.write(reinterpret_cast<const char*>(&n), sizeof(n));
+    out.write(reinterpret_cast<const char*>(positions), sizeof(water::Vec3f) * count);
+}
+
 } // namespace
 
-int main(int argc, char** argv) {
-    try {
-        auto args  = parse(argc, argv);
-        auto scene = water::scene::load_scene(args.scene_path);
+int main(int argc, char** argv) try {
+    auto args  = parse(argc, argv);
+    auto scene = water::scene::load_scene(args.scene_path);
 
-        std::printf("=== water_sim sim_cli ===\n");
-        std::printf("scene:        %s\n", scene.name.c_str());
-        std::printf("output:       %dx%d @ %.1f fps, frames %d..%d\n",
-                    scene.output.width, scene.output.height,
-                    scene.output.fps,
-                    scene.output.frame_start, scene.output.frame_end);
-        std::printf("solver:       %s\n", scene.fluid.solver.c_str());
-        std::printf("particle r:   %.4f m\n", scene.fluid.particle_radius);
-        std::printf("rest density: %.1f kg/m^3\n", scene.fluid.rest_density);
+    if (args.frames_start < 0) args.frames_start = scene.output.frame_start;
+    if (args.frames_end   < 0) args.frames_end   = scene.output.frame_end;
 
-        // Vulkan check
+    std::printf("=== water_sim sim_cli ===\n");
+    std::printf("scene:        %s\n", scene.name.c_str());
+    std::printf("frames:       %d..%d (%d total)\n",
+                args.frames_start, args.frames_end,
+                args.frames_end - args.frames_start);
+    std::printf("solver:       %s\n", scene.fluid.solver.c_str());
+    std::printf("record:       %s%s\n",
+                args.record ? "yes -> " : "no",
+                args.record ? args.out_dir.c_str() : "");
+
+    if (!args.skip_vulkan) {
         water::renderer::VulkanDevice vk;
         auto info = vk.info();
         std::printf("vulkan:       %s (api %u.%u.%u, RT %s)\n",
@@ -74,44 +103,74 @@ int main(int argc, char** argv) {
                     VK_API_VERSION_MINOR(info.api_version),
                     VK_API_VERSION_PATCH(info.api_version),
                     info.ray_tracing_supported ? "yes" : "no");
-
-        // Initial particle block
-        auto initial = generate_initial_block(scene.fluid);
-        std::printf("particles:    %zu (initial block)\n", initial.size());
-
-        if (initial.empty()) {
-            std::fprintf(stderr, "warning: zero particles generated\n");
-            return 0;
-        }
-
-        water::ParticleStore store(initial.size() * 2);  // 2x headroom
-        store.resize(initial.size());
-        WATER_CUDA_CHECK(cudaMemcpy(store.positions(), initial.data(),
-                                     sizeof(water::Vec3f) * initial.size(),
-                                     cudaMemcpyHostToDevice));
-
-        // Build LBVH on the initial particles.
-        water::AABB scene_bounds{
-            {scene.fluid.initial_block_min.x - 0.1f,
-             scene.fluid.initial_block_min.y - 0.1f,
-             scene.fluid.initial_block_min.z - 0.1f},
-            {scene.fluid.initial_block_max.x + 0.1f,
-             scene.fluid.initial_block_max.y + 0.1f,
-             scene.fluid.initial_block_max.z + 0.1f}};
-        water::SpatialAccel accel;
-        accel.build(store.positions(), store.count(), scene_bounds);
-        WATER_CUDA_CHECK(cudaDeviceSynchronize());
-        std::printf("lbvh leaves:  %zu\n", accel.leaf_count());
-
-        // Substepping smoke check
-        water::TimeStepper ts;
-        const auto dt = ts.next_dt(/*max_v=*/1.0f, scene.fluid.particle_radius, 1.0f / 24.0f);
-        std::printf("first dt:     %.6f s (CFL with v=1 m/s)\n", dt);
-
-        std::printf("=== sim_cli OK ===\n");
-        return 0;
-    } catch (const std::exception& e) {
-        std::fprintf(stderr, "sim_cli error: %s\n", e.what());
-        return 1;
     }
+
+    auto initial = generate_initial_block(scene.fluid);
+    if (initial.empty()) { std::fprintf(stderr, "no particles\n"); return 1; }
+    std::printf("particles:    %zu\n", initial.size());
+
+    water::ParticleStore store(initial.size());
+    store.resize(initial.size());
+    WATER_CUDA_CHECK(cudaMemcpy(store.positions(), initial.data(),
+                                 sizeof(water::Vec3f) * initial.size(),
+                                 cudaMemcpyHostToDevice));
+
+    water::solvers::DFSPHSolver::Config cfg;
+    cfg.rest_density     = scene.fluid.rest_density;
+    cfg.particle_radius  = scene.fluid.particle_radius;
+    cfg.smoothing_length = 2.0f * scene.fluid.particle_radius;
+    cfg.viscosity        = scene.fluid.viscosity;
+    cfg.surface_tension  = scene.fluid.surface_tension;
+    cfg.gravity          = scene.fluid.gravity;
+    cfg.domain_min       = {0.0f, 0.0f, 0.0f};
+    cfg.domain_max       = {1.0f, 1.0f, 1.0f};
+
+    water::solvers::DFSPHSolver solver(store, cfg);
+    water::TimeStepper ts;
+
+    if (args.record) {
+        // Best-effort mkdir -p; ignore EEXIST.
+        std::string cmd = "mkdir -p " + args.out_dir;
+        std::system(cmd.c_str());
+        // Dump frame 0 (initial state) before stepping.
+        char fname[512];
+        std::snprintf(fname, sizeof(fname), "%s/frame_%04d.bin",
+                      args.out_dir.c_str(), args.frames_start);
+        write_frame_binary(fname, initial.data(), initial.size());
+    }
+
+    const float frame_dt = 1.0f / scene.output.fps;
+    std::vector<water::Vec3f> pos_host(store.count());
+
+    for (int f = args.frames_start; f < args.frames_end; ++f) {
+        float t_remaining = frame_dt;
+        int sub = 0;
+        while (t_remaining > 1e-6f && sub < 64) {
+            // Use a fixed timestep early (max_velocity is 0 before first step).
+            float dt = ts.next_dt(/*max_v=*/std::max(solver.max_velocity(), 0.5f),
+                                  cfg.particle_radius, t_remaining);
+            solver.step(dt);
+            t_remaining -= dt;
+            ++sub;
+        }
+        WATER_CUDA_CHECK(cudaDeviceSynchronize());
+        std::printf("frame %4d: substeps=%2d, max_v=%.4f m/s\n",
+                    f + 1, sub, solver.max_velocity());
+
+        if (args.record) {
+            WATER_CUDA_CHECK(cudaMemcpy(pos_host.data(), store.positions(),
+                                         sizeof(water::Vec3f) * store.count(),
+                                         cudaMemcpyDeviceToHost));
+            char fname[512];
+            std::snprintf(fname, sizeof(fname), "%s/frame_%04d.bin",
+                          args.out_dir.c_str(), f + 1);
+            write_frame_binary(fname, pos_host.data(), pos_host.size());
+        }
+    }
+
+    std::printf("=== sim_cli OK ===\n");
+    return 0;
+} catch (const std::exception& e) {
+    std::fprintf(stderr, "sim_cli error: %s\n", e.what());
+    return 1;
 }

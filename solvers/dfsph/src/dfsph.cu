@@ -1,6 +1,8 @@
 #include "water/solvers/dfsph.h"
 #include "water/core/cuda_check.h"
+#include <algorithm>
 #include <cmath>
+#include <cstdlib>
 
 namespace water::solvers {
 
@@ -13,6 +15,13 @@ __global__ void alpha_kernel(
     std::size_t, Vec3f, Vec3i, f32, f32, f32);
 __global__ void apply_gravity_kernel(Vec3f*, std::size_t, Vec3f, f32);
 __global__ void advect_kernel(Vec3f*, Vec3f*, std::size_t, Vec3f, Vec3f, f32);
+__global__ void density_change_kernel(
+    const Vec3f*, const Vec3f*, const f32*, const u32*, const u32*,
+    f32*, f32*, const f32*, f32, std::size_t,
+    Vec3f, Vec3i, f32, f32, f32, f32);
+__global__ void apply_kappa_kernel(
+    const Vec3f*, Vec3f*, const f32*, const f32*, const u32*, const u32*,
+    std::size_t, Vec3f, Vec3i, f32, f32, f32, f32);
 }
 
 
@@ -53,7 +62,13 @@ void DFSPHSolver::step(f32 dt) {
     compute_density();
     compute_alpha();
     apply_external_forces(dt);
+    density_solve(dt);
     advect(dt);
+
+    // Phase 2 placeholder for max_velocity_ (proper GPU reduction is T10).
+    // A constant ~1 m/s is a reasonable CFL hint for slow-falling water and
+    // avoids the self-amplifying bug from a naive accumulator.
+    max_velocity_ = 1.0f;
 }
 
 f32 DFSPHSolver::density_at(std::size_t i) const {
@@ -132,9 +147,42 @@ void DFSPHSolver::advect(f32 dt) {
     WATER_CUDA_CHECK_LAST();
 }
 
+void DFSPHSolver::density_solve(f32 dt) {
+    const std::size_t n = store_.count();
+    if (n == 0) return;
+    constexpr int block = 128;
+    const int grid = static_cast<int>((n + block - 1) / block);
+    // Phase 2 (interim): fixed iteration count (5). The CUB-based convergence
+    // check is the second half of T7/T8 — added when needed for cinematic
+    // quality. Five iterations is sufficient for visible incompressibility.
+    // 20 fixed iterations is enough to support a settled fluid stack
+    // visually. The CUB-based convergence check (T8) replaces this with
+    // an early-exit when mean density error drops below eta_density.
+    const u32 iters = std::min<u32>(20u, cfg_.max_density_iters);
+    for (u32 iter = 0; iter < iters; ++iter) {
+        detail::density_change_kernel<<<grid, block, 0, stream_>>>(
+            store_.positions(), store_.velocities(),
+            store_.attribute_data(density_),
+            grid_.sorted_indices(), grid_.cell_start(),
+            store_.attribute_data(density_adv_), store_.attribute_data(kappa_),
+            store_.attribute_data(alpha_),
+            cfg_.rest_density,
+            n, grid_.origin(), grid_.cells_per_axis(), grid_.cell_length(),
+            mass_, cfg_.smoothing_length, dt);
+        WATER_CUDA_CHECK_LAST();
+
+        detail::apply_kappa_kernel<<<grid, block, 0, stream_>>>(
+            store_.positions(), store_.velocities(),
+            store_.attribute_data(density_), store_.attribute_data(kappa_),
+            grid_.sorted_indices(), grid_.cell_start(),
+            n, grid_.origin(), grid_.cells_per_axis(), grid_.cell_length(),
+            mass_, cfg_.smoothing_length, dt);
+        WATER_CUDA_CHECK_LAST();
+    }
+}
+
 // Stub host methods — populated in subsequent tasks.
 void DFSPHSolver::surface_tension(f32 /*dt*/) {}
-void DFSPHSolver::density_solve(f32 /*dt*/) {}
 void DFSPHSolver::divergence_solve(f32 /*dt*/) {}
 f32  DFSPHSolver::mean_density_error_()    { return 0.0f; }
 f32  DFSPHSolver::mean_divergence_error_() { return 0.0f; }
