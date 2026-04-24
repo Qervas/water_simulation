@@ -1,0 +1,65 @@
+## NOTICE: This CMakeLists.txt is for Windows only
+
+cmake_minimum_required(VERSION 3.0)
+
+# Option for setting custom GCC path
+option(USE_CUSTOM_GCC_PATH "Use a custom GCC path" OFF)
+
+# Check and set GCC path
+if(USE_CUSTOM_GCC_PATH)
+    if(NOT DEFINED ENV{GCC_PATH})
+        message(FATAL_ERROR "GCC_PATH environment variable not set. Please set it, or disable USE_CUSTOM_GCC_PATH.")
+    endif()
+    set(GCC_PATH "$ENV{GCC_PATH}")
+    set(CMAKE_C_COMPILER "${GCC_PATH}/bin/gcc.exe")
+    set(CMAKE_CXX_COMPILER "${GCC_PATH}/bin/g++.exe")
+    set(CMAKE_CUDA_HOST_COMPILER "${GCC_PATH}/bin/g++.exe")
+endif()
+
+# Set CUDA path and compiler
+set(CUDA_HOME "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.0")  # Adjust as per your CUDA version
+set(CMAKE_CUDA_COMPILER "${CUDA_HOME}/bin/nvcc.exe")
+
+# Set CUDA architectures
+set(CMAKE_CUDA_ARCHITECTURES 60)
+
+project(app CXX CUDA)
+
+# Set CUDA flags
+set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -G -gencode arch=compute_60,code=sm_60 \
+                    --expt-extended-lambda -use_fast_math -Xcompiler -Wall,-Wextra \
+                    -diag-suppress 20012 \
+                    ")
+
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 20)
+
+# Include and link directories
+include_directories("${CUDA_HOME}/include" "3rd-party" "include")
+link_directories("${CUDA_HOME}/lib64")
+
+# Set build type
+set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
+
+# Add source files
+file(GLOB SOURCES "src/*.cpp" "src/*.cu")
+
+# Add executable
+add_executable(app ${SOURCES} src/main.cpp)
+
+# Add libraries
+# Note: Library names/paths may need to be adjusted for Windows
+target_link_libraries(app -lstdc++fs glfw3 GLEW32 opengl32 glu32 freeglut cudart)
+
+# Add include files
+target_include_directories(app PUBLIC "include")
+
+# Add compiler flags
+target_compile_options(app PUBLIC -Wall -Wextra)
+
+# Add compiler definitions
+target_compile_definitions(app PUBLIC -DDEBUG)
+
+# Note: Symlinking and file copying may need adjustment or additional configuration on Windows
+# Consider using configure_file or file(COPY ...) for non-symlink file copying

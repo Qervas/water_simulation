@@ -1,0 +1,120 @@
+#include "ShaderUtils.h"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
+
+GLuint ShaderUtils::loadShader(const std::string& filename, GLenum shaderType) {
+    std::ifstream shaderFile(filename);
+
+    if (!shaderFile.is_open()) {
+        std::cerr << "Error: Could not open shader file " << filename << std::endl;
+        return 0;
+    }
+
+    std::stringstream shaderStream;
+    shaderStream << shaderFile.rdbuf();
+    std::string shaderSource = shaderStream.str();
+
+    const char* shaderSourceCStr = shaderSource.c_str();
+
+    GLuint shader = glCreateShader(shaderType);
+    glShaderSource(shader, 1, &shaderSourceCStr, nullptr);
+    glCompileShader(shader);
+
+    GLint success;
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+
+    if (!success) {
+        GLint maxLength = 0;
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
+
+        if (maxLength > 1) { // length includes terminating null
+            std::vector<char> errorLog(static_cast<size_t>(maxLength));
+            glGetShaderInfoLog(shader, maxLength, &maxLength, errorLog.data());
+            std::cerr << "Error: Shader compilation failed for " << filename << ": " << errorLog.data() << std::endl;
+        } else {
+            std::cerr << "Error: Shader compilation failed for " << filename << " (no log available)." << std::endl;
+        }
+        glDeleteShader(shader);
+        return 0;
+    }
+
+    return shader;
+}
+
+GLuint ShaderUtils::createShaderProgram(GLuint vertexShader, GLuint fragmentShader) {
+    GLuint program = glCreateProgram();
+    glAttachShader(program, vertexShader);
+    glAttachShader(program, fragmentShader);
+    glLinkProgram(program);
+
+    GLint success;
+    glGetProgramiv(program, GL_LINK_STATUS, &success);
+
+    if (!success) {
+        GLint maxLength = 0;
+        glGetProgramiv(program, GL_INFO_LOG_LENGTH, &maxLength);
+
+        if (maxLength > 1) {
+            std::vector<char> errorLog(static_cast<size_t>(maxLength));
+            glGetProgramInfoLog(program, maxLength, &maxLength, errorLog.data());
+            std::cerr << "Error: Shader program linking failed: " << errorLog.data() << std::endl;
+        } else {
+            std::cerr << "Error: Shader program linking failed (no log available)." << std::endl;
+        }
+        glDeleteProgram(program);
+        return 0;
+    }
+
+    return program;
+}
+
+GLuint ShaderUtils::load2DTexture(const char* filename, GLenum format){
+    int width, height, numChannels;
+    unsigned char* img = stbi_load(filename, &width, &height, &numChannels, 0);
+    if( img == nullptr){
+        std::cerr << "failed to load texture: " << filename << std::endl;
+        return 0;
+    }
+
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, format, GL_UNSIGNED_BYTE, img);
+
+    stbi_image_free(img);
+    return texture;
+}
+
+GLuint ShaderUtils::loadSkyboxTexture(const std::string* filesname){
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
+    int width, height, numChannels;
+    unsigned char* img;
+    for(GLuint i = 0; i < 6; i++){
+        img = stbi_load(filesname[i].c_str(), &width, &height, &numChannels, 0);
+        if(img){
+            glTexImage2D(
+                GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+                0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img
+            );
+        }
+        else{
+            std::cerr << "Skybox texture failed to load: " << filesname[i] << std::endl;
+        }
+        stbi_image_free(img);
+    }
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+    return texture;
+}
