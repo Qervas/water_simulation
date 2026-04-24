@@ -4,6 +4,7 @@ add_executable(water_tests
     unit/test_particle_store.cu
     unit/test_spatial_accel.cu
     unit/test_cell_grid.cu
+    unit/test_sph_kernels.cu
     unit/test_boundary.cu
     unit/test_scene_loader.cpp
 )
