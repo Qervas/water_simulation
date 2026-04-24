@@ -5,9 +5,31 @@ Modern rebuild of a 2023 bachelor project.
 
 ## Status
 
-**Phase 1 (Foundation) complete.** The modern toolchain — CUDA 13.2 + Vulkan 1.4 + Slang + LBVH spatial accel + JSON scene loader + test harness — is wired and green.
+- ✅ **Phase 1 (Foundation)** complete. Modern toolchain wired — CUDA 13.2 + Vulkan 1.4 + Slang + LBVH spatial accel + JSON scene loader + test harness.
+- ⚠️ **Phase 2 (DFSPH solver)** *partially complete and not yet stable*. CellGrid, SPH kernels, density + α factor + density-invariance iteration scaffolding all build and unit-test green, but the solver is **not stable for multi-particle cinematic output** because boundary handling is a soft AABB clamp + bounce, not proper boundary forces. Water spreads infinitely thin instead of stacking. See [`docs/superpowers/plans/2026-04-24-water-simulation-v2-phase2.5-boundaries-and-viscosity.md`](docs/superpowers/plans/2026-04-24-water-simulation-v2-phase2.5-boundaries-and-viscosity.md) for the focused fix-up plan.
+- ⏳ **Phase 3** (screen-space dev viewport) — not started
+- ⏳ **Phase 4** (anisotropic surface reconstruction) — not started
+- ⏳ **Phase 5** (Vulkan-RT path tracer) — not started
+- ⏳ **Phase 6** (OIDN denoise + ffmpeg cinematic mux) — not started
 
-What's *not* yet built: the DFSPH solver (Phase 2), screen-space dev viewport (Phase 3), anisotropic surface reconstruction (Phase 4), Vulkan-RT path tracer (Phase 5), and OIDN denoise + ffmpeg cinematic mux (Phase 6). See [`docs/superpowers/specs/2026-04-23-water-simulation-rebuild-design.md`](docs/superpowers/specs/2026-04-23-water-simulation-rebuild-design.md) for the full design and [`docs/superpowers/plans/`](docs/superpowers/plans/) for incremental implementation plans.
+See [`docs/superpowers/specs/2026-04-23-water-simulation-rebuild-design.md`](docs/superpowers/specs/2026-04-23-water-simulation-rebuild-design.md) for the full design and [`docs/superpowers/plans/`](docs/superpowers/plans/) for per-phase implementation plans.
+
+### Honest limitations of the current Phase 2 partial
+
+What works:
+- All 23 unit tests pass (CellGrid, SPH kernels, density/α correctness in controlled cases, single-particle gravity-then-floor)
+- `sim_cli` runs scenes end-to-end and dumps per-frame particle positions
+- `tools/viz.py` renders mp4 from the dumps
+- A dam-break visually shows column collapse and surge dynamics
+
+What doesn't work (yet):
+- **Settled fluid does not stack** — water spreads to a single-layer film on the floor instead of forming a puddle of correct depth
+- **Pressure is not zero at rest** — even at rest spacing, density samples to ρ₀ but boundary undersampling produces spurious pressure gradients
+- **No viscosity** — fluid is inviscid, contributing to chaotic motion
+- **Density solver fixed at 20 iters** — no convergence-based early exit
+- **`max_velocity` is a constant placeholder** — adaptive CFL substepping is not really adaptive
+
+These are addressed by Phase 2.5 (Akinci 2012 boundary particles + viscosity + density convergence).
 
 ## Tech stack
 
