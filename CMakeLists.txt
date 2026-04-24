@@ -75,6 +75,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 add_subdirectory(third_party)
 add_subdirectory(core)
 add_subdirectory(scene)
+add_subdirectory(solvers)
 add_subdirectory(renderer)
 add_subdirectory(apps)
 
