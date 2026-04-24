@@ -4,6 +4,13 @@
 
 namespace water::solvers {
 
+namespace detail {
+__global__ void density_kernel(
+    const Vec3f*, const u32*, const u32*, f32*,
+    std::size_t, Vec3f, Vec3i, f32, f32, f32);
+}
+
+
 namespace {
 
 CellGrid make_grid(const DFSPHSolver::Config& cfg, cudaStream_t stream) {
@@ -37,8 +44,8 @@ DFSPHSolver::DFSPHSolver(ParticleStore& store, Config cfg, cudaStream_t stream)
 }
 
 void DFSPHSolver::step(f32 /*dt*/) {
-    // Phase 2 placeholder. Filled in piece by piece by Tasks 4-9.
     grid_.build(store_.positions(), store_.count());
+    compute_density();
 }
 
 f32 DFSPHSolver::density_at(std::size_t i) const {
@@ -57,8 +64,26 @@ f32 DFSPHSolver::alpha_at(std::size_t i) const {
     return v;
 }
 
+void DFSPHSolver::compute_density() {
+    const std::size_t n = store_.count();
+    if (n == 0) return;
+    constexpr int block = 128;
+    const int grid = static_cast<int>((n + block - 1) / block);
+    detail::density_kernel<<<grid, block, 0, stream_>>>(
+        store_.positions(),
+        grid_.sorted_indices(),
+        grid_.cell_start(),
+        store_.attribute_data(density_),
+        n,
+        grid_.origin(),
+        grid_.cells_per_axis(),
+        grid_.cell_length(),
+        mass_,
+        cfg_.smoothing_length);
+    WATER_CUDA_CHECK_LAST();
+}
+
 // Stub host methods — populated in subsequent tasks.
-void DFSPHSolver::compute_density() {}
 void DFSPHSolver::compute_alpha() {}
 void DFSPHSolver::apply_external_forces(f32 /*dt*/) {}
 void DFSPHSolver::surface_tension(f32 /*dt*/) {}
