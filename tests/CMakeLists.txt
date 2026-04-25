@@ -23,3 +23,5 @@ set_target_properties(water_tests PROPERTIES
 )
 
 add_test(NAME water_tests COMMAND water_tests)
+
+add_subdirectory(regression)
