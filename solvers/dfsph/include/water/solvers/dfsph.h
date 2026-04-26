@@ -21,6 +21,7 @@ public:
         f32   particle_radius     = 0.0015f;
         f32   smoothing_length    = 0.003f;
         f32   viscosity           = 1e-3f;       // XSPH velocity smoothing coefficient
+        f32   damping             = 0.5f;        // global velocity decay (1/s) — energy dissipation
         f32   surface_tension     = 0.0f;
         Vec3f gravity             {0.0f, -9.81f, 0.0f};
         u32   max_density_iters   = 100;

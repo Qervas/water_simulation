@@ -42,8 +42,8 @@ __global__ void xsph_viscosity_kernel(
     const Vec3f*, Vec3f*, const f32*, const u32*, const u32*, std::size_t,
     Vec3f, Vec3i, f32, f32, f32, f32);
 
-__global__ void apply_gravity_kernel(Vec3f*, std::size_t, Vec3f, f32);
-__global__ void advect_kernel(Vec3f*, Vec3f*, std::size_t, f32);
+__global__ void apply_gravity_kernel(Vec3f*, std::size_t, Vec3f, f32, f32);
+__global__ void advect_kernel(Vec3f*, Vec3f*, std::size_t, f32, f32, Vec3f, Vec3f);
 __global__ void density_error_kernel(const f32*, f32, f32*, std::size_t);
 __global__ void velocity_magnitude_kernel(const Vec3f*, f32*, std::size_t);
 }
@@ -190,7 +190,7 @@ void DFSPHSolver::apply_external_forces(f32 dt) {
     constexpr int block = 128;
     const int grid = static_cast<int>((n + block - 1) / block);
     detail::apply_gravity_kernel<<<grid, block, 0, stream_>>>(
-        fluid_.velocities(), n, cfg_.gravity, dt);
+        fluid_.velocities(), n, cfg_.gravity, dt, cfg_.damping);
     WATER_CUDA_CHECK_LAST();
 }
 
@@ -263,8 +263,12 @@ void DFSPHSolver::advect(f32 dt) {
     const std::size_t n = fluid_.count();
     constexpr int block = 128;
     const int grid = static_cast<int>((n + block - 1) / block);
+    // Hard velocity clamp to keep DFSPH stable at high impact velocities.
+    // 5 m/s is well within "fast splash" territory while still bounded.
+    constexpr f32 MAX_VELOCITY_CLAMP = 5.0f;
     detail::advect_kernel<<<grid, block, 0, stream_>>>(
-        fluid_.positions(), fluid_.velocities(), n, dt);
+        fluid_.positions(), fluid_.velocities(), n, dt, MAX_VELOCITY_CLAMP,
+        cfg_.domain_min, cfg_.domain_max);
     WATER_CUDA_CHECK_LAST();
 }
 

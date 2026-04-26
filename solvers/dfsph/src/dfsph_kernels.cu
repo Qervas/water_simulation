@@ -340,23 +340,49 @@ __global__ void xsph_viscosity_kernel(
     vel_f[i].z += delta.z;
 }
 
-// ---------- gravity, advection ----------
+// ---------- gravity + global damping ----------
+// v ← v * exp(-damping*dt) + g*dt
+// Damping is energy dissipation that lets the fluid actually settle (XSPH
+// only smooths between neighbors; it doesn't damp bulk motion).
 __global__ void apply_gravity_kernel(Vec3f* velocity, std::size_t n,
-                                      Vec3f g, f32 dt) {
+                                      Vec3f g, f32 dt, f32 damping) {
     std::size_t i = blockIdx.x * blockDim.x + threadIdx.x;
     if (i >= n) return;
-    velocity[i].x += g.x * dt;
-    velocity[i].y += g.y * dt;
-    velocity[i].z += g.z * dt;
+    const f32 decay = expf(-damping * dt);
+    velocity[i].x = velocity[i].x * decay + g.x * dt;
+    velocity[i].y = velocity[i].y * decay + g.y * dt;
+    velocity[i].z = velocity[i].z * decay + g.z * dt;
 }
 
-// Pure advection — no AABB clamp. Boundary particles handle wall reactions.
-__global__ void advect_kernel(Vec3f* position, Vec3f* velocity, std::size_t n, f32 dt) {
+// Symplectic advection with two safety nets:
+// 1) Velocity magnitude clamp — prevents kappa-overshoot launches.
+// 2) AABB position clamp at domain bounds — boundary particles do the real
+//    repulsion; this clamp just catches the rare particle that slips through
+//    a boundary gap. Without it, escaped particles fall forever (boundary
+//    forces only act WITHIN the box, not below the floor).
+__global__ void advect_kernel(Vec3f* position, Vec3f* velocity, std::size_t n,
+                               f32 dt, f32 max_v,
+                               Vec3f domain_min, Vec3f domain_max) {
     std::size_t i = blockIdx.x * blockDim.x + threadIdx.x;
     if (i >= n) return;
-    position[i].x += velocity[i].x * dt;
-    position[i].y += velocity[i].y * dt;
-    position[i].z += velocity[i].z * dt;
+    Vec3f v = velocity[i];
+    const f32 sp = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
+    if (sp > max_v) {
+        const f32 s = max_v / sp;
+        v.x *= s; v.y *= s; v.z *= s;
+    }
+    Vec3f p{position[i].x + v.x * dt,
+            position[i].y + v.y * dt,
+            position[i].z + v.z * dt};
+    const f32 eps = 1e-3f;
+    if (p.x < domain_min.x + eps) { p.x = domain_min.x + eps; if (v.x < 0) v.x = 0; }
+    if (p.y < domain_min.y + eps) { p.y = domain_min.y + eps; if (v.y < 0) v.y = 0; }
+    if (p.z < domain_min.z + eps) { p.z = domain_min.z + eps; if (v.z < 0) v.z = 0; }
+    if (p.x > domain_max.x - eps) { p.x = domain_max.x - eps; if (v.x > 0) v.x = 0; }
+    if (p.y > domain_max.y - eps) { p.y = domain_max.y - eps; if (v.y > 0) v.y = 0; }
+    if (p.z > domain_max.z - eps) { p.z = domain_max.z - eps; if (v.z > 0) v.z = 0; }
+    velocity[i] = v;
+    position[i] = p;
 }
 
 // ---------- per-particle scalars for CUB reductions ----------

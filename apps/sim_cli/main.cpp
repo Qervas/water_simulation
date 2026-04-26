@@ -129,8 +129,11 @@ int main(int argc, char** argv) try {
 
     // Boundary particles for the AABB box.
     const float spacing = 2.0f * cfg.particle_radius;
+    // 3 layers required because kernel support (2*l = 2*spacing) needs
+    // ceil(2*l/spacing) layers to fully sample the wall side of a fluid
+    // particle right at the boundary.
     auto bpts = water::solvers::sample_aabb_boundary(
-        cfg.domain_min, cfg.domain_max, spacing, 2);
+        cfg.domain_min, cfg.domain_max, spacing, 3);
     std::printf("boundary:     %zu particles (Akinci 2012, 2 layers)\n", bpts.size());
     auto boundary = std::make_unique<water::ParticleStore>(bpts.size());
     boundary->resize(bpts.size());
