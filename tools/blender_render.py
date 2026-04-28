@@ -96,37 +96,89 @@ def make_water_material():
                             transmission=1.0, ior=1.333)
 
 
-def setup_room(domain_size=1.0):
-    """Build the room: floor at z=0, two walls at -X and -Y, all in Z-up."""
-    # Floor — large wood plane in XY at z=0. Default plane is in XY with normal +Z. ✓
-    bpy.ops.mesh.primitive_plane_add(
-        size=domain_size * 8.0,
-        location=(domain_size / 2, domain_size / 2, 0))
-    floor = bpy.context.active_object
-    floor.name = "Floor"
-    floor.data.materials.append(make_principled(
-        "Floor", (0.20, 0.13, 0.08), roughness=0.55))
+def make_glass_material():
+    return make_principled("TankGlass", (0.95, 0.97, 1.0), roughness=0.0,
+                            transmission=1.0, ior=1.5)
 
-    # Back wall at -Y, facing +Y (toward camera). Default plane normal is +Z.
-    # To get a vertical wall at y = -X, with normal in +Y: rotate +90° around X.
+
+def _box(name, lo, hi, material):
+    """Add an axis-aligned box from `lo` (corner) to `hi` (corner), Blender Z-up.
+    Default cube primitive is centered with side=2, so we use size=2 then scale
+    by half-extents and translate to center.
+    """
+    cx, cy, cz = (lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, (lo[2] + hi[2]) / 2
+    sx, sy, sz = (hi[0] - lo[0]) / 2, (hi[1] - lo[1]) / 2, (hi[2] - lo[2]) / 2
+    bpy.ops.mesh.primitive_cube_add(size=2.0, location=(cx, cy, cz))
+    obj = bpy.context.active_object
+    obj.scale = (sx, sy, sz)
+    obj.name = name
+    obj.data.materials.append(material)
+    return obj
+
+
+def setup_room(domain_size=1.0):
+    """Counter + glass tank around the sim domain + back wall.
+
+    Sim domain is [0,0,0] -> [1,1,1] in sim Y-up coords, mapped to
+    [0,0,0] -> [1,1,1] in Blender Z-up (Y_sim is up, becomes Z_bl after the
+    Y/Z swap in load_frame). Tank walls hug those bounds exactly so water can
+    visibly press against the glass.
+    """
+    glass = make_glass_material()
+    wood  = make_principled("Counter", (0.18, 0.11, 0.06), roughness=0.45)
+    walle = make_principled("BackWall", (0.55, 0.45, 0.40), roughness=0.85)
+
+    # Counter — wood slab the tank sits on. Top at z = -0.005 so its surface
+    # is just below the tank's bottom face (no z-fighting).
+    counter_size = 3.0
+    _box("Counter",
+         lo=(domain_size / 2 - counter_size / 2,
+             domain_size / 2 - counter_size / 2,
+             -0.05),
+         hi=(domain_size / 2 + counter_size / 2,
+             domain_size / 2 + counter_size / 2,
+             -0.005),
+         material=wood)
+
+    # Back wall — vertical plane behind the tank. Camera looks toward -Y, so
+    # this sits at +Y far side. (Camera setup will place camera at +Y, looking
+    # back toward -Y, so back wall is "behind" from camera's POV).
     bpy.ops.mesh.primitive_plane_add(
-        size=domain_size * 8.0,
-        location=(domain_size / 2, -domain_size * 1.5, domain_size * 1.0),
+        size=6.0,
+        location=(domain_size / 2, domain_size + 2.5, 1.2),
         rotation=(math.radians(90), 0, 0))
     bw = bpy.context.active_object
     bw.name = "BackWall"
-    bw.data.materials.append(make_principled(
-        "BackWall", (0.10, 0.25, 0.45), roughness=0.65))
+    bw.data.materials.append(walle)
 
-    # Side wall at -X, facing +X. Rotate +90° around Y to put plane in YZ.
-    bpy.ops.mesh.primitive_plane_add(
-        size=domain_size * 8.0,
-        location=(-domain_size * 1.5, domain_size / 2, domain_size * 1.0),
-        rotation=(0, math.radians(90), 0))
-    sw = bpy.context.active_object
-    sw.name = "SideWall"
-    sw.data.materials.append(make_principled(
-        "SideWall", (0.45, 0.20, 0.15), roughness=0.65))
+    # Glass tank — 5 walls, no top. Wall thickness = 2cm. Tank interior
+    # exactly matches sim domain.
+    t = 0.02
+    # Floor: just below sim floor
+    _box("Tank.Floor",
+         lo=(0.0, 0.0, -t),
+         hi=(domain_size, domain_size, 0.0),
+         material=glass)
+    # +X wall (right)
+    _box("Tank.PlusX",
+         lo=(domain_size, 0.0, 0.0),
+         hi=(domain_size + t, domain_size, domain_size),
+         material=glass)
+    # -X wall (left)
+    _box("Tank.MinusX",
+         lo=(-t, 0.0, 0.0),
+         hi=(0.0, domain_size, domain_size),
+         material=glass)
+    # +Y wall (back of tank from camera POV — between camera and water at far side)
+    _box("Tank.PlusY",
+         lo=(0.0, domain_size, 0.0),
+         hi=(domain_size, domain_size + t, domain_size),
+         material=glass)
+    # -Y wall (front — closest to camera)
+    _box("Tank.MinusY",
+         lo=(0.0, -t, 0.0),
+         hi=(domain_size, 0.0, domain_size),
+         material=glass)
 
 
 def _aim_at(obj, target):
@@ -201,14 +253,14 @@ def setup_lighting(domain_size=1.0):
 
 
 def setup_camera(domain_size=1.0):
-    """Camera positioned at +X+Y+Z corner, tracking the scene center."""
-    target = (domain_size / 2, domain_size / 2, domain_size * 0.25)
-    cam_pos = (domain_size * 2.4, domain_size * 2.4, domain_size * 1.4)
+    """3/4 angle on the tank, pulled back so the tank reads as an object."""
+    target = (domain_size / 2, domain_size / 2, domain_size * 0.35)
+    cam_pos = (domain_size * 1.7, -domain_size * 2.2, domain_size * 1.1)
 
     bpy.ops.object.camera_add(location=cam_pos)
     cam = bpy.context.active_object
     cam.name = "Camera"
-    cam.data.lens = 35
+    cam.data.lens = 50
     cam.data.dof.use_dof = True
     cam.data.dof.focus_distance = math.sqrt(
         sum((c - t) ** 2 for c, t in zip(cam_pos, target)))
