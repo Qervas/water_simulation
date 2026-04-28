@@ -5,31 +5,42 @@ Modern rebuild of a 2023 bachelor project.
 
 ## Status
 
-- ✅ **Phase 1 (Foundation)** complete. Modern toolchain wired — CUDA 13.2 + Vulkan 1.4 + Slang + LBVH spatial accel + JSON scene loader + test harness.
-- ⚠️ **Phase 2 (DFSPH solver)** *partially complete and not yet stable*. CellGrid, SPH kernels, density + α factor + density-invariance iteration scaffolding all build and unit-test green, but the solver is **not stable for multi-particle cinematic output** because boundary handling is a soft AABB clamp + bounce, not proper boundary forces. Water spreads infinitely thin instead of stacking. See [`docs/superpowers/plans/2026-04-24-water-simulation-v2-phase2.5-boundaries-and-viscosity.md`](docs/superpowers/plans/2026-04-24-water-simulation-v2-phase2.5-boundaries-and-viscosity.md) for the focused fix-up plan.
-- ⏳ **Phase 3** (screen-space dev viewport) — not started
-- ⏳ **Phase 4** (anisotropic surface reconstruction) — not started
-- ⏳ **Phase 5** (Vulkan-RT path tracer) — not started
-- ⏳ **Phase 6** (OIDN denoise + ffmpeg cinematic mux) — not started
+- ✅ **Phase 1 (Foundation)** — modern toolchain wired (CUDA 13.2 + Vulkan 1.4 + Slang + LBVH + JSON scene loader + test harness)
+- ✅ **Phase 2 (DFSPH solver)** + **Phase 2.5 (boundaries + viscosity + convergence)** — DFSPH with Akinci 2012 boundary particles, XSPH viscosity, CUB-based density-solver convergence, and explicit damping. Settled-puddle regression test green.
+- ✅ **Cycles render pipeline** (Blender) — photoreal path-traced glass-tank scene via `tools/blender_render.py`. Reads sim binary frames → metaball fluid surface → renders with proper Z-up convention, glass tank visible at sim domain bounds, wood counter, soft three-point lighting.
+- ⏳ **Phase 3** (in-engine screen-space viewport) — not started
+- ⏳ **Phase 4** (anisotropic surface reconstruction in CUDA) — not started
+- ⏳ **Phase 5** (Vulkan-RT path tracer) — not started; rendering currently bridged via Blender Cycles
+- ⏳ **Phase 6** (OIDN denoise + ffmpeg cinematic mux) — partially via ffmpeg; no in-renderer denoise
 
 See [`docs/superpowers/specs/2026-04-23-water-simulation-rebuild-design.md`](docs/superpowers/specs/2026-04-23-water-simulation-rebuild-design.md) for the full design and [`docs/superpowers/plans/`](docs/superpowers/plans/) for per-phase implementation plans.
 
-### Honest limitations of the current Phase 2 partial
+## What works end-to-end (today)
 
-What works:
-- All 23 unit tests pass (CellGrid, SPH kernels, density/α correctness in controlled cases, single-particle gravity-then-floor)
-- `sim_cli` runs scenes end-to-end and dumps per-frame particle positions
-- `tools/viz.py` renders mp4 from the dumps
-- A dam-break visually shows column collapse and surge dynamics
+```bash
+# Simulate
+./build/linux-debug-local/bin/sim_cli \
+    --scene scenes/dam_break.json --frames 0:90 \
+    --record --no-vulkan --out out/dam_break
 
-What doesn't work (yet):
-- **Settled fluid does not stack** — water spreads to a single-layer film on the floor instead of forming a puddle of correct depth
-- **Pressure is not zero at rest** — even at rest spacing, density samples to ρ₀ but boundary undersampling produces spurious pressure gradients
-- **No viscosity** — fluid is inviscid, contributing to chaotic motion
-- **Density solver fixed at 20 iters** — no convergence-based early exit
-- **`max_velocity` is a constant placeholder** — adaptive CFL substepping is not really adaptive
+# Render with Cycles (glass-tank scene)
+blender --background --python tools/blender_render.py -- \
+    --seq out/dam_break --out-dir out/dam_break_render \
+    --stride 2 --spp 64 --res 1280 720
 
-These are addressed by Phase 2.5 (Akinci 2012 boundary particles + viscosity + density convergence).
+# Mux to mp4
+ffmpeg -y -framerate 15 -pattern_type glob \
+    -i 'out/dam_break_render/render_*.png' \
+    -c:v libx264 -pix_fmt yuv420p -crf 18 out/dam_break.mp4
+```
+
+Produces a photoreal animation of a glass column collapsing inside a glass tank on a wood counter, with proper splash dynamics, refraction, and settling.
+
+## Tests
+
+26 unit tests + 2 regression tests, all green:
+- `water_tests` — kernels, particle store, cell grid, LBVH, scene loader, boundary sampler, DFSPH density/α/gravity
+- `water_regression` — diagnostic (single-particle gravity + boundary mass) + settled puddle (4913-particle block falls into 1m³ box, settles into stable puddle in <1.5s sim time, no NaN, no escapees)
 
 ## Tech stack
 
