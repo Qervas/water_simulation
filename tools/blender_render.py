@@ -92,12 +92,16 @@ def make_principled(name, rgb, roughness, transmission=0.0, ior=1.5):
 
 
 def make_water_material():
-    return make_principled("Water", (0.85, 0.92, 1.0), roughness=0.0,
+    """Water with slight aqua tint (real water absorbs red wavelengths at
+    depth — gives the characteristic blue-green look that distinguishes
+    water from clear glass at the same scale)."""
+    return make_principled("Water", (0.78, 0.92, 0.96), roughness=0.0,
                             transmission=1.0, ior=1.333)
 
 
 def make_glass_material():
-    return make_principled("TankGlass", (0.95, 0.97, 1.0), roughness=0.0,
+    """Tank glass — colorless, IOR 1.50."""
+    return make_principled("TankGlass", (0.97, 0.98, 1.0), roughness=0.0,
                             transmission=1.0, ior=1.5)
 
 
@@ -277,18 +281,27 @@ def setup_camera(domain_size=1.0):
 
 
 def make_metaball_cluster(pts, radius, water_mat):
-    """Metaballs auto-merge into a fluid surface. Pts are already Z-up Blender."""
+    """Metaballs auto-merge into a fluid surface. Pts are already Z-up Blender.
+
+    Tuned for smooth fluid surface (not visible particle bumps):
+      - Large element radius (7x particle radius) so neighboring metaballs
+        overlap heavily.
+      - Low threshold (0.10) so the iso-surface forms close to where
+        elements end, fusing them.
+      - Fine resolution for the marching-cubes mesh extractor (sized to
+        the actual particle radius, not the inflated metaball radius).
+    """
     mball = bpy.data.metaballs.new("FluidMeta")
-    mball.resolution = radius * 0.5
-    mball.render_resolution = radius * 0.3
-    mball.threshold = 0.25
+    mball.resolution        = radius * 0.4
+    mball.render_resolution = radius * 0.25
+    mball.threshold         = 0.10
     obj = bpy.data.objects.new("Fluid", mball)
     bpy.context.scene.collection.objects.link(obj)
     obj.data.materials.append(water_mat)
     for p in pts:
         e = mball.elements.new(type="BALL")
         e.co = p
-        e.radius = radius * 4.0
+        e.radius = radius * 7.0    # heavy overlap for full surface merging
     return obj
 
 
