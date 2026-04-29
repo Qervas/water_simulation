@@ -1,6 +1,7 @@
 add_library(water_dfsph STATIC
     src/dfsph.cu
     src/dfsph_kernels.cu
+    src/boundary_sampler.cpp
 )
 
 target_include_directories(water_dfsph

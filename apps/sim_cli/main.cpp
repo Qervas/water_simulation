@@ -3,6 +3,8 @@
 #include "water/core/timestep.h"
 #include "water/core/cuda_check.h"
 #include "water/solvers/dfsph.h"
+#include "water/solvers/boundary_sampler.h"
+#include <memory>
 #include "water/renderer/vk_device.h"
 
 #include <cstdio>
@@ -119,13 +121,27 @@ int main(int argc, char** argv) try {
     cfg.rest_density     = scene.fluid.rest_density;
     cfg.particle_radius  = scene.fluid.particle_radius;
     cfg.smoothing_length = 2.0f * scene.fluid.particle_radius;
-    cfg.viscosity        = scene.fluid.viscosity;
+    cfg.viscosity        = std::max(scene.fluid.viscosity, 1e-2f);
     cfg.surface_tension  = scene.fluid.surface_tension;
     cfg.gravity          = scene.fluid.gravity;
     cfg.domain_min       = {0.0f, 0.0f, 0.0f};
     cfg.domain_max       = {1.0f, 1.0f, 1.0f};
 
-    water::solvers::DFSPHSolver solver(store, cfg);
+    // Boundary particles for the AABB box.
+    const float spacing = 2.0f * cfg.particle_radius;
+    // 3 layers required because kernel support (2*l = 2*spacing) needs
+    // ceil(2*l/spacing) layers to fully sample the wall side of a fluid
+    // particle right at the boundary.
+    auto bpts = water::solvers::sample_aabb_boundary(
+        cfg.domain_min, cfg.domain_max, spacing, 3);
+    std::printf("boundary:     %zu particles (Akinci 2012, 2 layers)\n", bpts.size());
+    auto boundary = std::make_unique<water::ParticleStore>(bpts.size());
+    boundary->resize(bpts.size());
+    WATER_CUDA_CHECK(cudaMemcpy(boundary->positions(), bpts.data(),
+                                 sizeof(water::Vec3f) * bpts.size(),
+                                 cudaMemcpyHostToDevice));
+
+    water::solvers::DFSPHSolver solver(store, boundary.get(), cfg);
     water::TimeStepper ts;
 
     if (args.record) {

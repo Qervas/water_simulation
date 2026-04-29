@@ -27,7 +27,7 @@ TEST_CASE("DFSPHSolver: density of a single isolated particle ≈ mass * W(0)") 
     cfg.domain_min       = {0.f, 0.f, 0.f};
     cfg.domain_max       = {1.f, 1.f, 1.f};
 
-    DFSPHSolver solver(store, cfg);
+    DFSPHSolver solver(store, nullptr, cfg);
     solver.step(0.001f);
     cudaDeviceSynchronize();
 
@@ -58,7 +58,7 @@ TEST_CASE("DFSPHSolver: dense pack center density approaches rest_density") {
     cfg.domain_min       = {0.f, 0.f, 0.f};
     cfg.domain_max       = {1.f, 1.f, 1.f};
 
-    DFSPHSolver solver(store, cfg);
+    DFSPHSolver solver(store, nullptr, cfg);
     solver.step(0.001f);
     cudaDeviceSynchronize();
 
@@ -78,7 +78,9 @@ TEST_CASE("DFSPHSolver: dense pack center density approaches rest_density") {
     CHECK(std::isfinite(a));
 }
 
-TEST_CASE("DFSPHSolver: single particle falls under gravity, settles on floor") {
+TEST_CASE("DFSPHSolver: single particle falls under gravity (no boundary)") {
+    // Without boundary particles, advection has nothing to stop falling.
+    // We only verify gravity is applied: particle moves DOWN over time.
     ParticleStore store(1);
     store.resize(1);
     Vec3f p{0.5f, 0.5f, 0.5f};
@@ -90,17 +92,18 @@ TEST_CASE("DFSPHSolver: single particle falls under gravity, settles on floor") 
     cfg.rest_density     = 1000.0f;
     cfg.particle_radius  = 0.01f;
     cfg.smoothing_length = 0.04f;
+    cfg.viscosity        = 0.0f;
     cfg.domain_min       = {0.f, 0.f, 0.f};
     cfg.domain_max       = {1.f, 1.f, 1.f};
-    DFSPHSolver solver(store, cfg);
+    DFSPHSolver solver(store, nullptr, cfg);
 
-    for (int k = 0; k < 100; ++k) solver.step(0.01f);
+    for (int k = 0; k < 50; ++k) solver.step(0.01f);
     cudaDeviceSynchronize();
 
     Vec3f p_final{};
     WATER_CUDA_CHECK(cudaMemcpy(&p_final, store.positions(), sizeof(Vec3f),
                                  cudaMemcpyDeviceToHost));
-    CHECK(p_final.y < 0.05f);
-    CHECK(p_final.x == doctest::Approx(0.5f).epsilon(0.05f));
-    CHECK(p_final.z == doctest::Approx(0.5f).epsilon(0.05f));
+    CHECK(p_final.y < 0.5f);   // moved down
+    CHECK(p_final.x == doctest::Approx(0.5f).epsilon(0.01f));  // no lateral drift
+    CHECK(p_final.z == doctest::Approx(0.5f).epsilon(0.01f));
 }

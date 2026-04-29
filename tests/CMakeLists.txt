@@ -8,6 +8,7 @@ add_executable(water_tests
     unit/test_boundary.cu
     unit/test_scene_loader.cpp
     unit/test_dfsph_density.cu
+    unit/test_boundary_sampler.cu
 )
 
 target_link_libraries(water_tests
@@ -23,3 +24,5 @@ set_target_properties(water_tests PROPERTIES
 )
 
 add_test(NAME water_tests COMMAND water_tests)
+
+add_subdirectory(regression)
