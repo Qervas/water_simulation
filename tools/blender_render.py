@@ -280,6 +280,24 @@ def setup_camera(domain_size=1.0):
     bpy.context.scene.camera = cam
 
 
+def load_water_mesh(ply_path: str, water_mat) -> bpy.types.Object:
+    """Import a pre-reconstructed water surface PLY mesh.
+
+    The PLY is built externally by tools/particles_to_mesh.py with
+    coordinates ALREADY in Blender Z-up convention — no transform
+    needed here. This gives much smoother surfaces than metaballs
+    (which are inherently blobby).
+    """
+    try:
+        bpy.ops.wm.ply_import(filepath=ply_path)
+    except AttributeError:
+        bpy.ops.import_mesh.ply(filepath=ply_path)
+    obj = bpy.context.selected_objects[0]
+    obj.name = "Fluid"
+    obj.data.materials.append(water_mat)
+    return obj
+
+
 def make_metaball_cluster(pts, radius, water_mat):
     """Metaballs auto-merge into a fluid surface. Pts are already Z-up Blender.
 
@@ -308,6 +326,7 @@ def make_metaball_cluster(pts, radius, water_mat):
 # ---------- top-level ----------
 
 def render_one(out_path: str, frame_path: str = None,
+                mesh_path: str = None,
                 spp=64, res=(1280, 720), radius=0.012, domain_size=1.0,
                 no_water=False):
     reset_scene()
@@ -316,14 +335,17 @@ def render_one(out_path: str, frame_path: str = None,
     setup_lighting(domain_size)
     setup_camera(domain_size)
 
-    if not no_water:
-        if frame_path is None:
-            sys.exit("frame_path required when no_water=False")
+    if no_water:
+        print("  --no-water: rendering empty room")
+    elif mesh_path is not None:
+        print(f"  loading water mesh from {mesh_path}")
+        load_water_mesh(mesh_path, make_water_material())
+    elif frame_path is not None:
         pts = load_frame(frame_path)
         print(f"  loaded {len(pts)} particles from {frame_path}")
         make_metaball_cluster(pts, radius, make_water_material())
     else:
-        print("  --no-water: rendering empty room")
+        sys.exit("must supply frame_path, mesh_path, or no_water=True")
 
     bpy.context.scene.render.filepath = str(Path(out_path).resolve())
     bpy.ops.render.render(write_still=True)
@@ -338,10 +360,12 @@ def main():
         argv = []
 
     p = argparse.ArgumentParser()
-    p.add_argument("--frame", help="single binary frame")
-    p.add_argument("--seq", help="directory of frame_NNNN.bin (batch)")
-    p.add_argument("--out", help="single output PNG")
-    p.add_argument("--out-dir", help="batch output directory")
+    p.add_argument("--frame",     help="single binary frame")
+    p.add_argument("--seq",       help="directory of frame_NNNN.bin (batch)")
+    p.add_argument("--mesh",      help="single PLY mesh from particles_to_mesh.py")
+    p.add_argument("--mesh-seq",  help="directory of frame_NNNN.ply (batch)")
+    p.add_argument("--out",       help="single output PNG")
+    p.add_argument("--out-dir",   help="batch output directory")
     p.add_argument("--spp", type=int, default=64)
     p.add_argument("--res", nargs=2, type=int, default=[1280, 720])
     p.add_argument("--radius", type=float, default=0.012)
@@ -359,7 +383,24 @@ def main():
                     domain_size=args.domain, no_water=True)
         return
 
-    if args.frame:
+    if args.mesh:
+        if not args.out:
+            sys.exit("--out required with --mesh")
+        render_one(args.out, mesh_path=args.mesh, spp=args.spp,
+                    res=tuple(args.res), radius=args.radius,
+                    domain_size=args.domain)
+    elif args.mesh_seq:
+        if not args.out_dir:
+            sys.exit("--out-dir required with --mesh-seq")
+        Path(args.out_dir).mkdir(parents=True, exist_ok=True)
+        files = sorted(Path(args.mesh_seq).glob("frame_*.ply"))[::args.stride]
+        for i, f in enumerate(files):
+            out = Path(args.out_dir) / f"render_{f.stem.split('_')[1]}.png"
+            print(f"[{i+1}/{len(files)}] {f.name} -> {out.name}")
+            render_one(str(out), mesh_path=str(f), spp=args.spp,
+                        res=tuple(args.res), radius=args.radius,
+                        domain_size=args.domain)
+    elif args.frame:
         if not args.out:
             sys.exit("--out required with --frame")
         render_one(args.out, frame_path=args.frame, spp=args.spp,
@@ -377,7 +418,7 @@ def main():
                         res=tuple(args.res), radius=args.radius,
                         domain_size=args.domain)
     else:
-        sys.exit("must pass --frame, --seq, or --no-water")
+        sys.exit("must pass --frame, --seq, --mesh, --mesh-seq, or --no-water")
 
 
 if __name__ == "__main__":
