@@ -25,6 +25,8 @@ struct Args {
     bool        record       = false;
     bool        skip_vulkan  = false;     // skip Vulkan device creation (faster startup)
     std::string out_dir      = "out";
+    float       damping      = -1.0f;     // <0 = solver default
+    float       viscosity    = -1.0f;     // <0 = use scene value
 };
 
 Args parse(int argc, char** argv) {
@@ -44,8 +46,11 @@ Args parse(int argc, char** argv) {
         else if (s == "--record")             { a.record = true; }
         else if (s == "--out" && i + 1 < argc){ a.out_dir = argv[++i]; }
         else if (s == "--no-vulkan")          { a.skip_vulkan = true; }
+        else if (s == "--damping" && i + 1 < argc)   { a.damping   = std::stof(argv[++i]); }
+        else if (s == "--viscosity" && i + 1 < argc) { a.viscosity = std::stof(argv[++i]); }
         else if (s == "-h" || s == "--help") {
-            std::puts("Usage: sim_cli --scene PATH [--frames START:END] [--record] [--out DIR] [--no-vulkan]");
+            std::puts("Usage: sim_cli --scene PATH [--frames START:END] [--record] "
+                      "[--out DIR] [--no-vulkan] [--damping F] [--viscosity F]");
             std::exit(0);
         } else {
             std::fprintf(stderr, "Unknown arg: %s\n", s.c_str()); std::exit(2);
@@ -121,11 +126,16 @@ int main(int argc, char** argv) try {
     cfg.rest_density     = scene.fluid.rest_density;
     cfg.particle_radius  = scene.fluid.particle_radius;
     cfg.smoothing_length = 2.0f * scene.fluid.particle_radius;
-    cfg.viscosity        = std::max(scene.fluid.viscosity, 1e-2f);
+    cfg.viscosity        = (args.viscosity > 0.0f)
+                            ? args.viscosity
+                            : std::max(scene.fluid.viscosity, 1e-2f);
     cfg.surface_tension  = scene.fluid.surface_tension;
     cfg.gravity          = scene.fluid.gravity;
     cfg.domain_min       = {0.0f, 0.0f, 0.0f};
     cfg.domain_max       = {1.0f, 1.0f, 1.0f};
+    if (args.damping >= 0.0f) cfg.damping = args.damping;
+    std::printf("solver cfg:   damping=%.3f viscosity=%.4f\n",
+                cfg.damping, cfg.viscosity);
 
     // Boundary particles for the AABB box.
     const float spacing = 2.0f * cfg.particle_radius;
