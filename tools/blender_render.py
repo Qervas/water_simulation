@@ -50,7 +50,7 @@ def reset_scene():
     bpy.ops.wm.read_factory_settings(use_empty=True)
 
 
-def setup_render(spp: int, res_x: int, res_y: int):
+def setup_render(spp: int, res_x: int, res_y: int, caustics: bool = True):
     scene = bpy.context.scene
     scene.render.engine = "CYCLES"
     # Bleeding-edge GPUs (RTX 5070 sm_120) often don't match Blender's bundled
@@ -71,6 +71,28 @@ def setup_render(spp: int, res_x: int, res_y: int):
         scene.view_settings.view_transform = "AgX"
     except Exception:
         pass
+
+    if caustics:
+        # Cycles defaults clamp/disable refractive caustics for noise reduction.
+        # Re-enable so light can bend through the water column onto the floor.
+        # Cost: noisier render, must be paid back with higher SPP + denoising.
+        for attr, val in (
+            ("caustics_reflective", True),
+            ("caustics_refractive", True),
+            ("transmission_bounces", 24),
+            ("max_bounces", 16),
+            ("blur_glossy", 0.5),  # reduces firefly noise on caustic spots
+        ):
+            try:
+                setattr(scene.cycles, attr, val)
+            except Exception:
+                pass
+        # sample_clamp_indirect=0 disables clamping (preserves caustic peaks).
+        # Setting too low (e.g. 1.0) kills caustics; 10.0 is a safe firefly cap.
+        try:
+            scene.cycles.sample_clamp_indirect = 10.0
+        except Exception:
+            pass
 
 
 def make_principled(name, rgb, roughness, transmission=0.0, ior=1.5):
@@ -196,10 +218,62 @@ def _aim_at(obj, target):
     c.up_axis = "UP_Y"
 
 
-def setup_lighting(domain_size=1.0):
-    """Three-point area lighting; each light auto-aims at scene center."""
+def setup_world_hdri(hdri_path: str, strength: float = 1.0,
+                      rotation_deg: float = 0.0):
+    """World lit by an HDRI environment map.
+
+    Replaces the gradient background. HDRIs give physically-grounded
+    directional sun + soft sky ambient in one image — much closer to real
+    product photography than a synthetic light rig, and the directional
+    component drives clean caustics through the water.
+    """
+    bpy.context.scene.world = bpy.data.worlds.new("World")
+    world = bpy.context.scene.world
+    world.use_nodes = True
+    nt = world.node_tree
+    nt.nodes.clear()
+    out = nt.nodes.new("ShaderNodeOutputWorld")
+    bg = nt.nodes.new("ShaderNodeBackground")
+    env = nt.nodes.new("ShaderNodeTexEnvironment")
+    map_ = nt.nodes.new("ShaderNodeMapping")
+    coord = nt.nodes.new("ShaderNodeTexCoord")
+
+    env.image = bpy.data.images.load(hdri_path, check_existing=True)
+    map_.inputs["Rotation"].default_value[2] = math.radians(rotation_deg)
+    bg.inputs["Strength"].default_value = strength
+
+    nt.links.new(coord.outputs["Generated"], map_.inputs["Vector"])
+    nt.links.new(map_.outputs["Vector"], env.inputs["Vector"])
+    nt.links.new(env.outputs["Color"], bg.inputs["Color"])
+    nt.links.new(bg.outputs["Background"], out.inputs["Surface"])
+
+
+def setup_lighting(domain_size=1.0, hdri_path: str = None,
+                    hdri_strength: float = 1.0, hdri_rotation: float = 0.0):
+    """Lighting + world background.
+
+    With --hdri: HDRI carries the lighting; we add only a subtle warm rim
+    light to keep the tank's silhouette readable against the environment.
+
+    Without --hdri: full three-point area rig + gradient sky (legacy path).
+    """
     target = (domain_size / 2, domain_size / 2, domain_size * 0.3)
 
+    if hdri_path:
+        setup_world_hdri(hdri_path, hdri_strength, hdri_rotation)
+        # Single soft rim — most light is the HDRI; this just kicks the edge.
+        bpy.ops.object.light_add(
+            type="AREA",
+            location=(domain_size / 2, -domain_size * 1.5, domain_size * 0.8))
+        rim = bpy.context.active_object
+        rim.name = "RimLight"
+        rim.data.energy = 30
+        rim.data.size = 1.0
+        rim.data.color = (1.0, 0.92, 0.80)
+        _aim_at(rim, target)
+        return
+
+    # ---- legacy path: three-point rig + gradient sky ----
     # Key (warm), high above and slightly +X +Y
     bpy.ops.object.light_add(
         type="AREA",
@@ -328,11 +402,14 @@ def make_metaball_cluster(pts, radius, water_mat):
 def render_one(out_path: str, frame_path: str = None,
                 mesh_path: str = None,
                 spp=64, res=(1280, 720), radius=0.012, domain_size=1.0,
-                no_water=False):
+                no_water=False, hdri_path: str = None,
+                hdri_strength: float = 1.0, hdri_rotation: float = 0.0,
+                caustics: bool = True):
     reset_scene()
-    setup_render(spp, res[0], res[1])
+    setup_render(spp, res[0], res[1], caustics=caustics)
     setup_room(domain_size)
-    setup_lighting(domain_size)
+    setup_lighting(domain_size, hdri_path=hdri_path,
+                   hdri_strength=hdri_strength, hdri_rotation=hdri_rotation)
     setup_camera(domain_size)
 
     if no_water:
@@ -366,29 +443,44 @@ def main():
     p.add_argument("--mesh-seq",  help="directory of frame_NNNN.ply (batch)")
     p.add_argument("--out",       help="single output PNG")
     p.add_argument("--out-dir",   help="batch output directory")
-    p.add_argument("--spp", type=int, default=64)
+    p.add_argument("--spp", type=int, default=256,
+                   help="Cycles samples per pixel (caustics need >=128)")
     p.add_argument("--res", nargs=2, type=int, default=[1280, 720])
     p.add_argument("--radius", type=float, default=0.012)
     p.add_argument("--domain", type=float, default=1.0)
     p.add_argument("--stride", type=int, default=1)
     p.add_argument("--no-water", action="store_true",
                    help="render the room only, no fluid")
+    p.add_argument("--hdri", help="path to .hdr/.exr environment map")
+    p.add_argument("--hdri-strength", type=float, default=1.0,
+                   help="HDRI emission strength multiplier")
+    p.add_argument("--hdri-rotation", type=float, default=0.0,
+                   help="HDRI yaw rotation in degrees (rotates sun direction)")
+    p.add_argument("--no-caustics", action="store_true",
+                   help="disable refractive caustics (faster, no light bending)")
     args = p.parse_args(argv)
+
+    common = dict(
+        spp=args.spp,
+        res=tuple(args.res),
+        radius=args.radius,
+        domain_size=args.domain,
+        hdri_path=args.hdri,
+        hdri_strength=args.hdri_strength,
+        hdri_rotation=args.hdri_rotation,
+        caustics=not args.no_caustics,
+    )
 
     if args.no_water:
         if not args.out:
             sys.exit("--out required with --no-water")
-        render_one(args.out, frame_path=None, spp=args.spp,
-                    res=tuple(args.res), radius=args.radius,
-                    domain_size=args.domain, no_water=True)
+        render_one(args.out, frame_path=None, no_water=True, **common)
         return
 
     if args.mesh:
         if not args.out:
             sys.exit("--out required with --mesh")
-        render_one(args.out, mesh_path=args.mesh, spp=args.spp,
-                    res=tuple(args.res), radius=args.radius,
-                    domain_size=args.domain)
+        render_one(args.out, mesh_path=args.mesh, **common)
     elif args.mesh_seq:
         if not args.out_dir:
             sys.exit("--out-dir required with --mesh-seq")
@@ -397,15 +489,11 @@ def main():
         for i, f in enumerate(files):
             out = Path(args.out_dir) / f"render_{f.stem.split('_')[1]}.png"
             print(f"[{i+1}/{len(files)}] {f.name} -> {out.name}")
-            render_one(str(out), mesh_path=str(f), spp=args.spp,
-                        res=tuple(args.res), radius=args.radius,
-                        domain_size=args.domain)
+            render_one(str(out), mesh_path=str(f), **common)
     elif args.frame:
         if not args.out:
             sys.exit("--out required with --frame")
-        render_one(args.out, frame_path=args.frame, spp=args.spp,
-                    res=tuple(args.res), radius=args.radius,
-                    domain_size=args.domain)
+        render_one(args.out, frame_path=args.frame, **common)
     elif args.seq:
         if not args.out_dir:
             sys.exit("--out-dir required with --seq")
@@ -414,9 +502,7 @@ def main():
         for i, f in enumerate(files):
             out = Path(args.out_dir) / f"render_{f.stem.split('_')[1]}.png"
             print(f"[{i+1}/{len(files)}] {f.name} -> {out.name}")
-            render_one(str(out), frame_path=str(f), spp=args.spp,
-                        res=tuple(args.res), radius=args.radius,
-                        domain_size=args.domain)
+            render_one(str(out), frame_path=str(f), **common)
     else:
         sys.exit("must pass --frame, --seq, --mesh, --mesh-seq, or --no-water")
 
